@@ -1,0 +1,1 @@
+/home/fabian/git/linux-scripts/texcount.pl
