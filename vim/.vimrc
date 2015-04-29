@@ -245,4 +245,12 @@ au BufReadPost *.jsm set syntax=javascript
 :vnoremap < <gv
 :vnoremap > >gv
 
+" remember last cursor position
+augroup vimrcEx
+  autocmd!
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") && @% !~ '.git/COMMIT_EDITMSG' |
+    \   exe "normal g`\"" |
+    \ endif
+augroup END
 

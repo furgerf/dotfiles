@@ -162,8 +162,6 @@ alias fucking='sudo'
 
 alias refresh_conky='killall conky 2> /dev/null ; conky -d -c $HOME/git/dotfiles/arch/.conkyrc'
 
-alias vlc='/usr/bin/nice -n -10 /usr/bin/vlc'
-
 
 recent() {
   #if [[ "$1" =~ '^[0-9]+$' ]]; then
