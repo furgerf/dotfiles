@@ -323,7 +323,7 @@ alias gf='git fetch'
 alias gp='git push'
 alias pull='git pull'
 alias push='git push'
-alias git-all='git add . && git commit . && git push'
+alias gitall='git add . && git commit . && git push'
 
 alias tmux='TERM=xterm-256color tmux'
 alias compton-enable='compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3'
