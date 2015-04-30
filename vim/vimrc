@@ -230,6 +230,8 @@ autocmd! bufwritepost $MYVIMRC source %
 " for vim-airline
 "set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 command! Texcount execute "!perl /home/fabian/.vim/plugin/texcount.pl %"
 command! Texcountall execute "!perl /home/fabian/.vim/plugin/tex-count-recursive %:p:h"
