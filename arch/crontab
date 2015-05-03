@@ -1,5 +1,18 @@
 # min hour day month dayOfWeek cmd
 # dayOfWeek: sunday = 0
-0 13 * * * ~/git/linux-scripts/cron_wrapper sudo updatedb
-0 14 * * 0 ~/git/linux-scripts/cron_wrapper sudo paccache -r -k 2
-0 00,04,08,12,16,20 * * * ~/git/linux-scripts/cron_wrapper /home/fabian/git/linux-scripts/git-status /home/fabian/git
+
+# check date of cron history, just before cron tasts usually run
+0 * * * * /home/fabian/git/linux-scripts/new-day
+
+# "normal" entries
+# update file database for locate
+01 */9 * * * ~/git/linux-scripts/cron_wrapper sudo updatedb
+# clean old package files
+02 14 * * 0 ~/git/linux-scripts/cron_wrapper sudo paccache -r -k 2
+# check for unpushed commits
+03 */4 * * * ~/git/linux-scripts/cron_wrapper /home/fabian/git/linux-scripts/git-status /home/fabian/git
+# remind biodata entry
+04 7,8,9,10 * * * ~/git/linux-scripts/cron_wrapper /home/fabian/git/linux-scripts/biodata
+# export crontab to git
+19 17 * * 0 ~/git/linux-scripts/cron_wrapper /home/fabian/git/linux-scripts/crontab-backup
+
