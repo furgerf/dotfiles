@@ -24,7 +24,7 @@ export EDITOR="vim"
 #export TERM="xfce4-terminal"
 #export TERM="xterm"
 export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools"
-export HISTSIZE=5000
+export HISTSIZE=20000
 export HISTCONTROL=ignoredups
 
 # highlight broken symlinks
@@ -134,7 +134,7 @@ pdf() {
 alias pdfa='for i in *.pdf; do pdf "$i"; done'
 
 alias doodle='firefox -new-tab http://www.doodle.com/dy7cg2qqkd6vicst'
-alias libreoffice='/usr/bin/libreoffice --nologo'
+alias libre='/usr/bin/libreoffice --nologo'
 
 # android dev
 alias logcat="$HOME/git/linux-scripts/logcat"
