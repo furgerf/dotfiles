@@ -1,0 +1,3 @@
+# igonre YouCompleteMe stuff that behaves strangely...
+YouCompleteMe/third_party/ycmd
+
