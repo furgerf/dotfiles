@@ -561,7 +561,7 @@ local pacuwidget = wibox.widget.textbox()
 pacuwrapper:set_widget(pacuwidget)
 local pacutimer = timer({ timeout = 900 })
 local pacuwidgettext = ""
-function update_pacuwidget ()
+function update_db ()
   local handle = io.popen("ping -c 1 8.8.8.8 &> /dev/null ; echo $?")
   local inet = handle:read("*a")
   handle:close()
@@ -576,11 +576,17 @@ function update_pacuwidget ()
   pacutimer.timeout = 3600
   pacutimer:again()
 
-  -- sync pacman
-  --os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null &")
+  -- sync pacman -> ASYNCHRONOUSLY
+  os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null &")
 
-  -- get new packages
-  handle = io.popen("(sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null ; a=$(yaourt -Qu | wc -l) ; b=$(pacman -Qu | grep '\\[ignored\\]' | wc -l) ; echo \"$a-$b\" | bc) &")
+  -- wait 30s for the DB to update
+  local updatetimer = timer({ timeout = 30 })
+  updatetimer:connect_signal( "timeout", update_pacman)
+  updatetimer:start()
+end
+function update_pacman ()
+  -- get new packages -> SYNCHRONOUSLY
+  handle = io.popen("a=$(yaourt -Qu | wc -l) ; b=$(pacman -Qu | grep '\\[ignored\\]' | wc -l) ; echo \"$a-$b\" | bc")
   local count = handle:read("*a")
   handle:close()
   local count = count:sub(1, #count - 1)
@@ -596,7 +602,7 @@ function update_pacuwidget ()
     end
   end
 end
-pacutimer:connect_signal( "timeout", update_pacuwidget)
+pacutimer:connect_signal( "timeout", update_db)
 pacutimer:start()
 
 local pacu_naughty = nil
