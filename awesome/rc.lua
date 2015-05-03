@@ -263,6 +263,7 @@ shifty.config.apps = {
     match = {
       class = {
         "Vlc",
+        "smplayer",
         "Clementine",
         "Gsopcast",
       },
@@ -576,10 +577,10 @@ function update_pacuwidget ()
   pacutimer:again()
 
   -- sync pacman
-  os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null &")
+  --os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null &")
 
   -- get new packages
-  handle = io.popen("a=$(yaourt -Qu | wc -l) ; b=$(pacman -Qu | grep '\\[ignored\\]' | wc -l) ; echo \"$a-$b\" | bc")
+  handle = io.popen("(sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null ; a=$(yaourt -Qu | wc -l) ; b=$(pacman -Qu | grep '\\[ignored\\]' | wc -l) ; echo \"$a-$b\" | bc) &")
   local count = handle:read("*a")
   handle:close()
   local count = count:sub(1, #count - 1)
@@ -1118,6 +1119,7 @@ function(c)
   c.border_color = beautiful.border_focus
 
   if not (c.class    == "Vlc")
+    and not (c.class == "smplayer")
     and not (c.class == "Mirage")
     and not (c.class == "Plugin-container")
     and not (c.name == "SRF Player - Mozilla Firefox")
@@ -1138,6 +1140,7 @@ function(c)
   function(c)
     c.border_color = beautiful.border_normal
     if not (c.class    == "Vlc")
+      and not (c.class == "smplayer")
       and not (c.class == "Mirage")
       and not (c.class == "Plugin-container")
       and not (c.name == "SRF Player - Mozilla Firefox")
