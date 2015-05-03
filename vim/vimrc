@@ -97,7 +97,8 @@ autocmd FileType tex map <F3> :w<CR>\ll<CR>
 autocmd FileType bib map <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
 
 " key mapping: markdown
-autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf"<CR>
+autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
+autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" &<CR>
 
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 set grepprg=grep\ -nH\ $*
@@ -202,7 +203,7 @@ set nofoldenable    " disable foldin
 set foldlevelstart=99
 
 " biodata macro
-let @b='?BiodataEntrynVnyP3Nzz$*\q9l'
+let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
 
 
 "============================================================================
