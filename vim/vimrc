@@ -39,7 +39,7 @@ set ignorecase      " Ignore case in search patterns.
 set smartcase       " Override the 'ignorecase' option if the search pattern
                     " contains upper case characters.
 
-set backspace=2     " Influences the working of <BS>, <Del>, CTRL-W
+set backspace=indent,eol,start     " Influences the working of <BS>, <Del>, CTRL-W
                     " and CTRL-U in Insert mode. This is a list of items,
                     " separated by commas. Each item allows a way to backspace
                     " over something.
@@ -47,6 +47,8 @@ set backspace=2     " Influences the working of <BS>, <Del>, CTRL-W
 set autoindent      " Copy indent from current line when starting a new line
                     " (typing <CR> in Insert mode or when using the "o" or "O"
                     " command).
+
+set copyindent      " copy previous indentation
 
 set textwidth=256   " Maximum width of text that is being inserted. A longer
                     " line will be broken after white space to get this width.
@@ -114,9 +116,9 @@ set t_Co=256
 colorscheme fu
 
 " allow saving files as sudo
-"cmap sudow w !sudo tee > /dev/null %
+cmap w!! w !sudo tee % > /dev/null
 
-set pastetoggle=<F4>
+set pastetoggle=<F7>
 
 " make j/k move down/up one ROW rather than one LINE
 nmap j gj
@@ -125,7 +127,7 @@ nmap k gk
 " show some whitespaces
 set list
 "set listchars=eol:$,tab:->,trail:~
-set listchars=trail:~,tab:»·,eol:⏎
+set listchars=trail:~,space:·,tab:»·,eol:⏎
 
 " load pathogen
 execute pathogen#infect()
@@ -184,8 +186,8 @@ map <Leader>q :nohlsearch<CR>
 map <Leader>yy ggVG"*y
 map <Leader>n :NERDTree<CR>
 map <Leader>dr :e ~/dropbox<CR>
-map <Leader>ev :e $MYVIMRC<CR>
-map <Leader>sv :so $MYVIMRC<CR>
+map <Leader>vim :e $MYVIMRC<CR>
+map <Leader>ss :so $MYVIMRC<CR>
 map <Leader>b :e ~/.bashrc<CR>
 map <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 map <Leader>w <C-w>w
@@ -195,6 +197,12 @@ map <Leader>w <C-w>w
 map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 map <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 map <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+
+" easier window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 set laststatus=2 " Always show status line.
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
@@ -259,4 +267,17 @@ augroup vimrcEx
     \   exe "normal g`\"" |
     \ endif
 augroup END
+
+" buffers are hidden, rather than closed
+set hidden
+
+set history=1000         " remember more commands and search history
+set undolevels=5000      " use many muchos levels of undo
+set wildignore=*.swp     " ignore swapfiles when completing filenames
+set title                " change the terminal's title
+
+" Q autoformats the current selection or paragraph
+vmap Q gq
+nmap Q gqap
+
 
