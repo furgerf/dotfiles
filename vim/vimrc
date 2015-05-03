@@ -129,6 +129,8 @@ set listchars=trail:~,tab:»·,eol:⏎
 
 " load pathogen
 execute pathogen#infect()
+" not sure whether the following line is necessary
+call pathogen#helptags()
 
 " turn off arrow keys
 noremap <Up> <NOP>
@@ -182,7 +184,8 @@ map <Leader>q :nohlsearch<CR>
 map <Leader>yy ggVG"*y
 map <Leader>n :NERDTree<CR>
 map <Leader>dr :e ~/dropbox<CR>
-map <Leader>vim :e ~/.vimrc<CR>
+map <Leader>ev :e $MYVIMRC<CR>
+map <Leader>sv :so $MYVIMRC<CR>
 map <Leader>b :e ~/.bashrc<CR>
 map <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 map <Leader>w <C-w>w
