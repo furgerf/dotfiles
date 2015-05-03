@@ -1,4 +1,6 @@
-# igonre YouCompleteMe stuff that behaves strangely...
-YouCompleteMe/third_party/ycmd
-sh.pyc
+# igonre vim plugins (as they're git repos too)
+vim/bundle
+
+# ignore vim swap files
+*.swp
 
