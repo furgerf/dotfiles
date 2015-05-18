@@ -23,7 +23,7 @@ export PERL5LIB="/home/fabian/perl5/lib/perl5:$PERL5LIB"
 export EDITOR="vim"
 #export TERM="xfce4-terminal"
 #export TERM="xterm"
-export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools"
+export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools:$HOME/git/linux-scripts"
 export HISTSIZE=20000
 export HISTCONTROL=ignoredups
 
@@ -313,6 +313,7 @@ say(){
 
 # disable flow control (to use ctrl+s in vim)
 stty -ixon
+alias v='/usr/bin/vim'
 
 # git
 alias ga='git add'
