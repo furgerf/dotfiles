@@ -184,6 +184,7 @@ shifty.config.tags = {
     nopopup     = true,
     spawn       = 'ps aux | grep [f]irefox && firefox &',
     persist     = false,
+    screen      = screen.count(),
   },
   ["➌ ·doc·✎"] = {
     layout      = awful.layout.suit.fair,
@@ -203,6 +204,7 @@ shifty.config.tags = {
     nopopup     = true,
     spawn       = terminal .. " --working-directory /data/video",
     persist     = false,
+    screen      = screen.count(),
   },
   ["➏ ·d/l·⇅"] = {
     layout      = awful.layout.suit.tile.bottom,
@@ -226,6 +228,7 @@ shifty.config.tags = {
     layout      = awful.layout.suit.floating,
     position    = 9,
     persist     = false,
+    screen      = screen.count(),
   },
 }
 shifty.config.apps = {
@@ -234,6 +237,7 @@ shifty.config.apps = {
       class = { "Firefox" },
     },
     tag = "➋ ·web·🌏",
+    screen = screen.count(),
     --maximize_vertical = true,
     --maximize_horizontal = true,
     --screen = math.min(screen.count(), 2),
@@ -250,14 +254,15 @@ shifty.config.apps = {
       },
     },
     tag = "➌ ·doc·✎",
-    screen = math.min(screen.count(), 2),
+    --screen = math.min(screen.count(), 2),
   },
   {
     match = {
       class = { "Eclipse", "Brackets" },
     },
     tag = "➍ ·code·💡",
-    screen = math.min(screen.count(), 2),
+    screen = screen.count(),
+    --screen = math.min(screen.count(), 2),
   },
   {
     match = {
@@ -272,6 +277,7 @@ shifty.config.apps = {
       },
     },
     tag = "➎ ·media·♫",
+    screen = screen.count(),
   },
   {
     match = {
@@ -294,6 +300,7 @@ shifty.config.apps = {
     },
     tag = "➒ ·gimp",
     --screen = math.min(screen.count(), 2),
+    screen = screen.count(),
     slave = true,
   },
   {
@@ -302,6 +309,7 @@ shifty.config.apps = {
     },
     slave = true,
     --screen = math.min(screen.count(), 2),
+    screen = screen.count(),
   },
   {
     match = {
@@ -340,7 +348,7 @@ myconfigmenu = {
     { "awesome", editor_cmd .. " " .. awesome.conffile },
     { "xinit", editor_cmd .. " " .. os.getenv("HOME") .. "/.xinitrc" },
     { "vim", editor_cmd .. " " .. os.getenv("HOME") .. "/.vimrc" },
-    { "conky", editor_cmd .. " " .. os.getenv("HOME") .. "/git/linux-scripts/conky/.conkyrc" },
+    { "conky", editor_cmd .. " " .. os.getenv("HOME") .. "/git/dotfiles/arch/.conkyrc" },
 }
 myplacemenu = {
     { "/data", "thunar /data" },
@@ -797,8 +805,8 @@ globalkeys = awful.util.table.join(
   --   awful.util.spawn("amixer set Master 3%-") end),
   --awful.key({ }, "XF86AudioMute", function ()
   --   awful.util.spawn("amixer sset Master toggle") end),
-  --awful.key({ }, "XF86Display", function ()
-  --   awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
+  awful.key({ }, "XF86Display", function ()
+     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
   --awful.key({ }, "XF86Sleep", function ()
   --    awful.util.spawn("slock") end),
   awful.key({modkey}, "F6", function ()
