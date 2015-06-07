@@ -59,6 +59,8 @@ sleep 30 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log &
 # start thunderbird
 sleep 10 && thunderbird &
 
+env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
+
 # start awesome wm
 exec awesome
 #exec ck-launch-session awesome
