@@ -237,7 +237,7 @@ shifty.config.apps = {
       class = { "Firefox" },
     },
     tag = "➋ ·web·🌏",
-    screen = screen.count(),
+    --screen = screen.count(),
     --maximize_vertical = true,
     --maximize_horizontal = true,
     --screen = math.min(screen.count(), 2),
@@ -960,7 +960,7 @@ globalkeys = awful.util.table.join(
     mypromptbox[mouse.screen].widget,
     function (word)
       word = string.gsub(word, " ", "%%20")
-      awful.util.spawn("firefox -new-tab http://argentinabay.info/search/" .. word .. "/0/7/0")
+      awful.util.spawn("firefox -new-tab http://thepiratebay.mn/search/" .. word)
     end, nil, nil)
   end),
 

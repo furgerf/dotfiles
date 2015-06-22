@@ -10,9 +10,6 @@
 echo -e '\e[0;37mWelcome to the \e[1;34mother side\e[0;37m...\n'
 PS1="\[\033[1;30m\][\[\033[01;37m\]\$?\$(if [[ \$? == 0 ]]; then echo \"  \[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi)\[\033[1;30m\]][\[\033[1;37m\]\A\[\033[1;30m\]][\[\033[1;37m\]\u\[\033[1;30m\]@\[\033[1;37m\]\h\[\033[1;30m\]][\[\033[1;37m\]\w\[\033[1;30m\]]\[\033[1;34m\]\$\[\033[0;37m\] "
 
-# CERTAINLY(-ish) working
-#PS1="\[\033[1;30m\][\[\033[1;37m\]\A\[\033[1;30m\]][\[\033[1;37m\]\u\[\033[1;30m\]@\[\033[1;37m\]\h\[\033[1;30m\]][\[\033[1;37m\]\w\[\033[1;30m\]]\[\033[1;34m\]\$\[\033[0;37m\] "
-
 # vanilla
 #PS1='[\u@\h \W]\$ '
 # exports
@@ -330,6 +327,8 @@ alias tmux='TERM=xterm-256color tmux'
 alias compton-enable='compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3'
 alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)'
 
+alias raspi='ssh 192.168.1.31'
+alias raspi-extern='ssh 178.195.242.186'
 raspi-backup(){
   echo "Device to back up: "
   read DEVICE
@@ -346,4 +345,7 @@ raspi-restore(){
 
   gzip -dc "$BACKUP" | dd bs=4M of="$DEVICE"
 }
+
+alias xpaste='xclip -o'
+
 
