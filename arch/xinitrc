@@ -24,7 +24,7 @@ $HOME/git/linux-scripts/backlight
 xrandr --output VGA1 --off ; $HOME/git/linux-scripts/monitor
 
 # conky
-sleep 10 && conky -c $HOME/git/dotfiles/arch/.conkyrc -d &
+sleep 10 && conky -c $HOME/git/dotfiles/arch/conkyrc -d &
 
 # set shortcut to kill X session
 setxkbmap -option caps:swapescape,terminate:ctrl_alt_bksp
@@ -33,13 +33,13 @@ setxkbmap -option caps:swapescape,terminate:ctrl_alt_bksp
 nm-applet &
 
 # TP battery tresholds
-$HOME/git/linux-scripts/set_tpacpi
+$HOME/git/linux-scripts/set-tpacpi
 
 # dropbox
 dropbox &
 
 # set dbus address for cron stuff
-$HOME/git/linux-scripts/set_dbus_address
+$HOME/git/linux-scripts/set-dbus-address
 
 # composite manager
 compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3

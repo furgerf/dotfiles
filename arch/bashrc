@@ -157,7 +157,7 @@ alias xclip='xclip -selection c'
 
 alias fucking='sudo'
 
-alias refresh_conky='killall conky 2> /dev/null ; conky -d -c $HOME/git/dotfiles/arch/.conkyrc'
+alias refresh-conky='killall -SIGUSR1 conky'
 
 
 recent() {
@@ -348,4 +348,4 @@ raspi-restore(){
 
 alias xpaste='xclip -o'
 
-
+alias .='source'

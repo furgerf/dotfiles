@@ -433,10 +433,10 @@ cpuwidget:set_color(beautiful.cpu_fg)
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 cpuwrapper:set_widget(cpuwidget)
 cpuwrapper:connect_signal("button::press", function()
-  awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu_toggle_govenor")
+  awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
 end)
 cpuicon:connect_signal("button::press", function()
-  awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu_toggle_govenor")
+  awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
 end)
 local cpunaughty = nil
 cpuwrapper:connect_signal("mouse::enter", function ()
@@ -585,7 +585,7 @@ function update_db ()
   pacutimer:again()
 
   -- sync pacman -> ASYNCHRONOUSLY
-  os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh_database > /dev/null &")
+  os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh-database > /dev/null &")
 
   -- wait 30s for the DB to update
   local updatetimer = timer({ timeout = 30 })

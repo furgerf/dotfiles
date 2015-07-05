@@ -4,13 +4,13 @@
 PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # update file database for locate
-01 */9 * * * cron-wrapper sudo updatedb
+0 */9 * * * cron-wrapper sudo updatedb
 # clean old package files
-02 14 * * 0 cron-wrapper sudo paccache -r -k 2
+0 14 * * 0 cron-wrapper sudo paccache -r -k 2
 # remind biodata entry
-02 7,8,9,10 * * * cron-wrapper biodata
+0,30 6,7,8,9,10,11,12 * * * cron-wrapper biodata
 # check for unpushed commits
-03 */4 * * * cron-wrapper git-status /home/fabian/git
+0 */4 * * * cron-wrapper git-status /home/fabian/git
 # export crontab to git
-04 14 * * 0 cron-wrapper crontab-backup
+0 14 * * 0 cron-wrapper crontab-backup
 
