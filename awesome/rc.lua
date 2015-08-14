@@ -479,6 +479,7 @@ function(widget, args)
     chargedesc = ""
   elseif direction == "Full" then
     chargedesc = direction_sign
+    direction_sign = ""
   else
     chargedesc = "No Battery"
     no_battery = true
@@ -1144,6 +1145,7 @@ function(c)
     and not (c.class == "Soffice")
     and not (c.class == "Gimp")
     and not (c.class == "Gimp*")
+    and not (c.class == "Chromium")
     then
       c.opacity = 0.93
     else

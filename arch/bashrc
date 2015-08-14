@@ -349,3 +349,6 @@ raspi-restore(){
 alias xpaste='xclip -o'
 
 alias .='source'
+
+alias imgprint='convert label:@- $1'
+
