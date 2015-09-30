@@ -214,7 +214,11 @@ todo() {
 }
 
 finished () {
-  sed -i "$1"d /data/Dropbox/misc/misc/todo.txt
+  if [[ "$1" -eq "" ]]; then
+    echo "Please specify a number to remove"
+  else
+    sed -i "$1"d /data/Dropbox/misc/misc/todo.txt
+  fi
 }
 
 p4 () {
