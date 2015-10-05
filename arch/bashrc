@@ -356,3 +356,5 @@ alias .='source'
 
 alias imgprint='convert label:@- $1'
 
+alias jdownloader-headless='java -Djava.awt.headless=true -jar /home/fabian/jd2/JDownloader.jar &'
+

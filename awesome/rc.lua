@@ -1162,6 +1162,7 @@ function(c)
       and not (c.name == "SRF Player - Mozilla Firefox")
       and not (c.class == "Gimp")
       and not (c.class == "Gimp*")
+      and not (c.class == "Chromium")
       then
         c.opacity = 0.85
       else
