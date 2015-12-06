@@ -21,7 +21,7 @@ sudo dhcpcd -b -q enp0s25
 $HOME/git/linux-scripts/backlight
 
 # monitor
-xrandr --output VGA1 --off ; $HOME/git/linux-scripts/monitor
+$HOME/git/linux-scripts/monitor enable
 
 # conky
 sleep 10 && conky -c $HOME/git/dotfiles/arch/conkyrc -d &
@@ -59,7 +59,7 @@ sleep 30 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log &
 # start thunderbird
 sleep 10 && thunderbird &
 
-env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
+#env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
 
 # start awesome wm
 exec awesome

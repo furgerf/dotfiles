@@ -12,5 +12,7 @@ PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 # check for unpushed commits
 0 */4 * * * cron-wrapper git-status /home/fabian/git
 # export crontab to git
-0 14 * * 0 cron-wrapper crontab-backup
+0 */4 * * * cron-wrapper crontab-backup
+# update cache for "command not found"
+0 14 * * 0 cron-wrapper sudo pkgfile --update
 
