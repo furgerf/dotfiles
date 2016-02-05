@@ -8,7 +8,7 @@ PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 # clean old package files
 0 14 * * 0 cron-wrapper sudo paccache -r -k 2
 # remind biodata entry
-0,30 6,7,8,9,10 * * * cron-wrapper biodata
+#0,30 6,7,8,9,10 * * * cron-wrapper biodata
 # check for unpushed commits
 0 */4 * * * cron-wrapper git-status /home/fabian/git
 # export crontab to git

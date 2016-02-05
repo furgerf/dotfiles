@@ -14,7 +14,9 @@ fi
 # exports
 export TERM="xterm"
 export PAGER="/bin/less"
+#export $(dbus-launch)
 
+# TOODO: Check if stuff is already running!
 sudo dhcpcd -b -q enp0s25
 
 # backlight
@@ -22,9 +24,6 @@ $HOME/git/linux-scripts/backlight
 
 # monitor
 $HOME/git/linux-scripts/monitor enable
-
-# conky
-sleep 10 && conky -c $HOME/git/dotfiles/arch/conkyrc -d &
 
 # set shortcut to kill X session
 setxkbmap -option caps:swapescape,terminate:ctrl_alt_bksp
@@ -53,11 +52,16 @@ udiskie -2 -s &
 # adjust keyboard repeat rate
 xset r rate 250 35
 
-# store boot log
-sleep 30 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log &
+# conky
+(sleep 10 && conky -c $HOME/git/dotfiles/arch/conkyrc -d) &
 
 # start thunderbird
-sleep 10 && thunderbird &
+(sleep 10 && thunderbird) &
+
+# store boot log
+(sleep 60 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log) &
+
+#(sleep 60 && $HOME/git/linux-scripts/samba-connect) &
 
 #env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
 

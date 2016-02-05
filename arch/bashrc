@@ -24,7 +24,7 @@ export HISTCONTROL=ignorespace:ignoredups:erasedups
 #export TERM="xterm"
 export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools:$HOME/git/linux-scripts"
 export HISTSIZE=20000
-export HISTCONTROL=ignoredups
+export HISTIGNORE="history;ls;date;man *;exit;:q"
 
 # highlight broken symlinks
 eval $(dircolors -b)
@@ -333,8 +333,11 @@ alias tmux='TERM=xterm-256color tmux'
 alias compton-enable='compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3'
 alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)'
 
-alias raspi='ssh 192.168.1.31'
-alias raspi-extern='ssh 178.195.242.186'
+alias raspi='ssh raspi'
+alias raspi-extern='ssh raspi-extern'
+alias raspi-session='while true; do raspi; echo -n "Waiting 10s before reconnecting... "; for i in $(seq 10 -1 0); do sleep 1; echo  -n "$i... "; done; echo "Reconnecting..."; done'
+alias raspi-extern-session='while true; do raspi-extern; echo -n "Waiting 10s before reconnecting... "; for i in $(seq 10 -1 0); do sleep 1; echo  -n "$i... "; done; echo "Reconnecting..."; done'
+
 raspi-backup(){
   echo "Device to back up: "
   read DEVICE
@@ -359,4 +362,11 @@ alias .='source'
 alias imgprint='convert label:@- $1'
 
 alias jdownloader-headless='java -Djava.awt.headless=true -jar /home/fabian/jd2/JDownloader.jar &'
+
+shrug(){ echo -n "¯\_(ツ)_/¯" | (xsel||pbcopy);echo "¯\_(ツ)_/¯ copied to your clipboard"; }
+
+alias spiral='x=0;y=0;while [[ $y -lt 500 ]] ; do xdotool mousemove --polar $x $y ; x=$(($x+4));y=$(($y+1)); sleep 0.01; done'
+
+alias tf='tail -F'
+alias vlc='smplayer'
 

@@ -182,9 +182,9 @@ shifty.config.tags = {
     layout      = awful.layout.suit.fair,
     position    = 2,
     nopopup     = true,
-    spawn       = 'ps aux | grep [f]irefox && firefox &',
+    --spawn       = 'ps aux | grep [f]irefox && firefox &',
     persist     = false,
-    screen      = screen.count(),
+    --screen      = screen.count(),
   },
   ["➌ ·doc·✎"] = {
     layout      = awful.layout.suit.fair,
@@ -282,7 +282,7 @@ shifty.config.apps = {
   {
     match = {
       class = {
-        "Qbittorrent",
+        "qBittorrent",
         "Vuze",
       },
       name = {
@@ -348,7 +348,7 @@ myconfigmenu = {
     { "awesome", editor_cmd .. " " .. awesome.conffile },
     { "xinit", editor_cmd .. " " .. os.getenv("HOME") .. "/.xinitrc" },
     { "vim", editor_cmd .. " " .. os.getenv("HOME") .. "/.vimrc" },
-    { "conky", editor_cmd .. " " .. os.getenv("HOME") .. "/git/dotfiles/arch/.conkyrc" },
+    { "conky", editor_cmd .. " " .. os.getenv("HOME") .. "/git/dotfiles/arch/conkyrc" },
 }
 myplacemenu = {
     { "/data", "thunar /data" },
@@ -965,6 +965,16 @@ globalkeys = awful.util.table.join(
     end, nil, nil)
   end),
 
+  awful.key({ modkey,           }, "g",      function ()
+    info = true
+    awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Google:</span> " },
+    mypromptbox[mouse.screen].widget,
+    function (word)
+      word = string.gsub(word, " ", "+")
+      awful.util.spawn("firefox -new-tab http://google.com/search?q=" .. word)
+    end, nil, nil)
+  end),
+
   awful.key({ modkey,           }, "c",      function ()
     info = true
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Calc:</span> " },
@@ -1137,6 +1147,7 @@ function(c)
     and not (c.class == "smplayer")
     and not (c.class == "Mirage")
     and not (c.class == "Plugin-container")
+    and not (c.class == "Firefox")
     and not (c.name == "SRF Player - Mozilla Firefox")
     and not (c.name == "Sacred")
     and not (c.class == "Geeqie")
@@ -1145,9 +1156,10 @@ function(c)
     and not (c.class == "Soffice")
     and not (c.class == "Gimp")
     and not (c.class == "Gimp*")
-    and not (c.class == "Chromium")
+    and not (c.class == "chromium")
     then
-      c.opacity = 0.93
+      --c.opacity = 0.93
+      c.opacity = 0.95
     else
       c.opacity = 1
     end
@@ -1159,19 +1171,26 @@ function(c)
       and not (c.class == "smplayer")
       and not (c.class == "Mirage")
       and not (c.class == "Plugin-container")
+      and not (c.class == "Firefox")
       and not (c.name == "SRF Player - Mozilla Firefox")
+      and not (c.name == "Sacred")
+      and not (c.class == "Geeqie")
+      and not (c.class == "Ristretto")
+      and not (c.class == "MPlayer")
+      and not (c.class == "Soffice")
       and not (c.class == "Gimp")
       and not (c.class == "Gimp*")
-      and not (c.class == "Chromium")
+      and not (c.class == "chromium")
       then
-        c.opacity = 0.85
+        --c.opacity = 0.85
+        c.opacity = 0.93
       else
         c.opacity = 1
       end
     end)
--- }}}
+    -- }}}
 
-function init_capslock()
+    function init_capslock()
   local handle = io.popen("xset q | grep Caps | cut -d ' ' -f 10")
   local data = handle:read("*l")
   handle:close()
