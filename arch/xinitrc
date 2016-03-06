@@ -25,9 +25,6 @@ $HOME/git/linux-scripts/backlight
 # monitor
 $HOME/git/linux-scripts/monitor enable
 
-# set shortcut to kill X session
-setxkbmap -option caps:swapescape,terminate:ctrl_alt_bksp
-
 # NM UI
 nm-applet &
 
