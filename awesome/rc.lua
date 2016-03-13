@@ -558,6 +558,18 @@ wifiwrapper:set_widget(wifiwidget)
 local dotseparator = wibox.widget.textbox()
 dotseparator:set_text(" ⚫ ")
 
+-- layout icon
+-- TODO: Add switching with mousepress and displaying options on hover...
+local kblayouticon = wibox.widget.imagebox()
+local kblayouttimer = timer({ timeout = 1 })
+function set_layout_icon ()
+    local handle = io.popen("/home/fabian/git/linux-scripts/xkblayout-state print %s")
+  local layout = handle:read("*a")
+  kblayouticon:set_image('/usr/share/awesome/themes/archdove/icons/' .. layout .. ".png")
+end
+kblayouttimer:connect_signal( "timeout", set_layout_icon)
+kblayouttimer:start()
+
 -- Create a textclock widget
 local mytextclock = awful.widget.textclock("%A, %B %e, <span color='#1793D1'>%H:%M</span>", 29)
 calendar2.addCalendarToWidget(mytextclock, "<span color='#1793D1'>%s</span>")
@@ -724,6 +736,8 @@ for s = 1, screen.count() do
   -- Widgets that are aligned to the right
   local right_layout = wibox.layout.fixed.horizontal()
   if s == 1 then right_layout:add(wibox.widget.systray()) end
+  right_layout:add(dotseparator)
+  right_layout:add(kblayouticon)
   right_layout:add(dotseparator)
   right_layout:add(pacuwrapper)
   right_layout:add(cpuicon)
