@@ -12,6 +12,8 @@ set convert-meta off
 set completion-ignore-case on
 # only complete after second tab
 set menu-complete-display-prefix on
+# when completing filenames, treat - and _ equally
+set completion-map-case on
 # colored menu completion
 set colored-stats on
 # VI-mode
