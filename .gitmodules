@@ -22,3 +22,9 @@
 [submodule "vim/bundle/DidYouMean.vim"]
 	path = vim/bundle/DidYouMean.vim
 	url = git@github.com:EinfachToll/DidYouMean.git
+[submodule "vim/bundle/vim-interestingwords"]
+	path = vim/bundle/vim-interestingwords
+	url = https://github.com/lfv89/vim-interestingwords.git
+[submodule "vim/bundle/rainbow_csv"]
+	path = vim/bundle/rainbow_csv
+	url = https://github.com/mechatroner/rainbow_csv.git
