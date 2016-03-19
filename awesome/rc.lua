@@ -580,7 +580,7 @@ tclockwrapper:set_widget(mytextclock)
 local pacuwrapper = wibox.widget.background()
 local pacuwidget = wibox.widget.textbox()
 pacuwrapper:set_widget(pacuwidget)
-local pacutimer = timer({ timeout = 900 })
+local pacutimer = timer({ timeout = 30 * 60 })
 local pacuwidgettext = ""
 function update_db ()
   local handle = io.popen("ping -c 1 8.8.8.8 &> /dev/null ; echo $?")
@@ -588,13 +588,13 @@ function update_db ()
   handle:close()
   if inet:sub(1, #inet - 1) ~= "0" then
     naughty.notify({ text = "Package synchronization aborted: No Internet connection" })
-    pacutimer.timeout = 1800
+    pacutimer.timeout = 30 * 60
     pacutimer:again()
     return
   end
 
   -- update can proceed, only update hourly from now on
-  pacutimer.timeout = 3600
+  pacutimer.timeout = 60 * 60
   pacutimer:again()
 
   -- sync pacman -> ASYNCHRONOUSLY
