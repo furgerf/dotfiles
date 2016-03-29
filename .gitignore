@@ -1,3 +1,5 @@
 # ignore vim swap files
 *.swp
+# ignore changes to bash sourcer (from now on)
+arch/bash-sourcer.sh
 

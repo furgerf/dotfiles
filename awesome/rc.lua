@@ -558,6 +558,18 @@ wifiwrapper:set_widget(wifiwidget)
 local dotseparator = wibox.widget.textbox()
 dotseparator:set_text(" ⚫ ")
 
+-- layout icon
+-- TODO: Add switching with mousepress and displaying options on hover...
+local kblayouticon = wibox.widget.imagebox()
+local kblayouttimer = timer({ timeout = 1 })
+function set_layout_icon ()
+    local handle = io.popen("/home/fabian/git/linux-scripts/xkblayout-state print %s")
+  local layout = handle:read("*a")
+  kblayouticon:set_image('/usr/share/awesome/themes/archdove/icons/' .. layout .. ".png")
+end
+kblayouttimer:connect_signal( "timeout", set_layout_icon)
+kblayouttimer:start()
+
 -- Create a textclock widget
 local mytextclock = awful.widget.textclock("%A, %B %e, <span color='#1793D1'>%H:%M</span>", 29)
 calendar2.addCalendarToWidget(mytextclock, "<span color='#1793D1'>%s</span>")
@@ -568,7 +580,7 @@ tclockwrapper:set_widget(mytextclock)
 local pacuwrapper = wibox.widget.background()
 local pacuwidget = wibox.widget.textbox()
 pacuwrapper:set_widget(pacuwidget)
-local pacutimer = timer({ timeout = 900 })
+local pacutimer = timer({ timeout = 30 * 60 })
 local pacuwidgettext = ""
 function update_db ()
   local handle = io.popen("ping -c 1 8.8.8.8 &> /dev/null ; echo $?")
@@ -576,13 +588,13 @@ function update_db ()
   handle:close()
   if inet:sub(1, #inet - 1) ~= "0" then
     naughty.notify({ text = "Package synchronization aborted: No Internet connection" })
-    pacutimer.timeout = 1800
+    pacutimer.timeout = 30 * 60
     pacutimer:again()
     return
   end
 
   -- update can proceed, only update hourly from now on
-  pacutimer.timeout = 3600
+  pacutimer.timeout = 60 * 60
   pacutimer:again()
 
   -- sync pacman -> ASYNCHRONOUSLY
@@ -724,6 +736,8 @@ for s = 1, screen.count() do
   -- Widgets that are aligned to the right
   local right_layout = wibox.layout.fixed.horizontal()
   if s == 1 then right_layout:add(wibox.widget.systray()) end
+  right_layout:add(dotseparator)
+  right_layout:add(kblayouticon)
   right_layout:add(dotseparator)
   right_layout:add(pacuwrapper)
   right_layout:add(cpuicon)
