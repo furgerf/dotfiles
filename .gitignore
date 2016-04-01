@@ -2,6 +2,4 @@
 *.swp
 # ignore changes to bash sourcer (from now on)
 arch/bash-sourcer.sh
-# ignore rainbow_csv tags
-vim/bundle/rainbow_csv/doc/tags
 
