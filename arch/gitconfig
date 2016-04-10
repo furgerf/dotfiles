@@ -1,23 +1,22 @@
 [user]
-	name = Fabian Furger
-	email = furgerfabian@hotmail.com
+  name = Fabian Furger
+  email = furgerfabian@hotmail.com
 [color]
-	ui = true
+  ui = true
 [core]
-	editor = vim
+  editor = vim
 [alias]
     graph = log --graph --oneline --decorate
     authors = shortlog -s -n --all
-[branch "master"]
-    remote = origin
-    merge = refs/heads/master
+    fetchall = fetch --all
 [push]
-	default = matching
+  default = matching
 [http]
-	sslVerify = false
+  sslVerify = false
 [credential]
-	helper = cache
-[mailmap]
-	file = /home/fabian/.mailmap
-[init]
-	templatedir = /home/fabian/.git-templates
+  helper = cache
+#[mailmap]
+#  file = /home/fabian/.mailmap
+#[init]
+#  templatedir = /home/fabian/.git-templates
+
