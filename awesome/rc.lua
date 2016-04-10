@@ -576,79 +576,6 @@ calendar2.addCalendarToWidget(mytextclock, "<span color='#1793D1'>%s</span>")
 local tclockwrapper = wibox.widget.background()
 tclockwrapper:set_widget(mytextclock)
 
--- Pacman Update widget
-local pacuwrapper = wibox.widget.background()
-local pacuwidget = wibox.widget.textbox()
-pacuwrapper:set_widget(pacuwidget)
-local pacutimer = timer({ timeout = 30 * 60 })
-local pacuwidgettext = ""
-function update_db ()
-  local handle = io.popen("ping -c 1 8.8.8.8 &> /dev/null ; echo $?")
-  local inet = handle:read("*a")
-  handle:close()
-  if inet:sub(1, #inet - 1) ~= "0" then
-    naughty.notify({ text = "Package synchronization aborted: No Internet connection" })
-    pacutimer.timeout = 30 * 60
-    pacutimer:again()
-    return
-  end
-
-  -- update can proceed, only update hourly from now on
-  pacutimer.timeout = 60 * 60
-  pacutimer:again()
-
-  -- sync pacman -> ASYNCHRONOUSLY
-  os.execute("sudo " .. os.getenv("HOME") .. "/git/linux-scripts/awesome/refresh-database > /dev/null &")
-
-  -- wait 30s for the DB to update
-  local updatetimer = timer({ timeout = 30 })
-  updatetimer:connect_signal( "timeout", update_pacman)
-  updatetimer:start()
-end
-function update_pacman ()
-  -- get new packages -> SYNCHRONOUSLY
-  handle = io.popen("a=$(yaourt -Qu | wc -l) ; b=$(pacman -Qu | grep '\\[ignored\\]' | wc -l) ; echo \"$a-$b\" | bc")
-  local count = handle:read("*a")
-  handle:close()
-  local count = count:sub(1, #count - 1)
-
-  if tonumber(count) == 0 then
-    pacuwidget:set_text("")
-  else
-    local newText = count .. " updates ~ "
-    if pacuwidgettext ~= newText then
-      pacuwidgettext = newText
-      pacuwidget:set_text(count .. " updates ~ ")
-      naughty.notify({ text = "Package database synchronized. New updates available: " .. count })
-    end
-  end
-end
-pacutimer:connect_signal( "timeout", update_db)
-pacutimer:start()
-
-local pacu_naughty = nil
-function remove_pacu_naughty()
-  if pacu_naughty ~= nil then
-    naughty.destroy(pacu_naughty)
-    pacu_naughty = nil
-  end
-end
-pacuwrapper:connect_signal("button::press", function()
-  awful.util.spawn(terminal .. " -e \"bash -c 'yaourt -Syau; exec bash'\"")
-  pacuwidget:set_text("")
-  remove_pacu_naughty()
-end)
-
-pacuwrapper:connect_signal("mouse::enter", function()
-  local handle = io.popen("yaourt -Qu")
-  local packages = handle:read("*a")
-  handle:close()
-  remove_pacu_naughty()
-
-  pacu_naughty = naughty.notify({ text = packages:sub(1, #packages - 1), timeout = 0 })
-end)
-pacuwrapper:connect_signal("mouse::leave", remove_pacu_naughty)
-
 -- Create a wibox for each screen and add it
 local mywibox = {}
 local mypromptbox = {}
@@ -739,7 +666,6 @@ for s = 1, screen.count() do
   right_layout:add(dotseparator)
   right_layout:add(kblayouticon)
   right_layout:add(dotseparator)
-  right_layout:add(pacuwrapper)
   right_layout:add(cpuicon)
   right_layout:add(cpuwrapper)
   right_layout:add(dotseparator)
@@ -975,7 +901,7 @@ globalkeys = awful.util.table.join(
     mypromptbox[mouse.screen].widget,
     function (word)
       word = string.gsub(word, " ", "%%20")
-      awful.util.spawn("firefox -new-tab http://thepiratebay.mn/search/" .. word)
+      awful.util.spawn("firefox -new-tab http://thepiratebay.se/search/" .. word)
     end, nil, nil)
   end),
 
