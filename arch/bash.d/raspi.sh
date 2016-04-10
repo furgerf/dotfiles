@@ -1,6 +1,6 @@
 #!/bin/bash
 
-fortune | cowsay
+fortune | cowsay | lolcat
 PS1="\[\033[1;30m\][\[\033[0;31m\]\$?\$(if [[ \$? == 0 ]]; then echo \"  \[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi)\[\033[1;30m\]][\[\033[0;31m\]\A\[\033[1;30m\]][\[\033[0;31m\]\u\[\033[1;30m\]@\[\033[0;31m\]\h\[\033[1;30m\]][\[\033[0;31m\]\w\[\033[1;30m\]]\[\033[1;34m\]\$\[\033[0;37m\] "
 
 source /usr/share/git/completion/git-completion.bash
@@ -27,8 +27,6 @@ alias yas="/usr/bin/yaourt -Ss"
 alias yaq="/usr/bin/yaourt -Qs"
 alias yar="/usr/bin/yaourt -Rs"
 
-# modified commands
-alias libre='/usr/bin/libreoffice --nologo'
-alias cp='acp -agi'
-alias mv='amv -gi'
+# tmux
+alias tmux-torrent='~/git/dotfiles/arch/tmux/raspi-torrents.sh'
 
