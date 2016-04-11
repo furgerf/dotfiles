@@ -316,7 +316,13 @@ xnoremap <C-A-up> y`<Pgv
 nnoremap <C-b> :e#<CR>
 inoremap <C-b> <esc>:e#<CR>
 
+" insert placeholder
+nnoremap <Leader>j i<++><Esc>hi
+inoremap <Leader>j i<++><Esc>i
 
+" jump to next placeholder
+nnoremap <C-j> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
+inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 
 
