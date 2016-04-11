@@ -144,6 +144,7 @@ alias gitall='git add . && git commit . && git push'
 
 # misc
 alias tmux='TERM=xterm-256color tmux'
+alias ta='tmux a'
 alias v='/usr/bin/vim'
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
@@ -174,6 +175,7 @@ x(){
     echo "'$1' is not a valid file"
   fi
 }
+alias weather='curl wttr.in'
 
 # source other files
 test -s $HOME/.bash-sourcer.sh && source $HOME/.bash-sourcer.sh

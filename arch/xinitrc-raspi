@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+# exports
+export TERM="xterm"
+export PAGER="/bin/less"
+
+# set dbus address for cron stuff
+$HOME/git/linux-scripts/set-dbus-address
+
+# start udiskie for automounting usb's
+udiskie -2 -a -T &
+
+# adjust keyboard repeat rate
+xset r rate 250 35
+
