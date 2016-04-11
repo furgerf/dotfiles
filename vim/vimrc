@@ -79,6 +79,9 @@ set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 filetype plugin indent on
 syntax on
 
+" make vim understand .md as markdown
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
 " key mapping: general
 map <C-t> :tabe 
 map <F8> :tabn<CR>

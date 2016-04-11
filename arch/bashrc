@@ -65,6 +65,7 @@ fi
 # modified commands
 alias diff='colordiff -s'              # requires colordiff package
 alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
