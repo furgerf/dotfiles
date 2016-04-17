@@ -9,6 +9,7 @@
     graph = log --graph --oneline --decorate
     authors = shortlog -s -n --all
     fetchall = fetch --all
+	show-graph = log --graph --abbrev-commit --pretty=oneline
 [push]
   default = matching
 [http]
