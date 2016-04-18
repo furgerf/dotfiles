@@ -80,7 +80,7 @@ alias .......='cd ../../../../../..'
 # ls
 alias ls='ls -lhF --color=auto'
 alias lr='ls -R'                    # recursive ls
-alias la='ls -A'
+alias la='ls -a'
 alias lx='la -BX'                   # sort by extension
 alias lz='la -rS'                   # sort by size
 alias lt='la -rt'                   # sort by date

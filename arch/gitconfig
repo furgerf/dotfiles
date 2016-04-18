@@ -9,6 +9,7 @@
     graph = log --graph --oneline --decorate
     authors = shortlog -s -n --all
     fetchall = fetch --all
+    publish = push --progress \"origin\" HEAD:refs/publish/master
 [push]
   default = matching
 [http]

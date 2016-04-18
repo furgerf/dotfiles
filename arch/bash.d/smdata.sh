@@ -10,3 +10,7 @@ debdownload () {
   apt-get --print-uris --yes install $1 | grep ^\' | cut -d\' -f2 | wget -i -
 }
 
+pjson() { python2 $HOME/git/linux-scripts/pjson.py; }
+
+fortune | cowsay | lolcat
+
