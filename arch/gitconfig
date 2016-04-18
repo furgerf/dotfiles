@@ -10,6 +10,7 @@
     authors = shortlog -s -n --all
     fetchall = fetch --all
     publish = push --progress \"origin\" HEAD:refs/publish/master
+    show-graph = log --graph --abbrev-commit --pretty=oneline
 [push]
   default = matching
 [http]

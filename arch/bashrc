@@ -15,6 +15,7 @@ PS1="\[\033[1;30m\][\[\033[01;37m\]\$?\$(if [[ \$? == 0 ]]; then echo \"  \[\033
 # exports
 export EDITOR="vim"
 export VISUAL="vim"
+export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
 #export TERM="xfce4-terminal"
 #export TERM="xterm"
 
