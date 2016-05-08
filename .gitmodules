@@ -29,3 +29,6 @@
 	path = vim/bundle/rainbow_csv
 	url = https://github.com/mechatroner/rainbow_csv.git
 	ignore = untracked
+[submodule "vim/bundle/vim-obsession"]
+	path = vim/bundle/vim-obsession
+	url = git://github.com/tpope/vim-obsession.git
