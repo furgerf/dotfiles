@@ -60,6 +60,8 @@ xset r rate 250 35
 
 (sleep 60 && $HOME/git/linux-scripts/samba-connect) &
 
+(sleep 60 && gpodder) &
+
 #env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
 
 # start awesome wm

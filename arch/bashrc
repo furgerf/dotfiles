@@ -48,7 +48,7 @@ CDPATH=".:~/git:/data"
 cl() {
   if [[ -d "$1" ]]; then
     cd "$1"
-    la
+    ls -Alh
   else
     echo "bash: cl: '$1': Directory not found"
   fi
