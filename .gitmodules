@@ -32,3 +32,6 @@
 [submodule "vim/bundle/vim-obsession"]
 	path = vim/bundle/vim-obsession
 	url = git://github.com/tpope/vim-obsession.git
+[submodule "arch/tmux/plugins/tmux-resurrect"]
+	path = arch/tmux/plugins/tmux-resurrect
+	url = git@github.com:tmux-plugins/tmux-resurrect.git

@@ -28,5 +28,5 @@ alias yaq="/usr/bin/yaourt -Qs"
 alias yar="/usr/bin/yaourt -Rs"
 
 # tmux
-alias tmux-torrent='~/git/dotfiles/arch/tmux/raspi-torrents.sh'
+alias tmux-torrent='~/git/dotfiles/arch/tmux/sessions/raspi-torrents.sh'
 
