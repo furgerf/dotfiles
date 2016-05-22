@@ -70,14 +70,14 @@ alias raspi-extern-session='while true; do raspi-extern; echo -n "Waiting 10s be
 raspi-backup(){
   echo "Device to back up: "
   read DEVICE
-  sudo dd bs=4M if="$DEVICE" | gzip > raspi-image-$(date +%Y-%m-%d).gz
+  sudo dd bs=4M  if="$DEVICE" | gzip > raspi-image-$(date +%Y-%m-%d).gz
 }
 raspi-restore(){
   echo "Device to restore to: "
   read DEVICE
   echo "Backup file: "
   read BACKUP
-  gzip -dc "$BACKUP" | dd bs=4M of="$DEVICE"
+  gzip -dc "$BACKUP" | sudo dd bs=4M of="$DEVICE"
 }
 
 # misc "useful-ish" stuff

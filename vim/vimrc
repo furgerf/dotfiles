@@ -332,6 +332,15 @@ inoremap <Leader>j i<++><Esc>i
 nnoremap <C-j> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
 inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
+" OS X-like space bar to scroll.
+nnoremap <Space> <C-F>
+set tags=.git/tags,tags           " Look for tags in .git/
+
+" Backspace deletes buffer.
+nnoremap <BS> :bd<CR>
+
+set scrolloff=5 " Show 5 lines of context around the cursor.
+
 
 
 

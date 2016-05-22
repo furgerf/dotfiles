@@ -1,7 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/fabian/git/cu/305cde/Agora/src'
 let g:netrw_dirhist_2='/home/fabian/git/linux-scripts/arch-config'
 let g:netrw_dirhist_3='/home/fabian/git/linux-scripts/awesome'
 let g:netrw_dirhist_4='/home/fabian/git/linux-scripts/conky'
 let g:netrw_dirhist_5='/home/fabian/git/cu/305cde/Agora/node_modules'
+let g:netrw_dirhist_6='/home/fabian/git/tv-show-torrent-downloader/src'
