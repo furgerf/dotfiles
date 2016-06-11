@@ -76,8 +76,14 @@ set background=dark " When set to "dark", Vim will try to use colors that look
 
 set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
+set wildmode=list:longest,full " tab completion: show all matches, then start completing
+
 filetype plugin indent on
-syntax on
+syntax enable
+set foldmethod=indent
+set foldopen=all
+set foldclose=all
+set foldcolumn=4
 
 " make vim understand .md as markdown
 autocmd BufNewFile,BufRead *.md set filetype=markdown
@@ -145,7 +151,8 @@ set complete+=kspell
 
 " highlight long rows
 highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%101v', 100)
+"set colorcolumn=101 " always on
+call matchadd('ColorColumn', '\%101v', 100) " only on when exceeding - could add > to highlight all exceeding
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -334,12 +341,16 @@ inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " OS X-like space bar to scroll.
 nnoremap <Space> <C-F>
+
 set tags=.git/tags,tags           " Look for tags in .git/
 
 " Backspace deletes buffer.
 nnoremap <BS> :bd<CR>
 
 set scrolloff=5 " Show 5 lines of context around the cursor.
+
+" use magic regex mode by default
+nnoremap / /\v
 
 
 

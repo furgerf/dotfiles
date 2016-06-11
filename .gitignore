@@ -2,4 +2,6 @@
 *.swp
 # ignore bash sourcer
 arch/bash-sourcer.sh
+# vim net rw history
+vim/.netrwhist
 
