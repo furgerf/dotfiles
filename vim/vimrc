@@ -342,7 +342,12 @@ inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 " OS X-like space bar to scroll.
 nnoremap <Space> <C-F>
 
+" git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+nmap <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hr <Plug>GitGutterRevertHunk
 
 " Backspace deletes buffer.
 nnoremap <BS> :bd<CR>
