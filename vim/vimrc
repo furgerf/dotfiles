@@ -346,6 +346,8 @@ nnoremap <Space> <C-F>
 set tags=.git/tags,tags           " Look for tags in .git/
 nmap ]h <Plug>GitGutterNextHunk
 nmap [h <Plug>GitGutterPrevHunk
+nmap <Leader>hh <Plug>GitGutterNextHunk
+nmap <Leader>HH <Plug>GitGutterPrevHunk
 nmap <Leader>ha <Plug>GitGutterStageHunk
 nmap <Leader>hr <Plug>GitGutterRevertHunk
 
