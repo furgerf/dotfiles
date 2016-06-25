@@ -359,6 +359,8 @@ set scrolloff=5 " Show 5 lines of context around the cursor.
 " use magic regex mode by default
 nnoremap / /\v
 
+" search for what's visually selected by pressing `//`
+vnoremap // y/<C-R>"<CR>
 
 
 
