@@ -6,11 +6,19 @@
 [core]
   editor = vim
 [alias]
-    graph = log --graph --oneline --decorate
-    authors = shortlog -s -n --all
-    fetchall = fetch --all
-    publish = push --progress \"origin\" HEAD:refs/publish/master
-    show-graph = log --graph --abbrev-commit --pretty=oneline
+  graph = log --graph --oneline --decorate
+  authors = shortlog -s -n --all
+  fetchall = fetch --all
+  publish = push --progress \"origin\" HEAD:refs/publish/master
+  show-graph = log --graph --abbrev-commit --pretty=oneline
+  co = checkout
+  ec = config --global -e
+  cob = checkout -b
+  save = !git add -A && git commit -m 'SAVEPOINT'
+  wip = !git add -u && git commit -m 'WIP'
+  undo = reset HEAD~1 --mixed
+  amend = commit -a --amend
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 [push]
   default = matching
 [http]
