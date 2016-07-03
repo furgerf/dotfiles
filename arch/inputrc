@@ -1,27 +1,40 @@
-# single-tab completion
-set show-all-if-ambiguous on
 # alt+h for man entry of command
 "\eh": "\C-a\eb\ed\C-y\e#man \C-y\C-m\C-p\C-p\C-a\C-d\C-e"
-# ?
+
+# get 8bit input/output working
 set input-meta on
-# ?
 set output-meta on
-# ?
 set convert-meta off
+
+### TAB COMPLETION
+# single-tab completion
+set show-all-if-ambiguous on
 # ignore case on completion
 set completion-ignore-case on
-# only complete after second tab
+# first tab shows common prefix, then cycle through options
 set menu-complete-display-prefix on
 # when completing filenames, treat - and _ equally
 set completion-map-case on
 # colored menu completion
 set colored-stats on
-# VI-mode
+# don't expand tilde to absolute path
+#set expand-tilde off
+
+## MISC
+# append slash to symlinked directories
+set mark-symlinked-directories on
+
+## VI GENERAL
+# enable VI-mode
 set editing-mode vi
-# VI command
+# display '+' in insert mode, ':' in command mode
+set show-mode-in-prompt on
+
+## VI COMMAND MODE
 set keymap vi-command
-# insert previous cmd
+# insert previous command
 "p": "i !!\r"
+
 # VI insert
 set keymap vi-insert
 # tab opens completion menu
@@ -31,10 +44,6 @@ TAB: menu-complete
 # executes last command again (in vi-command mode)
 "p": self-insert
 
-# history completion
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-
 # ctrl-arrow navigation
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
@@ -43,5 +52,7 @@ TAB: menu-complete
 "\e\e[C": forward-word
 "\e\e[D": backward-word
 
-
+# history completion
+"\e[A": history-search-backward
+"\e[B": history-search-forward
 

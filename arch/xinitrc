@@ -58,7 +58,7 @@ xset r rate 250 35
 # store boot log
 (sleep 60 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log) &
 
-(sleep 60 && $HOME/git/linux-scripts/samba-connect) &
+#(sleep 60 && $HOME/git/linux-scripts/samba-connect) &     <-- looks like they're being connected elsewhere!
 
 (sleep 60 && gpodder) &
 

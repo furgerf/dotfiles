@@ -3,8 +3,8 @@
 
 PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# update file database for locate
-0 */9 * * * cron-wrapper sudo updatedb
+# update file database for locate - probably not necessary because of the systemd service
+#0 */9 * * * cron-wrapper sudo updatedb
 # clean old package files
 0 14 * * 0 cron-wrapper sudo paccache -r -k 2
 # remind biodata entry
