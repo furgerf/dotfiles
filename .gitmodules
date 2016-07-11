@@ -35,3 +35,7 @@
 [submodule "arch/tmux/plugins/tmux-resurrect"]
 	path = arch/tmux/plugins/tmux-resurrect
 	url = git@github.com:tmux-plugins/tmux-resurrect.git
+[submodule "vim/bundle/agrep"]
+	path = vim/bundle/agrep
+	url = https://github.com/ramele/agrep.git
+	ignore = untracked
