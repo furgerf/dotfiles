@@ -39,3 +39,6 @@
 	path = vim/bundle/agrep
 	url = git@github.com:ramele/agrep.git
 	ignore = untracked
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = git@github.com:majutsushi/tagbar.git
