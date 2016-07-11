@@ -27,6 +27,6 @@
   helper = cache
 #[mailmap]
 #  file = /home/fabian/.mailmap
-#[init]
-#  templatedir = /home/fabian/.git-templates
+[init]
+  templatedir = /home/fabian/.git-templates
 

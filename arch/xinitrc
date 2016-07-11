@@ -62,7 +62,7 @@ xset r rate 250 35
 
 (sleep 60 && gpodder) &
 
-(sleep 60 && qbittorrent) &
+#(sleep 60 && qbittorrent) &
 
 #env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
 

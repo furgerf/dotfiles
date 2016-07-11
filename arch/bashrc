@@ -144,6 +144,7 @@ alias gitall='git add . && git commit . && git push'
 
 # misc
 alias tmux='TERM=xterm-256color tmux'
+alias watch='\watch '   # allow alias expansion for watch argument
 alias ta='tmux a'
 alias v='/usr/bin/vim'
 alias .='source'
