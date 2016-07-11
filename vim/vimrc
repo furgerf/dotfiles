@@ -88,7 +88,8 @@ set foldcolumn=4
 " make vim understand .md as markdown
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
-" key mapping: general
+" key mapping: general - DON'T REMOVE TRAILING SPACE
+nnoremap <C-[> <C-t>
 map <C-t> :tabe 
 map <F8> :tabn<CR>
 map <S-F8> :tabp<CR>
@@ -339,9 +340,6 @@ inoremap <Leader>j i<++><Esc>i
 nnoremap <C-j> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
 inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
-" OS X-like space bar to scroll.
-nnoremap <Space> <C-F>
-
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
 nmap ]h <Plug>GitGutterNextHunk
@@ -362,9 +360,7 @@ nnoremap / /\v
 " search for what's visually selected by pressing `//`
 vnoremap // y/<C-R>"<CR>
 
-
-
-
-
+nnoremap <Leader>t :CtrlPTag<CR>
+nnoremap <Leader>b :TagbarToggle<CR>
 
 
