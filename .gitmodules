@@ -24,18 +24,18 @@
 	url = git@github.com:EinfachToll/DidYouMean.git
 [submodule "vim/bundle/vim-interestingwords"]
 	path = vim/bundle/vim-interestingwords
-	url = https://github.com/lfv89/vim-interestingwords.git
+	url = git@github.com:lfv89/vim-interestingwords.git
 [submodule "vim/bundle/rainbow_csv"]
 	path = vim/bundle/rainbow_csv
-	url = https://github.com/mechatroner/rainbow_csv.git
+	url = git@github.com:mechatroner/rainbow_csv.git
 	ignore = untracked
 [submodule "vim/bundle/vim-obsession"]
 	path = vim/bundle/vim-obsession
-	url = git://github.com/tpope/vim-obsession.git
+	url = git@github.com:tpope/vim-obsession.git
 [submodule "arch/tmux/plugins/tmux-resurrect"]
 	path = arch/tmux/plugins/tmux-resurrect
 	url = git@github.com:tmux-plugins/tmux-resurrect.git
 [submodule "vim/bundle/agrep"]
 	path = vim/bundle/agrep
-	url = https://github.com/ramele/agrep.git
+	url = git@github.com:ramele/agrep.git
 	ignore = untracked
