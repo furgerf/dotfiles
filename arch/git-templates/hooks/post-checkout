@@ -1,0 +1,5 @@
+#!/bin/sh
+### ctags hook (begin) ###
+./git/hooks/ctags > /dev/null 2>&1 &
+### ctags hook (end) ###
+
