@@ -89,7 +89,7 @@ set foldcolumn=4
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
 " key mapping: general - DON'T REMOVE TRAILING SPACE
-nnoremap <C-[> <C-t>
+nnoremap <C-\> <C-t>
 map <C-t> :tabe 
 map <F8> :tabn<CR>
 map <S-F8> :tabp<CR>
