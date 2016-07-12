@@ -203,6 +203,14 @@ map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 map <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 map <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
+" change TeX placeholder movement
+imap <C-g> <Plug>IMAP_JumpForward
+nmap <C-g> <Plug>IMAP_JumpForward
+
+" insert TeX-likeplaceholder
+nnoremap <Leader>g i<++><Esc>hi
+inoremap <Leader>g i<++><Esc>i
+
 " easier window navigation
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -332,13 +340,9 @@ xnoremap <C-A-up> y`<Pgv
 nnoremap <C-b> :e#<CR>
 inoremap <C-b> <esc>:e#<CR>
 
-" insert placeholder
-nnoremap <Leader>j i<++><Esc>hi
-inoremap <Leader>j i<++><Esc>i
-
 " jump to next placeholder
-nnoremap <C-j> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
-inoremap <C-j> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
+nnoremap <C-n> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
+inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
