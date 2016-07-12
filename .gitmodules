@@ -18,7 +18,7 @@
 	url = git@github.com:Valloric/YouCompleteMe.git
 [submodule "vim/bundle/ctrlp.vim"]
 	path = vim/bundle/ctrlp.vim
-	url = git@github.com:kien/ctrlp.vim.git
+	url = git@github.com:ctrlpvim/ctrlp.vim.git
 [submodule "vim/bundle/DidYouMean.vim"]
 	path = vim/bundle/DidYouMean.vim
 	url = git@github.com:EinfachToll/DidYouMean.git

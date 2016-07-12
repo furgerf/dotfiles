@@ -193,7 +193,7 @@ map <Leader>n :NERDTree<CR>
 map <Leader>dr :e ~/dropbox<CR>
 map <Leader>vim :e $MYVIMRC<CR>
 map <Leader>ss :so $MYVIMRC<CR>
-map <Leader>b :e ~/.bashrc<CR>
+"map <Leader>b :e ~/.bashrc<CR>
 map <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 map <Leader>w <C-w>w
 
@@ -366,5 +366,10 @@ vnoremap // y/<C-R>"<CR>
 
 nnoremap <Leader>t :CtrlPTag<CR>
 nnoremap <Leader>b :TagbarToggle<CR>
+
+" CtrlP: ignore files in .gitignore
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+set wildignore+=vendor
+set wildignore+=node_modules
 
 
