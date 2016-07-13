@@ -372,4 +372,8 @@ nnoremap <Leader>b :TagbarToggle<CR>
 set wildignore+=vendor
 set wildignore+=node_modules
 
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+
 
