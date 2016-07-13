@@ -5,7 +5,8 @@ alias dsrestart='sudo service hxm-dataserver restart'
 alias dsstop='sudo service hxm-dataserver stop'
 alias dsstart='sudo service hxm-dataserver start'
 alias ss='sudo service'
-alias fsupdate='echo "Changing directory..." ; cd /var/www/hxm-fatigue-supervisor ; echo "Stopping services..." ; sudo service hxm-websocket stop ; sudo service nginx stop ; echo "Pulling git..." ; git pull ; echo "Running npm install..." ; npm install ; echo "Running bower update..." ; bower update ; echo "Running grunt..." ; grunt ; echo "Running phar install..." ; sudo php composer.phar install ; echo "Migrating database..." ; php5 misc/preparePhinx.php; php5 vendor/bin/phinx migrate ;  echo "Starting services..." ; sudo service nginx start ; sudo service hxm-websocket start ; cd - echo "DONE!"'
+alias fsupdate='echo "Changing directory..." ; cd /var/www/hxm-fatigue-supervisor ; echo "Pulling git..." ; git pull ; echo "Running npm install..." ; npm install ; echo "Running bower update..." ; bower update ; echo "Running grunt..." ; grunt ; echo "Running phar install..." ; php composer.phar install ; echo "Migrating database..." ; php5 misc/preparePhinx.php; php5 vendor/bin/phinx migrate ;  echo "Restarting nginx..." ; sudo service nginx restart ; cd - echo "DONE!"'
+alias highstateundo='echo "Chowning /var/log/hxm..."; sudo chown -R hxm:hxm /var/log/hxm; echo "Stopping websocket..."; sudo service hxm-websocket stop'
 
 debdownload () {
   apt-get --print-uris --yes install $1 | grep ^\' | cut -d\' -f2 | wget -i -

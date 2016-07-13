@@ -29,5 +29,5 @@
 #[mailmap]
 #  file = /home/fabian/.mailmap
 [init]
-  templatedir = /home/fabian/.git-templates
+  templatedir = ~/.git-templates
 
