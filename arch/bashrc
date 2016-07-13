@@ -133,6 +133,16 @@ alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" |
 alias pg='ps -Af | grep $1'         # requires an argument (note: /usr/bin/pg is installed by the util-linux package; maybe a different alias name should be used)
 
 # git
+# `g` -> `git status`, `g foobar` -> `git foobar`
+function g {
+   if [[ $# > 0 ]]; then
+     git $@
+   else
+     git status
+   fi
+}
+# add `git` completion for `g`
+complete -F _git g
 alias ga='git add'
 alias gc='git commit'
 alias gs='git status'

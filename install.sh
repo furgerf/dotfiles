@@ -40,6 +40,8 @@ prompt-file $PWD/arch/vimperatorrc $HOME/.vimperatorrc
 prompt-file $PWD/arch/asoundrc $HOME/.asoundrc
 prompt-file $PWD/arch/gitconfig $HOME/.gitconfig
 prompt-file $PWD/arch/xinitrc $HOME/.xinitrc
+prompt-file $PWD/arch/ctags $HOME/.ctags
+prompt-file $PWD/arch/git-templates $HOME/.git-templates
 
 echo "* LINUX (root)"
 prompt-file $PWD/arch/slim.conf /etc/ sudo
