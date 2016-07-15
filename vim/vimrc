@@ -8,6 +8,8 @@ set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
 
 set shiftwidth=2    " Number of spaces to use for each step of (auto)indent.
 
+set softtabstop=2   " Same like those above, more or less - maybe.
+
 set expandtab       " Use the appropriate number of spaces to insert a <Tab>.
                     " Spaces are used in indents with the '>' and '<' commands
                     " and when 'autoindent' is on. To insert a real tab when
@@ -371,6 +373,7 @@ nnoremap <Leader>b :TagbarToggle<CR>
 "let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 set wildignore+=vendor
 set wildignore+=node_modules
+set wildignore+=*.pyc
 
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
