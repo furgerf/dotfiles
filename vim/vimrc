@@ -90,6 +90,10 @@ set foldcolumn=4
 " make vim understand .md as markdown
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
+" add JS syntax highlighting form .jsm
+autocmd BufReadPost *.jsm set syntax=javascript
+
+
 " key mapping: general - DON'T REMOVE TRAILING SPACE
 nnoremap <C-\> <C-t>
 map <C-t> :tabe 
@@ -146,8 +150,8 @@ execute pathogen#infect()
 call pathogen#helptags()
 
 " spellcheck
-autocmd FileType tex setlocal spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+autocmd FileType *.tex setlocal spell
+autocmd FileType *.md setlocal spell
 
 " word complete
 set complete+=kspell
@@ -251,7 +255,7 @@ let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
 
 
 " automatically re-source vimrc
-autocmd! bufwritepost $MYVIMRC source %
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 
 " for vim-airline
 "set laststatus=2
@@ -269,9 +273,6 @@ command! Texcountall execute "!perl /home/fabian/.vim/plugin/tex-count-recursive
 
 " adding pairs of matching characters
 set matchpairs+=<:>,=:;
-
-" add JS syntax highlighting form .jsm
-au BufReadPost *.jsm set syntax=javascript
 
 
 " visual mode: < and > indent block and re-select previous indentation too
@@ -379,4 +380,17 @@ map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
 
+" duplicate visual mode selection
+vmap D y'>p
+
+" Press Shift+P while in visual mode to replace the selection without
+" overwriting the default register
+vmap P p :call setreg('"', getreg('0')) <CR>
+
+" bind K to search word under cursor
+nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
 
