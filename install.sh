@@ -42,6 +42,7 @@ prompt-file $PWD/arch/gitconfig $HOME/.gitconfig
 prompt-file $PWD/arch/xinitrc $HOME/.xinitrc
 prompt-file $PWD/arch/ctags $HOME/.ctags
 prompt-file $PWD/arch/git-templates $HOME/.git-templates
+prompt-file $PWD/arch/gitignore $HOME/.gitignore
 
 echo "* LINUX (root)"
 prompt-file $PWD/arch/slim.conf /etc/ sudo

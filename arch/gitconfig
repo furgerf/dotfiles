@@ -5,6 +5,7 @@
   ui = true
 [core]
   editor = vim
+  excludefile = ~/.gitignore
 [alias]
   graph = log --graph --oneline --decorate
   authors = shortlog -s -n --all
@@ -27,7 +28,7 @@
 [credential]
   helper = cache
 #[mailmap]
-#  file = /home/fabian/.mailmap
+#  file = ~/.mailmap
 [init]
   templatedir = ~/.git-templates
 
