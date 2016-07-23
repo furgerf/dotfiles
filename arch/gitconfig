@@ -6,6 +6,10 @@
 [core]
   editor = vim
   excludefile = ~/.gitignore
+[fetch]
+  prune = true
+[pull]
+  rebase = true
 [alias]
   graph = log --graph --oneline --decorate
   authors = shortlog -s -n --all
@@ -31,4 +35,3 @@
 #  file = ~/.mailmap
 [init]
   templatedir = ~/.git-templates
-
