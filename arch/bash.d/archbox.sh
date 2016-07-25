@@ -43,7 +43,8 @@ alias gourcevideo='gource -1279x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec
 alias git-pullall='$HOME/git/linux-scripts/git-pull ~/git'
 alias logcat="$HOME/git/linux-scripts/logcat"
 alias refresh-conky='killall -SIGUSR1 conky'
-pjson() { python2 $HOME/git/linux-scripts/pjson.py; }
+#pjson() { python2 $HOME/git/linux-scripts/pjson.py; }
+pjson() { node $HOME/git/linux-scripts/pjson.js; }
 
 # image/office stuff
 alias image='geeqie'
