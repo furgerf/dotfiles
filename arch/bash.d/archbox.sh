@@ -43,8 +43,17 @@ alias gourcevideo='gource -1279x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec
 alias git-pullall='$HOME/git/linux-scripts/git-pull ~/git'
 alias logcat="$HOME/git/linux-scripts/logcat"
 alias refresh-conky='killall -SIGUSR1 conky'
-#pjson() { python2 $HOME/git/linux-scripts/pjson.py; }
-pjson() { node $HOME/git/linux-scripts/pjson.js; }
+pjson() {
+  JS_FILE=$HOME/git/linux-scripts/pjson.js
+  PY_FILE=$HOME/git/linux-scripts/pjson.py
+  if type node &> /dev/null && [ -f $JS_FILE ]; then
+    node $JS_FILE
+  elif type python2 &> /dev/null && [ -f $PY_FILE ]; then
+    python2 $PY_FILE
+  else
+    echo "No node or python JSON-formatter found"
+  fi
+}
 
 # image/office stuff
 alias image='geeqie'

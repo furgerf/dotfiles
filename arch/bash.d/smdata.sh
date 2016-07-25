@@ -12,8 +12,17 @@ debdownload () {
   apt-get --print-uris --yes install $1 | grep ^\' | cut -d\' -f2 | wget -i -
 }
 
-#pjson() { python2 $HOME/git/linux-scripts/pjson.py; }
-pjson() { node $HOME/git/linux-scripts/pjson.js; }
+pjson() {
+  JS_FILE=$HOME/git/linux-scripts/pjson.js
+  PY_FILE=$HOME/git/linux-scripts/pjson.py
+  if type node &> /dev/null && [ -f $JS_FILE ]; then
+    node $JS_FILE
+  elif type python2 &> /dev/null && [ -f $PY_FILE ]; then
+    python2 $PY_FILE
+  else
+    echo "No node or python JSON-formatter found"
+  fi
+}
 
 fortune | cowsay | lolcat
 
