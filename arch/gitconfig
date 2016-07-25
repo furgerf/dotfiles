@@ -25,6 +25,8 @@
   amend = commit -a --amend
   wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
   sub-update = !git submodule update --init --recursive
+  ignored = !git ls-files -v | grep "^[[:lower:]]"
+  prune-local = !git branch --merged | tr -d '*' | grep -v dev | xargs -n1 git branch -d
 [push]
   default = matching
 [http]
@@ -35,3 +37,5 @@
 #  file = ~/.mailmap
 [init]
   templatedir = ~/.git-templates
+[help]
+  autocorrect = 1
