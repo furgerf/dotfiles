@@ -44,11 +44,17 @@
 	url = git@github.com:majutsushi/tagbar.git
 [submodule "vim/bundle/camelcasemotion"]
 	path = vim/bundle/camelcasemotion
-	url = git@github.com:vim-scripts/camelcasemotion
+	url = git@github.com:vim-scripts/camelcasemotion.git
 	ignore = untracked
 [submodule "vim/bundle/vim-startify"]
 	path = vim/bundle/vim-startify
-	url = git@github.com:mhinz/vim-startify
+	url = git@github.com:mhinz/vim-startify.git
 [submodule "vim/bundle/vim-windowswap"]
 	path = vim/bundle/vim-windowswap
-	url = git@github.com:wesQ3/vim-windowswap
+	url = git@github.com:wesQ3/vim-windowswap.git
+[submodule "vim/bundle/vim-snippets"]
+	path = vim/bundle/vim-snippets
+	url = git@github.com:honza/vim-snippets.git
+[submodule "vim/bundle/ultisnips"]
+	path = vim/bundle/ultisnips
+	url = git@github.com:SirVer/ultisnips.git
