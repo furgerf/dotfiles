@@ -394,3 +394,8 @@ nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 set splitbelow
 set splitright
 
+set showbreak=↪
+
+let g:UltiSnipsExpandTrigger="<Leader><Space>"
+let g:UltiSnipsListSnippets="<Leader><Tab>"
+
