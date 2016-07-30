@@ -399,3 +399,6 @@ set showbreak=↪
 let g:UltiSnipsExpandTrigger="<Leader><Space>"
 let g:UltiSnipsListSnippets="<Leader><Tab>"
 
+autocmd FileType javascript,css nmap <silent> <leader>, :CommaOrSemiColon<CR>
+autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<CR>
+
