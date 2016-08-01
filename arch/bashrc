@@ -96,6 +96,7 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # new basic commands
+alias rmr='rm -r'
 alias fucking='sudo'
 alias xclip='xclip -selection c'
 alias xpaste='xclip -o'
