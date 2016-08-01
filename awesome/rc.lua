@@ -915,6 +915,23 @@ globalkeys = awful.util.table.join(
     end, nil, nil)
   end),
 
+  awful.key({ modkey, "Control" }, "c",      function ()
+    info = true
+    awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Units:</span> " },
+    mypromptbox[mouse.screen].widget,
+    function (input)
+      local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
+      local split = input:gmatch("[^%s]+")
+      local fr = split() .. " is "
+      for line in f:lines() do
+        fr = fr .. line
+      end
+      f:close()
+      fr = fr .. split()
+      naughty.notify({ text = fr, timeout = 30})
+    end, nil, awful.util.getdir("cache") .. "/dict")
+  end),
+
   awful.key({ modkey,           }, "c",      function ()
     info = true
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Calc:</span> " },
