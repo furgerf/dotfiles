@@ -295,7 +295,7 @@ endfunction
 
 set history=1000         " remember more commands and search history
 set undolevels=5000      " use many muchos levels of undo
-set wildignore=*.swp     " ignore swapfiles when completing filenames
+set wildignore+=*.swp     " ignore swapfiles when completing filenames
 set title                " change the terminal's title
 
 " Q autoformats the current selection or paragraph
@@ -372,9 +372,11 @@ nnoremap <Leader>b :TagbarToggle<CR>
 
 " CtrlP: ignore files in .gitignore
 "let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-set wildignore+=vendor
-set wildignore+=node_modules
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
+  \ }
 set wildignore+=*.pyc
+set wildignore+=__init__.py
 
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -408,7 +410,7 @@ set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
 map Q @q
 
 " Quickfix management
-map <Space><Space> :ccl<cr>
+map <Space><Space> :ccl<CR>:pclose<CR>
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'

@@ -151,6 +151,7 @@ alias gd='git diff'
 alias gf='git fetch'
 alias pull='git pull'
 alias push='git push'
+alias publish='git publish'
 alias gitall='git add . && git commit . && git push'
 
 # misc
