@@ -40,7 +40,7 @@ alias mv='amv -gi'
 
 # development
 alias gourcevideo='gource -1279x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4'
-alias git-pullall='$HOME/git/linux-scripts/git-pull ~/git'
+alias git-pullall="git-pull $HOME/git"
 alias logcat="$HOME/git/linux-scripts/logcat"
 alias refresh-conky='killall -SIGUSR1 conky'
 pjson() {
@@ -54,6 +54,7 @@ pjson() {
     echo "No node or python JSON-formatter found"
   fi
 }
+alias tv-show-dev='tmux-node-dev tv-show-torrent-downloader'
 
 # image/office stuff
 alias image='geeqie'
