@@ -1,8 +1,6 @@
-" .vimrc
-" See: http://vimdoc.sourceforge.net/htmldoc/options.html for details
+filetype plugin indent on
+syntax enable
 
-" For multi-byte character support (CJK support, for example):
-"set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,euc-kr,gb18030,latin1
 
 set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
 
@@ -80,46 +78,85 @@ set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
 set wildmode=list:longest,full " tab completion: show all matches, then start completing
 
-filetype plugin indent on
-syntax enable
 set foldmethod=indent
 set foldopen=all
 set foldclose=all
 set foldcolumn=4
 
-" make vim understand .md as markdown
-autocmd BufNewFile,BufRead *.md set filetype=markdown
 
-" add JS syntax highlighting form .jsm
-autocmd BufReadPost *.jsm set syntax=javascript
-
-" key mapping: general - DON'T REMOVE TRAILING SPACE
-nnoremap <C-\> <C-t>
+""""""""
+" TABS "
+""""""""
+" NOTE: Don't remove trailing space!
 map <C-t> :tabe 
 map <F8> :tabn<CR>
 map <S-F8> :tabp<CR>
 
-" key mapping: c
+" alt-nr tab navigation
+nnoremap 1 1gt
+nnoremap 2 2gt
+nnoremap 3 3gt
+nnoremap 4 4gt
+nnoremap 5 5gt
+nnoremap 6 6gt
+nnoremap 7 7gt
+nnoremap 8 8gt
+nnoremap 9 9gt
+nnoremap 0 :tablast<CR>
+inoremap 1 <Esc>1gt
+inoremap 2 <Esc>2gt
+inoremap 3 <Esc>3gt
+inoremap 4 <Esc>4gt
+inoremap 5 <Esc>5gt
+inoremap 6 <Esc>6gt
+inoremap 7 <Esc>7gt
+inoremap 8 <Esc>8gt
+inoremap 9 <Esc>9gt
+inoremap 0 <Esc>:tablast<CR>
+
+
+""""""""""""""""""""""
+" FILE-TYPE SPECIFIC "
+""""""""""""""""""""""
+" md is markdown
+autocmd BufNewFile,BufRead md set filetype=markdown
+
+" jsm is javascript
+autocmd BufReadPost jsm set syntax=javascript
+
+" files that use semicolons: use COSC plugin
+autocmd FileType javascript,css nmap <silent> <leader>, :CommaOrSemiColon<CR>
+autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<CR>
+
+" c: compile
 autocmd FileType c map <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 
-" key mapping: scripts
+" scripts: execute
 autocmd FileType lua\|sh map <F2> :!"%:p"<CR>
 
-" key mapping: tex
+" tex: compile and open/compile
 autocmd FileType tex map <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
 autocmd FileType tex imap <F3> <Esc>:w<CR>\ll<CR>a
 autocmd FileType tex map <F3> :w<CR>\ll<CR>
 
-" key mapping: bib
+" bib: compile
 autocmd FileType bib map <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
 
-" key mapping: markdown
+" md: compile and open/compile
 autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
 autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" &<CR>
 
+" enforce small commit message lines
+autocmd Filetype gitcommit setlocal textwidth=72
+
+" spellchecking
+autocmd FileType tex\|md\|gitcommit setlocal spell
+
+
+
+
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 " commit messages: spellchecking and small columns
-autocmd Filetype gitcommit setlocal spell textwidth=72
 
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
@@ -151,9 +188,6 @@ execute pathogen#infect()
 " not sure whether the following line is necessary
 call pathogen#helptags()
 
-" spellcheck
-autocmd FileType *.tex setlocal spell
-autocmd FileType *.md setlocal spell
 
 " word complete
 set complete+=kspell
@@ -240,26 +274,27 @@ let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
 " Make :help appear in a full-screen tab, instead of a window
 "============================================================================
 
-    "Only apply to .txt files...
-    augroup HelpInTabs
-        autocmd!
-        autocmd BufEnter  *.txt   call HelpInNewTab()
-    augroup END
+"Only apply to .txt files...
+augroup HelpInTabs
+  autocmd!
+  autocmd BufEnter  *.txt   call HelpInNewTab()
+augroup END
 
-    "Only apply to help files...
-    function! HelpInNewTab ()
-        if &buftype == 'help'
-            "Convert the help window to a tab...
-            execute "normal \<C-W>T"
-        endif
-    endfunction
+"Only apply to help files...
+function! HelpInNewTab ()
+  if &buftype == 'help'
+    "Convert the help window to a tab...
+    execute "normal \<C-W>T"
+  endif
+endfunction
 
-
-" automatically re-source vimrc
+" automatically re-source vimrc - which messes up airline, so refresh that
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC
+autocmd! BufWritePost $MYVIMRC AirlineRefresh
 
 " for vim-airline
 set laststatus=2
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -302,28 +337,6 @@ set title                " change the terminal's title
 " Q autoformats the current selection or paragraph
 vmap Q gq
 nmap Q gqap
-
-" alt-nr tab navigation
-nnoremap 1 1gt
-nnoremap 2 2gt
-nnoremap 3 3gt
-nnoremap 4 4gt
-nnoremap 5 5gt
-nnoremap 6 6gt
-nnoremap 7 7gt
-nnoremap 8 8gt
-nnoremap 9 9gt
-nnoremap 0 :tablast<CR>
-inoremap 1 <Esc>1gt
-inoremap 2 <Esc>2gt
-inoremap 3 <Esc>3gt
-inoremap 4 <Esc>4gt
-inoremap 5 <Esc>5gt
-inoremap 6 <Esc>6gt
-inoremap 7 <Esc>7gt
-inoremap 8 <Esc>8gt
-inoremap 9 <Esc>9gt
-inoremap 0 <Esc>:tablast<CR>
 
 " Bubble single lines
 nnoremap <silent> <C-Up>   :move-2<CR>==
@@ -388,7 +401,7 @@ vmap D y'>p
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vmap P p :call setreg('"', getreg('0')) <CR>
+vmap P p :call setreg('"', getreg('0'))<CR>
 
 " bind K to search word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -401,9 +414,6 @@ set showbreak=↪
 
 let g:UltiSnipsExpandTrigger="<Leader><Space>"
 let g:UltiSnipsListSnippets="<Leader><Tab>"
-
-autocmd FileType javascript,css nmap <silent> <leader>, :CommaOrSemiColon<CR>
-autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<CR>
 
 " When at 3 spaces and I hit >>, go to 4, not 5.
 set shiftround
@@ -439,4 +449,6 @@ map <Leader>rn :call RenameFile()<cr>
 
 " do not store runtimepath in session file - that doesn't work with pathogen
 set sessionoptions-=options
+
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
