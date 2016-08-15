@@ -93,7 +93,6 @@ autocmd BufNewFile,BufRead *.md set filetype=markdown
 " add JS syntax highlighting form .jsm
 autocmd BufReadPost *.jsm set syntax=javascript
 
-
 " key mapping: general - DON'T REMOVE TRAILING SPACE
 nnoremap <C-\> <C-t>
 map <C-t> :tabe 
@@ -119,6 +118,9 @@ autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" &
 autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" &<CR>
 
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+" commit messages: spellchecking and small columns
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 let g:Tex_DefaultTargetFormat='pdf'
@@ -195,7 +197,7 @@ imap <C-q> <esc>:qa<CR>
 " unhighlight search results
 map <Leader>q :nohlsearch<CR>
 map <Leader>yy ggVG"*y
-map <Leader>n :NERDTree<CR>
+map <Leader>n :NERDTreeToggle<CR>
 map <Leader>dr :e ~/dropbox<CR>
 map <Leader>vim :e $MYVIMRC<CR>
 map <Leader>ss :so $MYVIMRC<CR>
@@ -223,7 +225,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-set laststatus=2 " Always show status line.
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 
 " Highlight the status line
@@ -258,7 +259,7 @@ let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 
 " for vim-airline
-"set laststatus=2
+set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -362,7 +363,7 @@ nnoremap <BS> :bd<CR>
 set scrolloff=5 " Show 5 lines of context around the cursor.
 
 " use magic regex mode by default
-nnoremap / /\v
+"nnoremap / /\v
 
 " search for what's visually selected by pressing `//`
 vnoremap // y/<C-R>"<CR>
@@ -404,7 +405,8 @@ let g:UltiSnipsListSnippets="<Leader><Tab>"
 autocmd FileType javascript,css nmap <silent> <leader>, :CommaOrSemiColon<CR>
 autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<CR>
 
-set shiftround " When at 3 spaces and I hit >>, go to 4, not 5.
+" When at 3 spaces and I hit >>, go to 4, not 5.
+set shiftround
 
 " Execute macro in q
 map Q @q
@@ -433,5 +435,8 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <Leader>n :call RenameFile()<cr>
+map <Leader>rn :call RenameFile()<cr>
+
+" do not store runtimepath in session file - that doesn't work with pathogen
+set sessionoptions-=options
 

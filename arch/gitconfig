@@ -40,3 +40,5 @@
   templatedir = ~/.git-templates
 [help]
   autocorrect = 1
+[url "git@github.com:"]
+  insteadOf = gh:
