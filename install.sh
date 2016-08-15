@@ -43,6 +43,7 @@ prompt-file $PWD/arch/xinitrc $HOME/.xinitrc
 prompt-file $PWD/arch/ctags $HOME/.ctags
 prompt-file $PWD/arch/git-templates $HOME/.git-templates
 prompt-file $PWD/arch/gitignore $HOME/.gitignore
+prompt-file $PWD/arch/fonts $HOME/.fonts
 
 echo "* LINUX (root)"
 prompt-file $PWD/arch/slim.conf /etc/ sudo
