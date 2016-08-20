@@ -11,6 +11,9 @@ prompt-file() {
 
   while true; do
     echo "Do you want to create a symlink from $SRC to $DEST? (y/n)"
+    if [ -e "$DEST" ]; then
+      echo "NOTE: $DEST exists already!"
+    fi
     read ANSWER
     ANSWER=${ANSWER,,}
     echo "Answer: $ANSWER"
@@ -19,7 +22,7 @@ prompt-file() {
         echo -n "(root) "
       fi
       echo "Creating symlink from $1 to $2"
-      $3 ln -sn $1 $2
+      $3 ln -snf $1 $2
       break
     elif [ "$ANSWER" == "n" ]; then
       echo "Skipping..."
@@ -46,9 +49,9 @@ prompt-file $PWD/arch/gitignore $HOME/.gitignore
 prompt-file $PWD/arch/fonts $HOME/.fonts
 
 echo "* LINUX (root)"
-prompt-file $PWD/arch/slim.conf /etc/ sudo
-prompt-file $PWD/arch/locale.conf /etc/ sudo
-prompt-file $PWD/arch/locale.gen /etc/ sudo
+prompt-file $PWD/arch/slim.conf /etc/slim.conf sudo
+prompt-file $PWD/arch/locale.conf /etc/locale.conf sudo
+prompt-file $PWD/arch/locale.gen /etc/locale.gen sudo
 prompt-file $PWD/arch/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf sudo
 prompt-file $PWD/arch/20-intel.conf /etc/X11/xorg.conf.d/20-intel.conf sudo
 prompt-file $PWD/arch/50-synaptics.conf /etc/X11/xorg.conf.d/50-synaptics.conf sudo
