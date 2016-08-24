@@ -139,6 +139,9 @@ if os.getenv("AWESOME_BG") then
 elseif staticWallpaper ~= nil then
   gears.wallpaper.maximized(staticWallpaper)
 else
+  -- have to initialize a seed first, else the "random" wallpapers are rather dull
+  math.randomseed(os.time())
+
   -- Get the list of files from a directory. Must be all images or folders and non-empty.
   function scanDir(directory)
     local i, fileList, popen = 0, {}, io.popen
@@ -150,7 +153,7 @@ else
   end
   wallpaperList = scanDir("/usr/share/awesome/themes/archdove/wallpapers")
 
-  local wp = wallpaperList[math.random(1, #wallpaperList)]
+  local wp = wallpaperList[math.random(#wallpaperList)]
   for s = 1, screen.count() do
     gears.wallpaper.maximized(wp, s, true)
   end
@@ -158,7 +161,7 @@ else
   changeTime = 3600
   wallpaperTimer = timer { timeout = changeTime }
   wallpaperTimer:connect_signal("timeout", function()
-    local wp = wallpaperList[math.random(1, #wallpaperList)]
+    local wp = wallpaperList[math.random(#wallpaperList)]
     for s = 1, screen.count() do
         gears.wallpaper.maximized(wp, s, true)
     end
@@ -774,7 +777,7 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey, "Control" }, "t", function () clip_translate() end),
   awful.key({ modkey, "Control" }, "w", function ()
     if (wallpaperTimer ~= nil) then
-      local wp = wallpaperList[math.random(1, #wallpaperList)]
+      local wp = wallpaperList[math.random(#wallpaperList)]
       for s = 1, screen.count() do
         gears.wallpaper.maximized(wp, s, true)
       end
