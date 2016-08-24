@@ -452,3 +452,5 @@ set sessionoptions-=options
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+let g:indentLine_char = '┆'
+

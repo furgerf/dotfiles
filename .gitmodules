@@ -73,3 +73,12 @@
 [submodule "vim/bundle/vim-unimpaired"]
 	path = vim/bundle/vim-unimpaired
 	url = git@github.com:tpope/vim-unimpaired
+[submodule "vim/bundle/vim-json"]
+	path = vim/bundle/vim-json
+	url = git@github.com:elzr/vim-json
+[submodule "vim/bundle/indentLine"]
+	path = vim/bundle/indentLine
+	url = git@github.com:Yggdroot/indentLine
+[submodule "vim/bundle/minibufexpl.vim"]
+	path = vim/bundle/minibufexpl.vim
+	url = git@github.com:fholgado/minibufexpl.vim
