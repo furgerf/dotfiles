@@ -193,9 +193,11 @@ call pathogen#helptags()
 set complete+=kspell
 
 " highlight long rows
-highlight ColorColumn ctermbg=magenta
-"set colorcolumn=101 " always on
-call matchadd('ColorColumn', '\%101v', 100) " only on when exceeding - could add > to highlight all exceeding
+set colorcolumn=101 " always on
+"highlight ColorColumn ctermbg=magenta
+"call matchadd('ColorColumn', '\%101v', 100) " only on when exceeding - could add > to highlight all exceeding
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%101v.\+/
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -381,7 +383,7 @@ set scrolloff=5 " Show 5 lines of context around the cursor.
 " search for what's visually selected by pressing `//`
 vnoremap // y/<C-R>"<CR>
 
-nnoremap <Leader>t :CtrlPTag<CR>
+nnoremap <Leader>p :CtrlPTag<CR>
 nnoremap <Leader>b :TagbarToggle<CR>
 
 " CtrlP: ignore files in .gitignore
@@ -446,11 +448,14 @@ function! RenameFile()
   endif
 endfunction
 map <Leader>rn :call RenameFile()<cr>
-
 " do not store runtimepath in session file - that doesn't work with pathogen
 set sessionoptions-=options
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>tt :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
 
 let g:indentLine_char = '┆'
 

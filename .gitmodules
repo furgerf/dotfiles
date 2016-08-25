@@ -82,3 +82,7 @@
 [submodule "vim/bundle/minibufexpl.vim"]
 	path = vim/bundle/minibufexpl.vim
 	url = git@github.com:fholgado/minibufexpl.vim
+[submodule "vim/bundle/vim-test"]
+	path = vim/bundle/vim-test
+	url = git@github.com:janko-m/vim-test
+	ignore = untracked
