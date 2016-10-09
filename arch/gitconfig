@@ -28,6 +28,8 @@
   sub-update = !git submodule update --init --recursive
   ignored = !git ls-files -v | grep "^[[:lower:]]"
   prune-local = !git branch --merged | tr -d '*' | grep -v dev | xargs -n1 git branch -d
+  ss = !git stash save
+  sp = !git stash pop
 [push]
   default = matching
 [http]
@@ -42,3 +44,6 @@
   autocorrect = 1
 [url "git@github.com:"]
   insteadOf = gh:
+[color "diff"]
+  old = red strike
+  new = green italic

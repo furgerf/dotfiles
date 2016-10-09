@@ -78,6 +78,7 @@ alias raspi='ssh raspi'
 alias raspi-extern='ssh raspi-extern'
 alias raspi-session='while true; do raspi; echo -n "Waiting 10s before reconnecting... "; for i in $(seq 10 -1 0); do sleep 1; echo  -n "$i... "; done; echo "Reconnecting..."; done'
 alias raspi-extern-session='while true; do raspi-extern; echo -n "Waiting 10s before reconnecting... "; for i in $(seq 10 -1 0); do sleep 1; echo  -n "$i... "; done; echo "Reconnecting..."; done'
+alias raspi-tunnel='ssh -N raspi-tunnel'
 raspi-backup(){
   echo "Device to back up: "
   read DEVICE
