@@ -51,6 +51,3 @@
   autocorrect = 1
 [url "git@github.com:"]
   insteadOf = gh:
-[color "diff"]
-  old = red strike
-  new = green italic

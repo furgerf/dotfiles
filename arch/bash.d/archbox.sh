@@ -136,14 +136,14 @@ finished () {
 yoghurt () {
   first=1
   sudo echo "foo" > /dev/null
-  ping 8.8.8.8 -c 1 &> /dev/null
+  ping 8.8.8.8 -c 1 -w 1 &> /dev/null
   while [ $? -ne 0 ]; do
     if [ $first -eq 1 ]; then
       echo "Waiting for connection..."
       first=0
     fi
     sleep 1
-    ping 8.8.8.8 -c 1 &> /dev/null
+    ping 8.8.8.8 -c 1 -w 1 &> /dev/null
   done
   yau
 }
