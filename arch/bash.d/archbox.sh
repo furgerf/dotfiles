@@ -73,7 +73,7 @@ alias winmount="mount /dev/sdb1 /win"
 alias winhibernate="sudo $HOME/git/linux-scripts/winboot -h"
 alias winboot="sudo $HOME/git/linux-scripts/winboot"
 
-# raspi
+# raspi - MAKE SURE TO KEEP SSH CONFIG IN SSH_CONFIG
 alias raspi='ssh raspi'
 alias raspi-extern='ssh raspi-extern'
 alias raspi-session='while true; do raspi; echo -n "Waiting 10s before reconnecting... "; for i in $(seq 10 -1 0); do sleep 1; echo  -n "$i... "; done; echo "Reconnecting..."; done'

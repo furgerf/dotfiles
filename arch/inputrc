@@ -29,6 +29,8 @@ set mark-symlinked-directories on
 set editing-mode vi
 # display '+' in insert mode, ':' in command mode
 set show-mode-in-prompt on
+set vi-ins-mode-string \e[1;34m+\e[0;37m
+set vi-cmd-mode-string \033[1;31m:\e[0;37m
 
 ## VI COMMAND MODE
 set keymap vi-command
