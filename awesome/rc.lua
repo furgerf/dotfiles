@@ -807,6 +807,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Wiki:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       word = string.gsub(word, " ", "\\ ")
       awful.util.spawn("firefox -new-tab http://en.wikipedia.org/wiki/" .. word)
     end)
@@ -817,6 +820,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>ArchWiki:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       word = string.gsub(word, " ", "\\ ")
       awful.util.spawn("firefox -new-tab http://wiki.archlinux.org/index.php/" .. word)
     end)
@@ -889,6 +895,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Define:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       local f = io.popen("dict -d wn " .. word .. " 2>&1")
       local fr = ""
       for line in f:lines() do
@@ -904,6 +913,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Torrent:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       word = string.gsub(word, " ", "%%20")
       awful.util.spawn("firefox -new-tab http://thepiratebay.se/search/" .. word)
     end, nil, nil)
@@ -914,6 +926,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Google:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       word = string.gsub(word, " ", "+")
       awful.util.spawn("firefox -new-tab http://google.com/search?q=" .. word)
     end, nil, nil)
@@ -924,6 +939,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Units:</span> " },
     mypromptbox[mouse.screen].widget,
     function (input)
+      if string.len(input) == 0 then
+        return
+      end
       local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
       local split = input:gmatch("[^%s]+")
       local fr = split() .. " is "
@@ -941,6 +959,9 @@ globalkeys = awful.util.table.join(
     awful.prompt.run({ fg_cursor = "black", bg_cursor="gray", prompt = "<span color='#008DFA'>Calc:</span> " },
     mypromptbox[mouse.screen].widget,
     function (word)
+      if string.len(word) == 0 then
+        return
+      end
       local f = io.popen("calc " .. word)
       local fr = word .. "="
       for line in f:lines() do
@@ -1118,6 +1139,7 @@ function(c)
     and not (c.class == "Gimp")
     and not (c.class == "Gimp*")
     and not (c.class == "chromium")
+    and not (c.class == "Chromium")
     then
       --c.opacity = 0.93
       c.opacity = 0.95
@@ -1142,6 +1164,7 @@ function(c)
       and not (c.class == "Gimp")
       and not (c.class == "Gimp*")
       and not (c.class == "chromium")
+      and not (c.class == "Chromium")
       then
         --c.opacity = 0.85
         c.opacity = 0.93
