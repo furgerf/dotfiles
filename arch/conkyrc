@@ -53,7 +53,8 @@ System load $alignr${execi 10 uptime | rev | cut -d ':' -f 1 | rev}
 # CPU
 ${font Open Sans:Bold:size=10}${color0}CPU${hr 2}$color${font}
 Intel i7 3520M${goto 120}${font Open Sans:Bold:size=8}${freq_g cpu0}GHz, ${cpu cpu0}%$font$alignr${execi 300 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
-#${cpugauge cpu0 20, 40}${goto 64}
+${cpugauge cpu0 20, 40}${goto 100}${cpugauge cpu1 20, 40}${goto 160}${cpugauge cpu2 20, 40}${goto 220}${cpugauge cpu3 20, 40}${goto 280}${cpugauge cpu4 20, 40}
+${goto 15}${cpu cpu0 20, 40}%${goto 110}${cpu cpu1 20, 40}%${goto 170}${cpu cpu2 20, 40}%${goto 230}${cpu cpu3 20, 40}%${goto 290}${cpu cpu4 20, 40}%
 ${cpugraph cpu0 20, 316 000000 ffffff -t}
 # PROCESSES
 ${font Open Sans:Bold:size=10}${color0}PROCESSES${hr 2}$color$font
@@ -110,11 +111,11 @@ ${voffset -33}${downspeedgraph wlp3s0 20, 320 000000 ffffff -t}
 ## APPOINTMENTS
 #${font Open Sans:Bold:size=10}${color0}APPOINTMENTS${hr 2}$font$color
 #${execpi 3600 $HOME/git/linux-scripts/conky/gcalcli.lua}
+# MUSIC
+${execpi 5 $HOME/git/linux-scripts/conky/clementine-dbus $HOME/git/linux-scripts/conky/rp.png}
 # TODO
 ${font Open Sans:Bold:size=10}${color0}TODO${hr 2}$font$color
 ${execi 600 cat -n /data/Dropbox/misc/misc/todo.txt}
-# MUSIC
-${execpi 5 $HOME/git/linux-scripts/conky/clementine-dbus $HOME/git/linux-scripts/conky/rp.png}
 
 
 
