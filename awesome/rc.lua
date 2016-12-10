@@ -1121,58 +1121,43 @@ client.connect_signal("manage", function (c, startup)
   end
 end)
 
-client.connect_signal("focus",
-function(c)
-  c.border_color = beautiful.border_focus
+function is_class_opaque(class_name)
+  opaque_classes = {
+    "vlc",
+    "smplayer",
+    "mirage",
+    "plugin-container",
+    "firefox",
+    "geeqie",
+    "gimp",
+    "chromium"
+  }
 
-  if not (c.class    == "Vlc")
-    and not (c.class == "smplayer")
-    and not (c.class == "Mirage")
-    and not (c.class == "Plugin-container")
-    and not (c.class == "Firefox")
-    and not (c.name == "SRF Player - Mozilla Firefox")
-    and not (c.name == "Sacred")
-    and not (c.class == "Geeqie")
-    and not (c.class == "Ristretto")
-    and not (c.class == "MPlayer")
-    and not (c.class == "Soffice")
-    and not (c.class == "Gimp")
-    and not (c.class == "Gimp*")
-    and not (c.class == "chromium")
-    and not (c.class == "Chromium")
-    then
-      --c.opacity = 0.93
-      c.opacity = 0.95
-    else
-      c.opacity = 1
+  for index, value in ipairs(opaque_classes) do
+    if string.lower(value) == string.lower(class_name) then
+      return true
     end
-  end)
-  client.connect_signal("unfocus",
-  function(c)
-    c.border_color = beautiful.border_normal
-    if not (c.class    == "Vlc")
-      and not (c.class == "smplayer")
-      and not (c.class == "Mirage")
-      and not (c.class == "Plugin-container")
-      and not (c.class == "Firefox")
-      and not (c.name == "SRF Player - Mozilla Firefox")
-      and not (c.name == "Sacred")
-      and not (c.class == "Geeqie")
-      and not (c.class == "Ristretto")
-      and not (c.class == "MPlayer")
-      and not (c.class == "Soffice")
-      and not (c.class == "Gimp")
-      and not (c.class == "Gimp*")
-      and not (c.class == "chromium")
-      and not (c.class == "Chromium")
-      then
-        --c.opacity = 0.85
-        c.opacity = 0.93
-      else
-        c.opacity = 1
-      end
-    end)
-    -- }}}
+  end
+  return false
+end
+
+client.connect_signal("focus", function(c)
+  c.border_color = beautiful.border_focus
+  if is_class_opaque(c.class) then
+    c.opacity = 1
+  else
+    c.opacity = 0.95
+  end
+end)
+client.connect_signal("unfocus", function(c)
+  c.border_color = beautiful.border_normal
+  if is_class_opaque(c.class) then
+    c.opacity = 1
+  else
+    c.opacity = 0.93
+  end
+end)
+-- }}}
 
     function init_capslock()
   local handle = io.popen("xset q | grep Caps | cut -d ' ' -f 10")
