@@ -8,6 +8,7 @@ source! /home/fabian/.vimperatorrc.local
 
 noremap l gt
 noremap h gT
+map <C-b> <C-6>
 
 "===[ Settings ]========================================================
 
