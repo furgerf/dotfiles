@@ -139,14 +139,14 @@ function g {
    if [[ $# > 0 ]]; then
      git $@
    else
-     git status
+     git status  || ls
    fi
 }
 # add `git` completion for `g`
 complete -F _git g
 alias ga='git add'
 alias gc='git commit'
-alias gs='git status'
+alias gs='git status || ls'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gf='git fetch'
