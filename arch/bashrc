@@ -192,6 +192,13 @@ x(){
 alias weather='curl wttr.in'
 alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
 alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
+function box() {
+  t="$1xxxx"
+  c=${2:-#}
+  echo ${t//?/$c}
+  echo "$c $1 $c"
+  echo ${t//?/$c}
+}
 
 # source other files
 test -s $HOME/.bash-sourcer.sh && source $HOME/.bash-sourcer.sh
