@@ -78,11 +78,6 @@ set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
 set wildmode=list:longest,full " tab completion: show all matches, then start completing
 
-set foldmethod=indent
-set foldopen=all
-set foldclose=all
-set foldcolumn=4
-
 nnoremap <tab> zr
 nnoremap <s-tab> zm
 
@@ -268,9 +263,6 @@ set gdefault " assume the /g flag on :s substitutions to replace all matches in 
 
 " Highlight the status line
 "highlight StatusLine ctermfg=darkgray ctermbg=yellow
-
-"set nofoldenable    " disable foldin
-set foldlevelstart=1
 
 " biodata macro
 let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
@@ -462,8 +454,4 @@ nmap <silent> <leader>tl :TestLast<CR>
 
 let g:indentLine_char = '┆'
 
-let anyfold_activate=1
-let anyfold_identify_comments=0
-let anyfold_fold_comments=1
-let anyfold_fold_toplevel=1
 
