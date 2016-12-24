@@ -130,7 +130,7 @@ autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<C
 autocmd FileType c map <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 
 " scripts: execute
-autocmd FileType lua\|sh map <F2> :!"%:p"<CR>
+autocmd FileType lua\|sh\|python map <F2> :!"%:p"<CR>
 
 " tex: compile and open/compile
 autocmd FileType tex map <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
@@ -141,8 +141,8 @@ autocmd FileType tex map <F3> :w<CR>\ll<CR>
 autocmd FileType bib map <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
 
 " md: compile and open/compile
-autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
-autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc "%:p" -o "%:p:r.pdf" &<CR>
+autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
+autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
 
 " enforce small commit message lines
 autocmd Filetype gitcommit setlocal textwidth=72
@@ -232,10 +232,10 @@ imap <C-q> <esc>:qa<CR>
 map <Leader>q :nohlsearch<CR>
 map <Leader>yy ggVG"*y
 map <Leader>n :NERDTreeToggle<CR>
-map <Leader>dr :e ~/dropbox<CR>
+map <Leader>dr :E ~/dropbox<CR>
 map <Leader>vim :e $MYVIMRC<CR>
 map <Leader>ss :so $MYVIMRC<CR>
-"map <Leader>b :e ~/.bashrc<CR>
+map <Leader>b :e ~/.bashrc<CR>
 map <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 map <Leader>w <C-w>w
 
@@ -379,7 +379,7 @@ set scrolloff=5 " Show 5 lines of context around the cursor.
 vnoremap // y/<C-R>"<CR>
 
 nnoremap <Leader>p :CtrlPTag<CR>
-nnoremap <Leader>b :TagbarToggle<CR>
+nnoremap <Leader>t :TagbarToggle<CR>
 
 " CtrlP: ignore files in .gitignore
 "let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
