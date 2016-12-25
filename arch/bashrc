@@ -9,15 +9,37 @@
 #[[ -z "$TMUX" ]] && exec tmux
 
 # prompt
-echo -e '\e[0;37mWelcome to the \e[1;34mother side\e[0;37m...\n'
-PS1="\[\033[1;30m\][\[\033[01;37m\]\$?\$(if [[ \$? == 0 ]]; then echo \"  \[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi)\[\033[1;30m\]][\[\033[1;37m\]\A\[\033[1;30m\]][\[\033[1;37m\]\u\[\033[1;30m\]@\[\033[1;37m\]\h\[\033[1;30m\]][\[\033[1;37m\]\w\[\033[1;30m\]]\[\033[1;34m\]\$\[\033[0;37m\] "
+BLACK="\[$(tput setaf 0)\]"
+RED="\[$(tput setaf 1)\]"
+GREEN="\[$(tput setaf 2)\]"
+BROWN="\[$(tput setaf 3)\]"
+BLUE="\[$(tput setaf 4)\]"
+MAGENTA="\[$(tput setaf 5)\]"
+CYAN="\[$(tput setaf 6)\]"
+LGRAY="\[$(tput setaf 7)\]"
+
+DGRAY="\[$(tput setaf 8)\]"
+LRED="\[$(tput setaf 9)\]"
+LGREEN="\[$(tput setaf 10)\]"
+YELLOW="\[$(tput setaf 11)\]"
+LBLUE="\[$(tput setaf 12)\]"
+LMAGENTA="\[$(tput setaf 13)\]"
+LCYAN="\[$(tput setaf 14)\]"
+WHITE="\[$(tput setaf 15)\]"
+
+RESET="\[$(tput sgr0)\]"
+
+echo -e "$(tput sgr0)Welcome to the $(tput setaf 12)other side$(tput sgr0)...\n"
+
+PS1="${DGRAY}[${WHITE}\$?\$(if [[ \$? == 0 ]]; then echo \"  ${LGREEN}\342\234\223\"; else printf '%-3s' ${LRED}\342\234\227; fi)${DGRAY}][${WHITE}\A${DGRAY}][${WHITE}\u${DGRAY}@${WHITE}\h${DGRAY}][${WHITE}\w${DGRAY}]${RESET}${LBLUE}\$ ${RESET}"
 
 # exports
+export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
 export EDITOR="vim"
 export VISUAL="vim"
-export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
-#export TERM="xfce4-terminal"
-#export TERM="xterm"
+export PAGER="/bin/less"
+export TERM="screen-256color"
+#export TERM="xterm-256color"
 
 # history configuration
 # append to the history file, don't overwrite it
@@ -156,7 +178,7 @@ alias publish='git publish'
 alias gitall='git add . && git commit . && git push'
 
 # misc
-alias tmux='TERM=xterm-256color tmux'
+#alias tmux='TERM=screen-256color tmux'
 alias watch='\watch '   # allow alias expansion for watch argument
 alias ta='tmux a'
 alias v='/usr/bin/vim'

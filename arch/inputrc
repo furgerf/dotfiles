@@ -27,10 +27,11 @@ set mark-symlinked-directories on
 ## VI GENERAL
 # enable VI-mode
 set editing-mode vi
-# display '+' in insert mode, ':' in command mode
+# display '+' in insert mode, ':' in command mode - using colors
+# NOTE: Escape sequences are wrapped in \1...\2 instead of \[...\]
 set show-mode-in-prompt on
-set vi-ins-mode-string \e[1;34m+\e[0;37m
-set vi-cmd-mode-string \033[1;31m:\e[0;37m
+set vi-ins-mode-string \1\e[1;34m\2+\1\e[0;37m\2
+set vi-cmd-mode-string \1\033[1;31m\2:\1\e[0;37m\2
 
 ## VI COMMAND MODE
 set keymap vi-command
