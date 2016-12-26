@@ -21,3 +21,6 @@ let anyfold_identify_comments=0
 let anyfold_fold_comments=1
 let anyfold_fold_toplevel=1
 
+nnoremap <tab> zr
+nnoremap <s-tab> zm
+

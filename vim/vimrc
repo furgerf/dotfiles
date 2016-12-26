@@ -1,7 +1,6 @@
 filetype plugin indent on
 syntax enable
 
-
 set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
 
 set shiftwidth=2    " Number of spaces to use for each step of (auto)indent.
@@ -78,40 +77,6 @@ set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
 set wildmode=list:longest,full " tab completion: show all matches, then start completing
 
-nnoremap <tab> zr
-nnoremap <s-tab> zm
-
-
-""""""""
-" TABS "
-""""""""
-" NOTE: Don't remove trailing space!
-map <C-t> :tabe 
-map <F8> :tabn<CR>
-map <S-F8> :tabp<CR>
-
-" alt-nr tab navigation
-nnoremap 1 1gt
-nnoremap 2 2gt
-nnoremap 3 3gt
-nnoremap 4 4gt
-nnoremap 5 5gt
-nnoremap 6 6gt
-nnoremap 7 7gt
-nnoremap 8 8gt
-nnoremap 9 9gt
-nnoremap 0 :tablast<CR>
-inoremap 1 <Esc>1gt
-inoremap 2 <Esc>2gt
-inoremap 3 <Esc>3gt
-inoremap 4 <Esc>4gt
-inoremap 5 <Esc>5gt
-inoremap 6 <Esc>6gt
-inoremap 7 <Esc>7gt
-inoremap 8 <Esc>8gt
-inoremap 9 <Esc>9gt
-inoremap 0 <Esc>:tablast<CR>
-
 
 """"""""""""""""""""""
 " FILE-TYPE SPECIFIC "
@@ -144,17 +109,15 @@ autocmd FileType bib map <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done
 autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
 autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
 
+" commit messages: spellchecking and small columns
 " enforce small commit message lines
 autocmd Filetype gitcommit setlocal textwidth=72
-
 " spellchecking
 autocmd FileType tex\|md\|gitcommit setlocal spell
 
 
 
-
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
-" commit messages: spellchecking and small columns
 
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
@@ -264,8 +227,6 @@ set gdefault " assume the /g flag on :s substitutions to replace all matches in 
 " Highlight the status line
 "highlight StatusLine ctermfg=darkgray ctermbg=yellow
 
-" biodata macro
-let @b='G?BiodataEntrynVnyP3Nzz$*\q9l'
 
 "============================================================================
 " Make :help appear in a full-screen tab, instead of a window
