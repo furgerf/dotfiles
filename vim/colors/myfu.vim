@@ -37,9 +37,9 @@ let colors_name = "fu"
 
 " General colors
 hi Normal         ctermfg=252   ctermbg=0                    guifg=#d0d0d0  guibg=#1c1c1c
-hi CursorColumn                 ctermbg=238                                 guibg=#444444
+hi CursorColumn                 ctermbg=0                                 guibg=#444444
 hi Cursor                       ctermbg=214                                 guibg=#ffaf00
-hi CursorLine                   ctermbg=238                                 guibg=#444444
+hi CursorLine                   ctermbg=0                                 guibg=#444444
 hi FoldColumn     ctermfg=248   ctermbg=bg                   guifg=#a8a8a8  guibg=#000000
 hi Folded         ctermfg=255   ctermbg=60                   guifg=#eeeeee  guibg=#5f5f87
 hi IncSearch      ctermfg=0     ctermbg=223                  guifg=#000000  guibg=#ffd7af
@@ -57,6 +57,8 @@ hi Visual         ctermfg=24    ctermbg=153                  guifg=#005f87  guib
 hi VIsualNOS      ctermfg=24    ctermbg=153                  guifg=#005f87  guibg=#afd7ff
 hi LineNr         ctermfg=248   ctermbg=232                  guifg=#a8a8a8  guibg=#080808
 hi ModeMsg        ctermfg=220                                guifg=#ffd700
+highlight ColorColumn ctermbg=232
+highlight OverLength ctermfg=red
 
 hi ErrorMsg       ctermfg=196   ctermbg=52                   guifg=#ff0000  guibg=#5f0000
 hi SpellBad       ctermfg=196   ctermbg=52

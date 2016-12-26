@@ -68,11 +68,6 @@ set formatoptions=c,q,r,t " This is a sequence of letters which describes how
 set ruler           " Show the line and column number of the cursor position,
                     " separated by a comma.
 
-set background=dark " When set to "dark", Vim will try to use colors that look
-                    " good on a dark background. When set to "light", Vim will
-                    " try to use colors that look good on a light background.
-                    " Any other value is illegal.
-
 set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
 set wildmode=list:longest,full " tab completion: show all matches, then start completing
@@ -127,9 +122,6 @@ let g:Tex_GotoError=0
 set clipboard=unnamed
 set encoding=utf-8
 
-set t_Co=256
-colorscheme fu
-
 " allow saving files as sudo
 cmap w!! w !sudo tee % > /dev/null
 
@@ -139,10 +131,6 @@ set pastetoggle=<F7>
 nmap j gj
 nmap k gk
 
-" show some whitespaces
-set list
-"set listchars=eol:$,tab:->,trail:~
-set listchars=trail:~,tab:»·,eol:⏎
 
 " load pathogen
 execute pathogen#infect()
@@ -153,12 +141,6 @@ call pathogen#helptags()
 " word complete
 set complete+=kspell
 
-" highlight long rows
-set colorcolumn=101 " always on
-"highlight ColorColumn ctermbg=magenta
-"call matchadd('ColorColumn', '\%101v', 100) " only on when exceeding - could add > to highlight all exceeding
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%101v.\+/
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -249,13 +231,6 @@ endfunction
 " automatically re-source vimrc - which messes up airline, so refresh that
 autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 autocmd! BufWritePost $MYVIMRC AirlineRefresh
-
-" for vim-airline
-set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " for vim-obsess
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
@@ -368,10 +343,12 @@ nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 set splitbelow
 set splitright
 
-set showbreak=↪
-
+" insert snippet from trigger
 let g:UltiSnipsExpandTrigger="<Leader><Space>"
+" show all potential snippets with current trigger
 let g:UltiSnipsListSnippets="<Leader><Tab>"
+" always look for snippets here (so UltiSnipsEdit can be used)
+let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
 
 " When at 3 spaces and I hit >>, go to 4, not 5.
 set shiftround

@@ -93,3 +93,6 @@
 	path = vim/bundle/vim-anyfold
 	url = git@github.com:pseewald/vim-anyfold.git
 	ignore = untracked
+[submodule "vim/bundle/gruvbox"]
+	path = vim/bundle/gruvbox
+	url = git@github.com:furgerf/gruvbox.git
