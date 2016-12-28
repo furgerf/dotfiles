@@ -11,32 +11,85 @@
 [pull]
   rebase = true
 [alias]
+  #################
+  # general stuff #
+  #################
+  # list all aliases
   aliases = !git var -l | grep -e "^alias" | cut -d '.' -f 2-
-  graph = log --graph --oneline --decorate
-  authors = shortlog -s -n --all
-  fetchall = fetch --all
-  publish = push --progress \"origin\" HEAD:refs/publish/master
-  show-graph = log --graph --abbrev-commit --pretty=oneline
-  co = checkout
-  ec = config --global -e
-  cob = checkout -b
-  save = !git add -A && git commit -m 'SAVEPOINT'
-  wip = !git add -u && git commit -m 'WIP'
-  undo = reset HEAD~1 --mixed
+  # shortcut to amend comit
   amend = commit --amend
-  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-  sub-update = !git submodule update --init --recursive
+  # list all ignored files
   ignored = !git ls-files -v | grep "^[[:lower:]]"
-  prune-local = !git branch --merged | tr -d '*' | grep -v dev | xargs -n1 git branch -d
+  # delete all merged local branches except the current
+  prune-local = !git branch --merged | grep -v '*' | xargs -n1 git branch -d
+  # short status output
+  shorty = status --short --branch
+  # unstage everything from index
+  unstage = reset HEAD
+
+  ########################
+  # working with history #
+  ########################
+  # list all different authors with their respective commit counts
+  authors = shortlog -s -n --all
+  # show commit graph
+  graph = log --graph --abbrev-commit --pretty=oneline
+  # fancier commit graph
+  grog = !git log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+  # show-branch with current branch and origin/master
+  sb = !git show-branch $(git rev-parse --abbrev-ref HEAD) origin/master
+  # show-branch-all local branches and origin/master
+  sba = !git show-branch $(git for-each-ref --format='%(refname:short)' refs/heads) origin/master
+
+  ########################
+  # working with remotes #
+  ########################
+  # fetch all remotes
+  fetchall = fetch --all
+  # gerrit-publish
+  publish = push --progress \"origin\" HEAD:refs/publish/master
+  # `push --force` that fails if someone else pushed in the meantime
+  please = push --force-with-lease
+
+  #########################
+  # working with branches #
+  #########################
+  # laziness...
+  b = branch
+  co = checkout
+  cob = checkout -b
+
+  ######################
+  # working with stash #
+  ######################
+  # laziness...
   ss = !git stash save
   sp = !git stash pop
-  please = push --force-with-lease
+
+  # stash only unstaged changes to tracked files
   stsh = stash --keep-index
+  # (`stash` stashes all (un-)staged changes to tracked files)
+  # stash untracked and tracked files
   staash = stash --include-untracked
+  # stash ignored, untracked, and tracked files
   staaash = stash --all
-  st = status --short --branch
-  shorty = status --short --branch
-  grog = !git log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+
+  # stash changes to tracked files in a "WIP" commit
+  wip = !git add -u && git commit -m 'WIP'
+  # stash all changes in a "SAVEPOINT" commit
+  save = !git add -A && git commit -m 'SAVEPOINT'
+  # "undoes" a wip/save commit by resetting to the previous commit
+  undo = reset HEAD~1 --mixed
+  # create and discard a "WIPE SAVEPOINT" commit
+  wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+  ###########################
+  # working with submodules #
+  ###########################
+  # recursively initialize submodules (after cloning a repo)
+  sub-init = !git submodule update --init --recursive
+  # pull all submodules
+  sub-update = !git submodule foreach git pull origin master
 [push]
   default = matching
 [http]
