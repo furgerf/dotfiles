@@ -327,9 +327,9 @@ let g:ctrlp_custom_ignore = {
 set wildignore+=*.pyc
 set wildignore+=__init__.py
 
-noremap w <Plug>CamelCaseMotion_w
-noremap b <Plug>CamelCaseMotion_b
-noremap e <Plug>CamelCaseMotion_e
+map w <Plug>CamelCaseMotion_w
+map b <Plug>CamelCaseMotion_b
+map e <Plug>CamelCaseMotion_e
 
 " duplicate visual mode selection
 vnoremap D y'>p
@@ -404,4 +404,12 @@ let g:test#javascript#mocha#options = {
 nnoremap <S-Tab> <<
 " for insert mode
 inoremap <S-Tab> <C-d>
+
+" wrap word under cursor/selection in quotes - they don't always work and are just for playing around
+nnoremap <leader>" viw<Esc>a"<Esc>hbi"<Esc>lel
+inoremap <leader>" <Esc>viw<Esc>a"<Esc>hbi"<Esc>lela
+vnoremap <leader>" o<Esc>i"<Esc>gvo<Esc>la"<Esc>
+nnoremap <leader>' viw<Esc>a'<Esc>hbi'<Esc>lel
+inoremap <leader>' <Esc>viw<Esc>a'<Esc>hbi'<Esc>lela
+vnoremap <leader>' o<Esc>i'<Esc>gvo<Esc>la'<Esc>
 
