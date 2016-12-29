@@ -83,26 +83,26 @@ autocmd BufNewFile,BufRead md set filetype=markdown
 autocmd BufReadPost jsm set syntax=javascript
 
 " files that use semicolons: use COSC plugin
-autocmd FileType javascript,css nmap <silent> <leader>, :CommaOrSemiColon<CR>
-autocmd FileType javascript,css imap <silent> <leader>, <c-o>:CommaOrSemiColon<CR>
+autocmd FileType javascript,css nnoremap <leader>, :CommaOrSemiColon<CR>
+autocmd FileType javascript,css inoremap <leader>, <c-o>:CommaOrSemiColon<CR>
 
 " c: compile
-autocmd FileType c map <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
+autocmd FileType c noremap <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 
 " scripts: execute
-autocmd FileType lua\|sh\|python map <F2> :!"%:p"<CR>
+autocmd FileType lua\|sh\|python noremap <F2> :!"%:p"<CR>
 
 " tex: compile and open/compile
-autocmd FileType tex map <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
-autocmd FileType tex imap <F3> <Esc>:w<CR>\ll<CR>a
-autocmd FileType tex map <F3> :w<CR>\ll<CR>
+autocmd FileType tex noremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
+autocmd FileType tex inoremap <F3> <Esc>:w<CR>\ll<CR>a
+autocmd FileType tex noremap <F3> :w<CR>\ll<CR>
 
 " bib: compile
-autocmd FileType bib map <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
+autocmd FileType bib noremap <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
 
 " md: compile and open/compile
-autocmd FileType markdown map <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
-autocmd FileType markdown map <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
+autocmd FileType markdown noremap <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
+autocmd FileType markdown noremap <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
 
 " commit messages: spellchecking and small columns
 " enforce small commit message lines
@@ -123,13 +123,13 @@ set clipboard=unnamed
 set encoding=utf-8
 
 " allow saving files as sudo
-cmap w!! w !sudo tee % > /dev/null
+cnoremap w!! w !sudo tee % > /dev/null
 
 set pastetoggle=<F7>
 
 " make j/k move down/up one ROW rather than one LINE
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 
 " load pathogen
@@ -166,45 +166,45 @@ let g:ycm_filetype_specific_completion_to_disable = { 'tex': 1 }
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$', '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
 
 " map save, close all
-map <C-s> <esc>:w<CR>
-imap <C-s> <esc>:w<CR>a
-map <C-c> <esc>:q<CR>
-imap <C-c> <esc>:q<CR>
-map <C-q> <esc>:qa<CR>
-imap <C-q> <esc>:qa<CR>
+noremap <C-s> <esc>:w<CR>
+inoremap <C-s> <esc>:w<CR>a
+noremap <C-c> <esc>:q<CR>
+inoremap <C-c> <esc>:q<CR>
+noremap <C-q> <esc>:qa<CR>
+inoremap <C-q> <esc>:qa<CR>
 abbrev Qa qa
 
 " map leader
 " unhighlight search results
-map <Leader>q :nohlsearch<CR>
-map <Leader>yy ggVG"*y
-map <Leader>n :NERDTreeToggle<CR>
-map <Leader>dr :E ~/dropbox<CR>
-map <Leader>vim :e $MYVIMRC<CR>
-map <Leader>ss :so $MYVIMRC<CR>
-map <Leader>b :e ~/.bashrc<CR>
-map <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
-map <Leader>w <C-w>w
+noremap <Leader>q :nohlsearch<CR>
+noremap <Leader>yy ggVG"*y
+noremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>dr :E ~/dropbox<CR>
+noremap <Leader>vim :e $MYVIMRC<CR>
+noremap <Leader>ss :so $MYVIMRC<CR>
+noremap <Leader>b :e ~/.bashrc<CR>
+noremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
+noremap <Leader>w <C-w>w
 
 " Edit another file in the same directory as the current file
 " uses expression to extract path from current file's path
-map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
-map <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-map <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+noremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
+noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 " change TeX placeholder movement
-imap <C-g> <Plug>IMAP_JumpForward
-nmap <C-g> <Plug>IMAP_JumpForward
+inoremap <C-g> <Plug>IMAP_JumpForward
+nnoremap <C-g> <Plug>IMAP_JumpForward
 
 " insert TeX-likeplaceholder
 nnoremap <Leader>g i<++><Esc>hi
 inoremap <Leader>g i<++><Esc>i
 
 " easier window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 
@@ -236,8 +236,8 @@ autocmd! BufWritePost $MYVIMRC AirlineRefresh
 
 " for vim-obsess
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
-map <Leader>o :Obsess<CR>
-map <Leader>O :Obsess!<CR>
+noremap <Leader>o :Obsess<CR>
+noremap <Leader>O :Obsess!<CR>
 
 command! Texcount execute "!perl /home/fabian/.vim/plugin/texcount.pl %"
 command! Texcountall execute "!perl /home/fabian/.vim/plugin/tex-count-recursive %:p:h"
@@ -247,8 +247,8 @@ set matchpairs+=<:>,=:;
 
 
 " visual mode: < and > indent block and re-select previous indentation too
-:vnoremap < <gv
-:vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " Jump to last cursor position when opening a file
 autocmd BufReadPost * call s:SetCursorPosition()
@@ -270,8 +270,8 @@ set wildignore+=*.swp     " ignore swapfiles when completing filenames
 set title                " change the terminal's title
 
 " Q autoformats the current selection or paragraph
-" vmap Q gq
-" nmap Q gqap
+vnoremap Q gq
+" nnoremap Q gqap
 
 " Bubble single lines
 nnoremap <silent> <C-Up>   :move-2<CR>==
@@ -298,12 +298,12 @@ inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
-nmap <Leader>hh <Plug>GitGutterNextHunk
-nmap <Leader>HH <Plug>GitGutterPrevHunk
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterRevertHunk
+nnoremap ]h <Plug>GitGutterNextHunk
+nnoremap [h <Plug>GitGutterPrevHunk
+" nnoremap <Leader>hh <Plug>GitGutterNextHunk
+" nnoremap <Leader>HH <Plug>GitGutterPrevHunk
+nnoremap <Leader>ha <Plug>GitGutterStageHunk
+nnoremap <Leader>hr <Plug>GitGutterRevertHunk
 
 " Backspace deletes buffer.
 nnoremap <BS> :bd<CR>
@@ -327,16 +327,16 @@ let g:ctrlp_custom_ignore = {
 set wildignore+=*.pyc
 set wildignore+=__init__.py
 
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
+noremap w <Plug>CamelCaseMotion_w
+noremap b <Plug>CamelCaseMotion_b
+noremap e <Plug>CamelCaseMotion_e
 
 " duplicate visual mode selection
-vmap D y'>p
+vnoremap D y'>p
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vmap P p :call setreg('"', getreg('0'))<CR>
+vnoremap P p :call setreg('"', getreg('0'))<CR>
 
 " bind K to search word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -356,10 +356,10 @@ let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
 set shiftround
 
 " Execute macro in q
-map Q @q
+nnoremap Q @q
 
 " Quickfix management
-map <Space><Space> :ccl<CR>:pclose<CR>
+noremap <Space><Space> :ccl<CR>:pclose<CR>
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -382,15 +382,15 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <Leader>rn :call RenameFile()<cr>
+noremap <Leader>rn :call RenameFile()<cr>
 " do not store runtimepath in session file - that doesn't work with pathogen
 set sessionoptions-=options
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>tt :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
+nnoremap <silent> <leader>tn :TestNearest<CR>
+nnoremap <silent> <leader>tf :TestFile<CR>
+nnoremap <silent> <leader>tt :TestSuite<CR>
+nnoremap <silent> <leader>tl :TestLast<CR>
 
 let g:indentLine_char = '┆'
 
