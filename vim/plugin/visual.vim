@@ -6,7 +6,7 @@
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_number_column='bg1'
-let g:gruvbox_color_column='bg0'
+" let g:gruvbox_color_column='bg0'
 let g:gruvbox_improved_warnings='1'
 colorscheme gruvbox
 
@@ -23,19 +23,19 @@ let g:airline_powerline_fonts = 1
 " display buffers instead of tabs if no tabs are used
 let g:airline#extensions#tabline#enabled = 1
 " display 'straight' tabs
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " highlight the current buffer with normal background
 augroup BgHighlight
   autocmd!
-  autocmd VimEnter * execute "set colorcolumn=" . join(range(1, 101), ',')
-  autocmd WinEnter * execute "set colorcolumn=" . join(range(1, 101), ',')
+  autocmd VimEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
+  autocmd WinEnter * execute "set colorcolumn=" . join(range(101, 355), ',')
   autocmd WinLeave * execute "set colorcolumn=0"
 
-  " autocmd VimEnter * set cul cuc
-  " autocmd WinEnter * set cul cuc
-  " autocmd WinLeave * set nocul nocuc
+  autocmd VimEnter * set cul cuc
+  autocmd WinEnter * set cul cuc
+  autocmd WinLeave * set nocul nocuc
 augroup END
 
 " additional highlighting
