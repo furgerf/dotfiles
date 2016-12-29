@@ -143,6 +143,7 @@ set complete+=kspell
 
 
 " This rewires n and N to do the highlighing...
+" TODO: fix - maybe that was introduced with vim 8..?
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
 
@@ -171,6 +172,7 @@ map <C-c> <esc>:q<CR>
 imap <C-c> <esc>:q<CR>
 map <C-q> <esc>:qa<CR>
 imap <C-q> <esc>:qa<CR>
+abbrev Qa qa
 
 " map leader
 " unhighlight search results
@@ -268,8 +270,8 @@ set wildignore+=*.swp     " ignore swapfiles when completing filenames
 set title                " change the terminal's title
 
 " Q autoformats the current selection or paragraph
-vmap Q gq
-nmap Q gqap
+" vmap Q gq
+" nmap Q gqap
 
 " Bubble single lines
 nnoremap <silent> <C-Up>   :move-2<CR>==
@@ -363,7 +365,7 @@ map <Space><Space> :ccl<CR>:pclose<CR>
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 
-" Don't wait so long for the next keypress (particularly in ambigious Leader
+" Don't wait so long for the next keypress (particularly in ambigious Leaderkdsjflsa jflksadjf dsalkfj sadlfj
 " situations.
 set timeoutlen=500
 
@@ -392,4 +394,14 @@ nmap <silent> <leader>tl :TestLast<CR>
 
 let g:indentLine_char = '┆'
 
+let g:test#javascript#mocha#options = {
+  \ 'file':    '--check-leaks --full-trace --inline-diffs --no-exit',
+  \ 'nearest': '--check-leaks --full-trace --inline-diffs --no-exit',
+  \ 'suite':   '--check-leaks --full-trace --inline-diffs --no-exit --recursive'
+\}
+
+" for command mode
+nnoremap <S-Tab> <<
+" for insert mode
+inoremap <S-Tab> <C-d>
 
