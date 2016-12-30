@@ -72,37 +72,6 @@ set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
 
 set wildmode=list:longest,full " tab completion: show all matches, then start completing
 
-
-""""""""""""""""""""""
-" FILE-TYPE SPECIFIC "
-""""""""""""""""""""""
-" md is markdown
-autocmd BufNewFile,BufRead md set filetype=markdown
-
-" jsm is javascript
-autocmd BufReadPost jsm set syntax=javascript
-
-" files that use semicolons: use COSC plugin
-autocmd FileType javascript,css nnoremap <leader>, :CommaOrSemiColon<CR>
-autocmd FileType javascript,css inoremap <leader>, <c-o>:CommaOrSemiColon<CR>
-
-" c: compile
-autocmd FileType c noremap <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
-
-" scripts: execute
-autocmd FileType lua\|sh noremap <F2> :!"%:p"<CR>
-
-" md: compile and open/compile
-autocmd FileType markdown noremap <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
-autocmd FileType markdown noremap <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
-
-" commit messages: spellchecking and small columns
-" enforce small commit message lines
-autocmd Filetype gitcommit setlocal textwidth=72
-" spellchecking
-autocmd FileType md\|gitcommit setlocal spell
-
-
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 
 set grepprg=grep\ -nH\ $*
@@ -119,16 +88,13 @@ set pastetoggle=<F7>
 nnoremap j gj
 nnoremap k gk
 
-
 " load pathogen
 execute pathogen#infect()
 " not sure whether the following line is necessary
 call pathogen#helptags()
 
-
 " word complete
 set complete+=kspell
-
 
 " This rewires n and N to do the highlighing...
 " TODO: fix - maybe that was introduced with vim 8..?
