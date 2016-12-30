@@ -193,8 +193,8 @@ noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 " change TeX placeholder movement
-inoremap <C-g> <Plug>IMAP_JumpForward
-nnoremap <C-g> <Plug>IMAP_JumpForward
+imap <C-g> <Plug>IMAP_JumpForward
+nmap <C-g> <Plug>IMAP_JumpForward
 
 " insert TeX-likeplaceholder
 nnoremap <Leader>g i<++><Esc>hi
@@ -298,12 +298,10 @@ inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
-nnoremap ]h <Plug>GitGutterNextHunk
-nnoremap [h <Plug>GitGutterPrevHunk
-" nnoremap <Leader>hh <Plug>GitGutterNextHunk
-" nnoremap <Leader>HH <Plug>GitGutterPrevHunk
-nnoremap <Leader>ha <Plug>GitGutterStageHunk
-nnoremap <Leader>hr <Plug>GitGutterRevertHunk
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+nmap <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hr <Plug>GitGutterRevertHunk
 
 " Backspace deletes buffer.
 nnoremap <BS> :bd<CR>
