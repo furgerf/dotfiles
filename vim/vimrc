@@ -349,14 +349,6 @@ nnoremap <S-Tab> <<
 " for insert mode
 inoremap <S-Tab> <C-d>
 
-" wrap word under cursor/selection in quotes - they don't always work and are just for playing around
-nnoremap <leader>" viw<Esc>a"<Esc>hbi"<Esc>lel
-inoremap <leader>" <Esc>viw<Esc>a"<Esc>hbi"<Esc>lela
-vnoremap <leader>" o<Esc>i"<Esc>gvo<Esc>la"<Esc>
-nnoremap <leader>' viw<Esc>a'<Esc>hbi'<Esc>lel
-inoremap <leader>' <Esc>viw<Esc>a'<Esc>hbi'<Esc>lela
-vnoremap <leader>' o<Esc>i'<Esc>gvo<Esc>la'<Esc>
-
 " remember vim home directory
 let $VIMHOME=expand('<sfile>:p:h')
 
