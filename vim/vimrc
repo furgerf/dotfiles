@@ -90,7 +90,7 @@ autocmd FileType javascript,css inoremap <leader>, <c-o>:CommaOrSemiColon<CR>
 autocmd FileType c noremap <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 
 " scripts: execute
-autocmd FileType lua\|sh\|python noremap <F2> :!"%:p"<CR>
+autocmd FileType lua\|sh noremap <F2> :!"%:p"<CR>
 
 " tex: compile and open/compile
 autocmd FileType tex noremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
