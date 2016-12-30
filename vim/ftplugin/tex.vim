@@ -29,3 +29,6 @@ nmap <F3> :w<CR>\ll<CR>
 command! Texcount execute "!perl $VIMHOME/plugin/texcount.pl %"
 command! Texcountall execute "!perl $VIMHOME/plugin/tex-count-recursive %:p:h"
 
+" NOT enabling folding although that would be nice - first need to get that
+" to work properly though...
+

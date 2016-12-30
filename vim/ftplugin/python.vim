@@ -10,3 +10,8 @@ let test#python#nose2#options =
 " execute current file with F2
 " NOTE: Might want to change that mapping at some point...
 nnoremap <F2> :!"%:p"<CR>
+
+" enable folding - the default foldlevelstart of 1 is ok as it collapses
+" functions (assuming they're inside a class)
+set foldenable
+
