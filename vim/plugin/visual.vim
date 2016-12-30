@@ -31,17 +31,18 @@ augroup BgHighlight
   autocmd!
   autocmd VimEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
   autocmd WinEnter * execute "set colorcolumn=" . join(range(101, 355), ',')
-  autocmd WinLeave * execute "set colorcolumn=0"
+  autocmd WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
 
-  autocmd VimEnter * set cul cuc
-  autocmd WinEnter * set cul cuc
-  autocmd WinLeave * set nocul nocuc
+  " autocmd VimEnter * set cul cuc
+  " autocmd WinEnter * set cul cuc
+  " autocmd WinLeave * set nocul nocuc
 augroup END
 
 " additional highlighting
 " NOTE that this technically isn't part of the colorscheme
 " but, for it to fit, I'm manually taking the colors from there
-" overlength starts at column 81
+" OverLength highlighting starts at column 81
 highlight OverLength ctermfg=167 guifg=#fb4934
-match OverLength /\%81v.\+/
+" because `match`-ing only affects the current window, we apply it each time we open a buffer
+autocmd! BufWinEnter * match OverLength /\%81v.\+/
 
