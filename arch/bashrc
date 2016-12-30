@@ -184,6 +184,8 @@ alias publish='git publish'
 alias gitall='git add . && git commit . && git push'
 
 # misc
+alias ='exit'
+alias ='fg' # hit  to resume background paused process (fg)
 #alias tmux='TERM=screen-256color tmux'
 alias watch='\watch '   # allow alias expansion for watch argument
 alias ta='tmux a'

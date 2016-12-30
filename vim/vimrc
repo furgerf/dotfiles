@@ -1,3 +1,4 @@
+set nocompatible
 filetype plugin indent on
 syntax enable
 
@@ -183,9 +184,17 @@ function! HelpInNewTab ()
   endif
 endfunction
 
-" automatically re-source vimrc - which messes up airline, so refresh that
-autocmd! BufWritePost $MYVIMRC source $MYVIMRC
-autocmd! BufWritePost $MYVIMRC AirlineRefresh
+" NOT doing any vimrc re-sourcing because that leads to all sorts of problems...
+" augroup OnVimrcChanged
+"   " stuff to execute whenever vimrc changed...
+"   au!
+"   " ... load new vimrc
+"   autocmd BufWritePost $MYVIMRC source $MYVIMRC
+"   " ... refresh plugins that sometimes struggle
+"   " autocmd BufWritePost $MYVIMRC AirlineRefresh
+"   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/camelcasemotion/autoload/camelcasemotion.vim
+"   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/ctrlp.vim/autoload/ctrlp.vim
+" augroup END
 
 " for vim-obsess
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
@@ -246,8 +255,10 @@ inoremap <C-b> <esc>:e#<CR>
 set tags=.git/tags,tags           " Look for tags in .git/
 nmap ]h <Plug>GitGutterNextHunk
 nmap [h <Plug>GitGutterPrevHunk
+let g:gitgutter_map_keys=0
 nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterRevertHunk
+nmap <Leader>hr <Plug>GitGutterUndoHunk
+nmap <Leader>hv <Plug>GitGutterPreviewHunk
 
 " Backspace deletes buffer.
 nnoremap <BS> :bd<CR>
@@ -263,8 +274,23 @@ vnoremap // y/<C-R>"<CR>
 nnoremap <Leader>p :CtrlPTag<CR>
 nnoremap <Leader>t :TagbarToggle<CR>
 
-" CtrlP: ignore files in .gitignore
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" CtrlP: don't use normal file listing, use git instead
+" NOTE: this may ignore files that shouldn't be ignored - maybe switch to using
+" silver search instead
+" - no caching (necessary)
+let g:ctrlp_use_caching = 0
+" - assign user command for finding files
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+    \ }
+endif
+" - ignore  some stuff
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
   \ }
@@ -280,7 +306,17 @@ vnoremap D y'>p
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vnoremap P p :call setreg('"', getreg('0'))<CR>
+vnoremap P p:call setreg('"', getreg('0'))<CR>
+" alternative implementation:
+" function! RestoreRegister()
+"   let @" = s:restore_reg
+"   return ''
+" endfunction
+" function! s:Repl()
+"   let s:restore_reg = @"
+"   return "p@=RestoreRegister()\<cr>"
+" endfunction
+" vmap <silent> <expr> P <sid>Repl()
 
 " bind K to search word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -309,7 +345,7 @@ noremap <Space><Space> :ccl<CR>:pclose<CR>
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 
-" Don't wait so long for the next keypress (particularly in ambigious Leaderkdsjflsa jflksadjf dsalkfj sadlfj
+" Don't wait so long for the next keypress (particularly in ambigious Leader
 " situations.
 set timeoutlen=500
 
@@ -351,4 +387,24 @@ inoremap <S-Tab> <C-d>
 
 " remember vim home directory
 let $VIMHOME=expand('<sfile>:p:h')
+
+" turn paste mode off when leaving insert mode
+autocmd InsertLeave * set nopaste
+
+" assign leaders - will be changed soon
+let mapleader = "\\"
+let localmapleader = ","
+
+" go automatically to the end of the text after yanking/pasting
+vnoremap <silent> y y']
+vnoremap <silent> p p']
+nnoremap <silent> p p']
+
+" <CR> moves to the end of file or to a specific line
+nnoremap <CR> G
+
+noremap <silent> <F5> :e<CR>
+
+" select just-pasted text
+noremap gV `[v`]
 
