@@ -92,14 +92,6 @@ autocmd FileType c noremap <F2> :!gcc -o "%:p:r.out" "%:p" && "%:p:r.out"<CR>
 " scripts: execute
 autocmd FileType lua\|sh noremap <F2> :!"%:p"<CR>
 
-" tex: compile and open/compile
-autocmd FileType tex noremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" && okular &> /dev/null "%:p:r.pdf" &<CR>
-autocmd FileType tex inoremap <F3> <Esc>:w<CR>\ll<CR>a
-autocmd FileType tex noremap <F3> :w<CR>\ll<CR>
-
-" bib: compile
-autocmd FileType bib noremap <F2> :!cd "%:p:h" && for i in *.aux; do bibtex $i; done<CR>
-
 " md: compile and open/compile
 autocmd FileType markdown noremap <F2> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" && okular &> /dev/null "%:p:r.pdf" &<CR>
 autocmd FileType markdown noremap <F3> :!cd "%:p:h" && pandoc -V geometry:margin=1in "%:p" -o "%:p:r.pdf" &<CR>
@@ -108,16 +100,12 @@ autocmd FileType markdown noremap <F3> :!cd "%:p:h" && pandoc -V geometry:margin
 " enforce small commit message lines
 autocmd Filetype gitcommit setlocal textwidth=72
 " spellchecking
-autocmd FileType tex\|md\|gitcommit setlocal spell
-
+autocmd FileType md\|gitcommit setlocal spell
 
 
 set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 
 set grepprg=grep\ -nH\ $*
-let g:tex_flavor = "latex"
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_GotoError=0
 
 set clipboard=unnamed
 set encoding=utf-8
@@ -159,9 +147,6 @@ function! HLNext (blinktime)
   redraw
 endfunction
 
-" disable ycm in tex
-let g:ycm_filetype_specific_completion_to_disable = { 'tex': 1 }
-
 " NERDTree file filter
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$', '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
 
@@ -193,12 +178,17 @@ noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 " change TeX placeholder movement
+" NOTE: this stays in vimrc because we can use these placeholders in other files too
 imap <C-g> <Plug>IMAP_JumpForward
 nmap <C-g> <Plug>IMAP_JumpForward
 
-" insert TeX-likeplaceholder
+" insert TeX placeholder
 nnoremap <Leader>g i<++><Esc>hi
-inoremap <Leader>g i<++><Esc>i
+inoremap <Leader>g <++><Esc>i
+
+" jump to TeX next placeholder
+nnoremap <C-n> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
+inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " easier window navigation
 noremap <C-h> <C-w>h
@@ -207,9 +197,6 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
-
-" Highlight the status line
-"highlight StatusLine ctermfg=darkgray ctermbg=yellow
 
 
 "============================================================================
@@ -238,9 +225,6 @@ autocmd! BufWritePost $MYVIMRC AirlineRefresh
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 noremap <Leader>o :Obsess<CR>
 noremap <Leader>O :Obsess!<CR>
-
-command! Texcount execute "!perl /home/fabian/.vim/plugin/texcount.pl %"
-command! Texcountall execute "!perl /home/fabian/.vim/plugin/tex-count-recursive %:p:h"
 
 " adding pairs of matching characters
 set matchpairs+=<:>,=:;
@@ -291,10 +275,6 @@ xnoremap <C-A-up> y`<Pgv
 "Jump back to last edited buffer
 nnoremap <C-b> :e#<CR>
 inoremap <C-b> <esc>:e#<CR>
-
-" jump to next placeholder
-nnoremap <C-n> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
-inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
@@ -410,4 +390,7 @@ vnoremap <leader>" o<Esc>i"<Esc>gvo<Esc>la"<Esc>
 nnoremap <leader>' viw<Esc>a'<Esc>hbi'<Esc>lel
 inoremap <leader>' <Esc>viw<Esc>a'<Esc>hbi'<Esc>lela
 vnoremap <leader>' o<Esc>i'<Esc>gvo<Esc>la'<Esc>
+
+" remember vim home directory
+let $VIMHOME=expand('<sfile>:p:h')
 
