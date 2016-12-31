@@ -1,103 +1,118 @@
+" mandatory options
 set nocompatible
 filetype plugin indent on
 syntax enable
 
-set tabstop=2       " Number of spaces that a <Tab> in the file counts for.
+" TABS
+" number of spaces that a <Tab> counts for
+set tabstop=2
+" number of spaces to use for each step of (auto)indent
+set shiftwidth=2
+" same like those above, more or less - maybe...
+set softtabstop=2
+" expand all tabs to spaces
+set expandtab
+" make <Tab> work a bit better - I think...
+set smarttab
+" indent to a multiple of shiftwidth instead of inserting (expanded) <Tab>s
+set shiftround
+" copy indent from current line when starting a new line
+" but discard the indentation if the line remains empty
+set copyindent
+set autoindent
 
-set shiftwidth=2    " Number of spaces to use for each step of (auto)indent.
+" VISUALS
+" show relative line numbers
+set number
+set relativenumber
+" show the line and column number of the cursor - has no effect with vim-airline
+set ruler
+" briefly jump to matching brackets when inserting
+set showmatch
+" show command in status line - I don't think this has any effect on vim-airline
+set showcmd
+" always show 5 lines of context around cursor
+set scrolloff=5
+" change the title in the terminal showing session tracking
+set title
+set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+" add some pairs of matching characters - assignment/semicolon is debatable...
+set matchpairs+=<:>,=:;
 
-set softtabstop=2   " Same like those above, more or less - maybe.
+" SEARCH
+" search incrementally and highlight matches
+set incsearch
+set hlsearch
+" use case-sensitive search only when searching for uppercase chars
+set ignorecase
+set smartcase
+" always assume the /g flag on :s substitutions to replace all matches in a line
+set gdefault
 
-set expandtab       " Use the appropriate number of spaces to insert a <Tab>.
-                    " Spaces are used in indents with the '>' and '<' commands
-                    " and when 'autoindent' is on. To insert a real tab when
-                    " 'expandtab' is on, use CTRL-V <Tab>.
+" FORMATTING/EDITING
+" allow deleting beyond newly-inserted text
+set backspace=indent,eol,start
+" maximum width of text - I want to do my own linebreaks (usually)
+set textwidth=256
+" This is a sequence of letters which describes how
+" set up automatic formatting: (TODO: there are way more to check out)
+" t: auto-wrap text after textwidth (non-comments)
+" c: wrap comments and automatically insert comment leader
+" q: format comments with 'gq'
+" r: insert comment leader when starting new line from comment in insert mode
+set formatoptions=c,q,r,t
 
-set smarttab        " When on, a <Tab> in front of a line inserts blanks
-                    " according to 'shiftwidth'. 'tabstop' is used in other
-                    " places. A <BS> will delete a 'shiftwidth' worth of space
-                    " at the start of the line.
-
-set showcmd         " Show (partial) command in status line.
-
-set number          " Show line numbers.
-set relativenumber  " Show relative line numbers.
-
-set showmatch       " When a bracket is inserted, briefly jump to the matching
-                    " one. The jump is only done if the match can be seen on the
-                    " screen. The time to show the match can be set with
-                    " 'matchtime'.
-
-set hlsearch        " When there is a previous search pattern, highlight all
-                    " its matches.
-
-set incsearch       " While typing a search command, show immediately where the
-                    " so far typed pattern matches.
-
-set ignorecase      " Ignore case in search patterns.
-
-set smartcase       " Override the 'ignorecase' option if the search pattern
-                    " contains upper case characters.
-
-set backspace=indent,eol,start     " Influences the working of <BS>, <Del>, CTRL-W
-                    " and CTRL-U in Insert mode. This is a list of items,
-                    " separated by commas. Each item allows a way to backspace
-                    " over something.
-
-set autoindent      " Copy indent from current line when starting a new line
-                    " (typing <CR> in Insert mode or when using the "o" or "O"
-                    " command).
-
-set copyindent      " copy previous indentation
-
-set textwidth=256   " Maximum width of text that is being inserted. A longer
-                    " line will be broken after white space to get this width.
-
-set formatoptions=c,q,r,t " This is a sequence of letters which describes how
-                    " automatic formatting is to be done.-
-                    "
-                    " letter    meaning when present in 'formatoptions'
-                    " ------    ---------------------------------------
-                    " c         Auto-wrap comments using textwidth, inserting
-                    "           the current comment leader automatically.
-                    " q         Allow formatting of comments with "gq".
-                    " r         Automatically insert the current comment leader
-                    "           after hitting <Enter> in Insert mode.
-                    " t         Auto-wrap text using textwidth (does not apply
-                    "           to comments)
-
-set ruler           " Show the line and column number of the cursor position,
-                    " separated by a comma.
-
-set mouse=nr        " Enable the use of the mouse. SHOULD BE 'a'
-
-set wildmode=list:longest,full " tab completion: show all matches, then start completing
-
-set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
-
-set grepprg=grep\ -nH\ $*
-
+" CLIPBOARD
+" enable the mouse in the following modes
+" NOTE: if there's an issue, go back to 'nr'
+set mouse=a
+" changes the working of registers related to the clipboard
+" TODO: check out h x11-selection to maybe understand and configure better
 set clipboard=unnamed
+
+" MISC
+" use default linux encoding in vim
 set encoding=utf-8
 
-set pastetoggle=<F7>
+" use a shorter time when waiting for keypress (eg after leader)
+set timeoutlen=500
 
-" make j/k move down/up one ROW rather than one LINE
-nnoremap j gj
-nnoremap k gk
+" in insert mode with spell-checking, use dictionary for word completion
+" NOTE: Currently only completes manually (<C-n>)
+set complete+=kspell
+
+" change history and undo size
+set history=1000
+set undolevels=1000
+
+" modify grep command
+set grepprg=grep\ -nH\ $*
+
+" open new split panes to right and bottom
+set splitbelow
+set splitright
+
+" command wildchar expansion: show all matches, then start completing
+set wildmode=list:longest,full
+" ignore some file types when completing
+set wildignore+=*.swp,*.pyc,__init__.py
+
+" do not store runtimepath in session file - that doesn't work with pathogen
+set sessionoptions-=options
+
+" manually set the runtime path - I don't think that's needed (anymore)
+" set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+
+" remember vim home directory
+let $VIMHOME=expand('<sfile>:p:h')
 
 " load pathogen
 execute pathogen#infect()
-" not sure whether the following line is necessary
-call pathogen#helptags()
+" in case help text is missing, run `call pathogen#helptags()` or `Helptags`
 
-" word complete
-set complete+=kspell
 
 " NERDTree file filter
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$', '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
-
-set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
 
 "============================================================================
 " Make :help appear in a full-screen tab, instead of a window
@@ -129,12 +144,6 @@ endfunction
 "   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/ctrlp.vim/autoload/ctrlp.vim
 " augroup END
 
-" for vim-obsess
-set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
-
-" adding pairs of matching characters
-set matchpairs+=<:>,=:;
-
 " Jump to last cursor position when opening a file
 autocmd BufReadPost * call s:SetCursorPosition()
 function! s:SetCursorPosition()
@@ -146,14 +155,6 @@ function! s:SetCursorPosition()
     end
 endfunction
 
-" buffers are hidden, rather than closed
-"set hidden
-
-set history=1000         " remember more commands and search history
-set undolevels=5000      " use many muchos levels of undo
-set wildignore+=*.swp     " ignore swapfiles when completing filenames
-set title                " change the terminal's title
-
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
 nmap ]h <Plug>GitGutterNextHunk
@@ -162,8 +163,6 @@ let g:gitgutter_map_keys=0
 nmap <Leader>ha <Plug>GitGutterStageHunk
 nmap <Leader>hr <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
-
-set scrolloff=5 " Show 5 lines of context around the cursor.
 
 " use magic regex mode by default
 "nnoremap / /\v
@@ -188,32 +187,12 @@ endif
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
   \ }
-set wildignore+=*.pyc
-set wildignore+=__init__.py
-
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
-
 " always look for snippets here (so UltiSnipsEdit can be used)
 let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
-
-" When at 3 spaces and I hit >>, go to 4, not 5.
-set shiftround
-
-" Execute macro in q
-nnoremap Q @q
 
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
-
-" Don't wait so long for the next keypress (particularly in ambigious Leader
-" situations.
-set timeoutlen=500
-
-" do not store runtimepath in session file - that doesn't work with pathogen
-set sessionoptions-=options
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
@@ -224,9 +203,6 @@ let g:test#javascript#mocha#options = {
   \ 'nearest': '--check-leaks --full-trace --inline-diffs --no-exit',
   \ 'suite':   '--check-leaks --full-trace --inline-diffs --no-exit --recursive'
 \}
-
-" remember vim home directory
-let $VIMHOME=expand('<sfile>:p:h')
 
 " turn paste mode off when leaving insert mode
 autocmd InsertLeave * set nopaste

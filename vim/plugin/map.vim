@@ -115,3 +115,13 @@ vnoremap P "0P
 " bind K to search word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
+" make j/k move down/up one ROW rather than one LINE
+nnoremap j gj
+nnoremap k gk
+
+" Execute macro in q
+nnoremap Q @q
+
+" use F7 for pasting
+set pastetoggle=<F7>
+
