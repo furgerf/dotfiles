@@ -12,3 +12,5 @@ config
 dotfiles
 gitconfig
 vim
+tmux
+plugin

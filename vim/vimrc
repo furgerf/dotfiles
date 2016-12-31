@@ -80,9 +80,6 @@ set grepprg=grep\ -nH\ $*
 set clipboard=unnamed
 set encoding=utf-8
 
-" allow saving files as sudo
-cnoremap w!! w !sudo tee % > /dev/null
-
 set pastetoggle=<F7>
 
 " make j/k move down/up one ROW rather than one LINE
@@ -97,74 +94,10 @@ call pathogen#helptags()
 " word complete
 set complete+=kspell
 
-" This rewires n and N to do the highlighing...
-" TODO: fix - maybe that was introduced with vim 8..?
-nnoremap <silent> n   n:call HLNext(0.4)<cr>
-nnoremap <silent> N   N:call HLNext(0.4)<cr>
-
-" add blinkhighlight when browsing trough matches
-function! HLNext (blinktime)
-  let [bufnum, lnum, col, off] = getpos('.')
-  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-  let target_pat = '\c\%#\%('.@/.'\)'
-  let ring = matchadd('ErrorMsg', target_pat, 101)
-  redraw
-  exec 'sleep ' . float2nr(a:blinktime * 500) . 'm'
-  call matchdelete(ring)
-  redraw
-endfunction
-
 " NERDTree file filter
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$', '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
 
-" map save, close all
-noremap <C-s> <esc>:w<CR>
-inoremap <C-s> <esc>:w<CR>a
-noremap <C-c> <esc>:q<CR>
-inoremap <C-c> <esc>:q<CR>
-noremap <C-q> <esc>:qa<CR>
-inoremap <C-q> <esc>:qa<CR>
-abbrev Qa qa
-
-" map leader
-" unhighlight search results
-noremap <Leader>q :nohlsearch<CR>
-noremap <Leader>yy ggVG"*y
-noremap <Leader>n :NERDTreeToggle<CR>
-noremap <Leader>dr :E ~/dropbox<CR>
-noremap <Leader>vim :e $MYVIMRC<CR>
-noremap <Leader>ss :so $MYVIMRC<CR>
-noremap <Leader>b :e ~/.bashrc<CR>
-noremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
-noremap <Leader>w <C-w>w
-
-" Edit another file in the same directory as the current file
-" uses expression to extract path from current file's path
-noremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
-noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-
-" change TeX placeholder movement
-" NOTE: this stays in vimrc because we can use these placeholders in other files too
-imap <C-g> <Plug>IMAP_JumpForward
-nmap <C-g> <Plug>IMAP_JumpForward
-
-" insert TeX placeholder
-nnoremap <Leader>g i<++><Esc>hi
-inoremap <Leader>g <++><Esc>i
-
-" jump to TeX next placeholder
-nnoremap <C-n> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
-inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
-
-" easier window navigation
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-
 set gdefault " assume the /g flag on :s substitutions to replace all matches in a line
-
 
 "============================================================================
 " Make :help appear in a full-screen tab, instead of a window
@@ -198,16 +131,9 @@ endfunction
 
 " for vim-obsess
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
-noremap <Leader>o :Obsess<CR>
-noremap <Leader>O :Obsess!<CR>
 
 " adding pairs of matching characters
 set matchpairs+=<:>,=:;
-
-
-" visual mode: < and > indent block and re-select previous indentation too
-vnoremap < <gv
-vnoremap > >gv
 
 " Jump to last cursor position when opening a file
 autocmd BufReadPost * call s:SetCursorPosition()
@@ -228,29 +154,6 @@ set undolevels=5000      " use many muchos levels of undo
 set wildignore+=*.swp     " ignore swapfiles when completing filenames
 set title                " change the terminal's title
 
-" Q autoformats the current selection or paragraph
-vnoremap Q gq
-" nnoremap Q gqap
-
-" Bubble single lines
-nnoremap <silent> <C-Up>   :move-2<CR>==
-nnoremap <silent> <C-Down> :move+<CR>==
-" Bubble multiple lines
-xnoremap <silent> <C-Up>   :move-2<CR>gv=gv
-xnoremap <silent> <C-Down> :move'>+<CR>gv=gv
-
-"Duplicate lines above and below
-inoremap <C-A-down> <esc>Ypk
-nnoremap <C-A-down> Ypk
-xnoremap <C-A-down> y`>pgv
-inoremap <C-A-up> <esc>YPj
-nnoremap <C-A-up> YPj
-xnoremap <C-A-up> y`<Pgv
-
-"Jump back to last edited buffer
-nnoremap <C-b> :e#<CR>
-inoremap <C-b> <esc>:e#<CR>
-
 " git(-plugin)-related stuff
 set tags=.git/tags,tags           " Look for tags in .git/
 nmap ]h <Plug>GitGutterNextHunk
@@ -260,19 +163,10 @@ nmap <Leader>ha <Plug>GitGutterStageHunk
 nmap <Leader>hr <Plug>GitGutterUndoHunk
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
 
-" Backspace deletes buffer.
-nnoremap <BS> :bd<CR>
-
 set scrolloff=5 " Show 5 lines of context around the cursor.
 
 " use magic regex mode by default
 "nnoremap / /\v
-
-" search for what's visually selected by pressing `//`
-vnoremap // y/<C-R>"<CR>
-
-nnoremap <Leader>p :CtrlPTag<CR>
-nnoremap <Leader>t :TagbarToggle<CR>
 
 " CtrlP: don't use normal file listing, use git instead
 " NOTE: this may ignore files that shouldn't be ignored - maybe switch to using
@@ -297,38 +191,10 @@ let g:ctrlp_custom_ignore = {
 set wildignore+=*.pyc
 set wildignore+=__init__.py
 
-map w <Plug>CamelCaseMotion_w
-map b <Plug>CamelCaseMotion_b
-map e <Plug>CamelCaseMotion_e
-
-" duplicate visual mode selection
-vnoremap D y'>p
-
-" Press Shift+P while in visual mode to replace the selection without
-" overwriting the default register
-vnoremap P p:call setreg('"', getreg('0'))<CR>
-" alternative implementation:
-" function! RestoreRegister()
-"   let @" = s:restore_reg
-"   return ''
-" endfunction
-" function! s:Repl()
-"   let s:restore_reg = @"
-"   return "p@=RestoreRegister()\<cr>"
-" endfunction
-" vmap <silent> <expr> P <sid>Repl()
-
-" bind K to search word under cursor
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
-
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
 
-" insert snippet from trigger
-let g:UltiSnipsExpandTrigger="<Leader><Space>"
-" show all potential snippets with current trigger
-let g:UltiSnipsListSnippets="<Leader><Tab>"
 " always look for snippets here (so UltiSnipsEdit can be used)
 let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
 
@@ -338,9 +204,6 @@ set shiftround
 " Execute macro in q
 nnoremap Q @q
 
-" Quickfix management
-noremap <Space><Space> :ccl<CR>:pclose<CR>
-
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
@@ -349,28 +212,10 @@ let g:ctrlp_use_caching = 0
 " situations.
 set timeoutlen=500
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" RENAME CURRENT FILE (thanks Gary Bernhardt)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'), 'file')
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
-endfunction
-noremap <Leader>rn :call RenameFile()<cr>
 " do not store runtimepath in session file - that doesn't work with pathogen
 set sessionoptions-=options
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
-nnoremap <silent> <leader>tn :TestNearest<CR>
-nnoremap <silent> <leader>tf :TestFile<CR>
-nnoremap <silent> <leader>tt :TestSuite<CR>
-nnoremap <silent> <leader>tl :TestLast<CR>
 
 let g:indentLine_char = '┆'
 
@@ -380,11 +225,6 @@ let g:test#javascript#mocha#options = {
   \ 'suite':   '--check-leaks --full-trace --inline-diffs --no-exit --recursive'
 \}
 
-" for command mode
-nnoremap <S-Tab> <<
-" for insert mode
-inoremap <S-Tab> <C-d>
-
 " remember vim home directory
 let $VIMHOME=expand('<sfile>:p:h')
 
@@ -392,19 +232,6 @@ let $VIMHOME=expand('<sfile>:p:h')
 autocmd InsertLeave * set nopaste
 
 " assign leaders - will be changed soon
-let mapleader = "\\"
-let localmapleader = ","
-
-" go automatically to the end of the text after yanking/pasting
-vnoremap <silent> y y']
-vnoremap <silent> p p']
-nnoremap <silent> p p']
-
-" <CR> moves to the end of file or to a specific line
-nnoremap <CR> G
-
-noremap <silent> <F5> :e<CR>
-
-" select just-pasted text
-noremap gV `[v`]
+let mapleader = "\<Space>"
+let localmapleader = "\\"
 

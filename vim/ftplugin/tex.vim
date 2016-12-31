@@ -18,9 +18,9 @@ noremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" &&
       \ okular &> /dev/null "%:p:r.pdf" &<CR>
 
 " re-compile
-" NOTE: \ll comes from VIM-LaTeX and isn't a leader-mapping
-imap <F3> <Esc>:w<CR>\ll<CR>a
-nmap <F3> :w<CR>\ll<CR>
+" NOTE: <Leader>ll comes from VIM-LaTeX
+imap <F3> <Esc>:w<CR><Leader>ll<CR>a
+nmap <F3> :w<CR><Leader>ll<CR>
 
 " disable ycm - that is a big mess, IIRC...
 " let g:ycm_filetype_specific_completion_to_disable = { 'tex': 1 }
@@ -29,6 +29,21 @@ nmap <F3> :w<CR>\ll<CR>
 command! Texcount execute "!perl $VIMHOME/plugin/texcount.pl %"
 command! Texcountall execute "!perl $VIMHOME/plugin/tex-count-recursive %:p:h"
 
-" NOT enabling folding although that would be nice - first need to get that
-" to work properly though...
+" NOT enabling normal folding although that would be nice - first need to get
+" that to work properly though...
+" in the meantime, VIM-LaTeX' folding can be used with <Leader>rf
+
+" map TeX placeholder movement
+imap <Localleader>j <Plug>IMAP_JumpForward
+nmap <Localleader>j <Plug>IMAP_JumpForward
+imap <Localleader>k <Plug>IMAP_JumpBackward
+nmap <Localleader>k <Plug>IMAP_JumpBackward
+
+" " insert TeX placeholder
+" nnoremap <Leader>g i<++><Esc>hi
+" inoremap <Leader>g <++><Esc>i
+
+" " jump to TeX next placeholder
+" nnoremap <C-n> /<+.*+><CR>:nohlsearch<CR><Esc>cf>
+" inoremap <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 
