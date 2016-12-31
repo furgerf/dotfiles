@@ -66,9 +66,9 @@ set formatoptions=c,q,r,t
 " enable the mouse in the following modes
 " NOTE: if there's an issue, go back to 'nr'
 set mouse=a
-" changes the working of registers related to the clipboard
+" share the plus register with the system clipboard
 " TODO: check out h x11-selection to maybe understand and configure better
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " MISC
 " use default linux encoding in vim

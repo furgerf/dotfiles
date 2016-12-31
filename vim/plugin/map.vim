@@ -99,18 +99,7 @@ vnoremap D y'>p
 
 " Press Shift+P while in visual mode to replace the selection without
 " overwriting the default register
-vnoremap P "0P
-" vnoremap P p:call setreg('"', getreg('0'))<CR>
-" alternative implementation:
-" function! RestoreRegister()
-"   let @" = s:restore_reg
-"   return ''
-" endfunction
-" function! s:Repl()
-"   let s:restore_reg = @"
-"   return "p@=RestoreRegister()\<cr>"
-" endfunction
-" vmap <silent> <expr> P <sid>Repl()
+vnoremap P p:call setreg('+', getreg('0'))<CR>
 
 " bind K to search word under cursor
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
