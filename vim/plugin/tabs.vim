@@ -2,12 +2,13 @@
 " Tab configuration "
 """""""""""""""""""""
 
+" easy tab creation and switching
 " NOTE: Don't remove trailing space!
 map <C-t> :tabe 
 map <F8> :tabn<CR>
 map <S-F8> :tabp<CR>
 
-" alt-nr tab navigation
+" directly navigate to tabs with alt-nr
 nnoremap 1 1gt
 nnoremap 2 2gt
 nnoremap 3 3gt
@@ -28,5 +29,4 @@ inoremap 7 <Esc>7gt
 inoremap 8 <Esc>8gt
 inoremap 9 <Esc>9gt
 inoremap 0 <Esc>:tablast<CR>
-
 

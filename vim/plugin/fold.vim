@@ -1,7 +1,12 @@
 """"""""""""""""""""""
 " Fold configuration "
 """"""""""""""""""""""
+" Contains configuration for:
+" - general folding options
+" - vim-anyfold
+" - custom fold text
 
+" General "{{{
 " disable folding by default - I prefer having filetypes enabling it
 " regardless, this is where I configure the folding that is used, if used
 set nofoldenable
@@ -16,18 +21,17 @@ set foldminlines=4
 "set foldopen=all
 " close folds when leaving them
 "set foldclose=all
+"}}}
 
-" vim-anyfold - must be enabled specifically (let anyfold_activate=1) if desired
+" vim-anyfold "{{{
+" Note: must be enabled specifically (let anyfold_activate=1) if desired
 let anyfold_identify_comments=0
 let anyfold_fold_comments=1
 let anyfold_fold_toplevel=1
+"}}}
 
-" these would make changing the foldlevel easier, but I prefer having
-" <C-i> available for traversing the jumplist
-" nnoremap <tab> zr
-" nnoremap <s-tab> zm
-
-" customize the fold text some more (anyfold already modifies that one...)
+" Fold text "{{{
+" Note that anyfold already uses a custom fold text (that gets overwritten)
 function! CustomFoldText()
   "get first non-blank line
   let fs = v:foldstart
@@ -49,4 +53,5 @@ function! CustomFoldText()
   return substitute(line, " ", "•", "g") . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
 autocmd User anyfoldLoaded set foldtext=CustomFoldText()
+"}}}
 
