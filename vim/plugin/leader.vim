@@ -18,7 +18,9 @@ noremap <Leader>w <C-w>w
 " uses expression to extract path from current file's path
 noremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+noremap <Leader>shl :split #<CR>
 noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+noremap <Leader>svl :vnew #<CR>
 
 noremap <Leader>o :Obsess<CR>
 noremap <Leader>O :Obsess!<CR>
