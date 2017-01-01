@@ -30,6 +30,7 @@ inoremap <C-c> <esc>:q<CR>
 noremap <C-q> <esc>:qa<CR>
 inoremap <C-q> <esc>:qa<CR>
 abbrev Qa qa
+cabbrev man help
 
 " easier window navigation
 noremap <C-h> <C-w>h

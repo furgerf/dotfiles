@@ -33,12 +33,6 @@ command! Texcountall execute "!perl $VIMHOME/plugin/tex-count-recursive %:p:h"
 " that to work properly though...
 " in the meantime, VIM-LaTeX' folding can be used with <Leader>rf
 
-" map TeX placeholder movement
-imap <Localleader>j <Plug>IMAP_JumpForward
-nmap <Localleader>j <Plug>IMAP_JumpForward
-imap <Localleader>k <Plug>IMAP_JumpBackward
-nmap <Localleader>k <Plug>IMAP_JumpBackward
-
 " " insert TeX placeholder
 " nnoremap <Leader>g i<++><Esc>hi
 " inoremap <Leader>g <++><Esc>i

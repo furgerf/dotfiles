@@ -211,3 +211,11 @@ autocmd InsertLeave * set nopaste
 let mapleader = "\<Space>"
 let localmapleader = "\\"
 
+" map TeX placeholder movement
+" NOTE: mapping them here (before vim-latex is potentially loaded) because
+" it re-maps <C-j> if `<Plug>IMAP_JumpForward` isn't already mapped
+imap <Localleader>j <Plug>IMAP_JumpForward
+nmap <Localleader>j <Plug>IMAP_JumpForward
+imap <Localleader>k <Plug>IMAP_JumpBackward
+nmap <Localleader>k <Plug>IMAP_JumpBackward
+
