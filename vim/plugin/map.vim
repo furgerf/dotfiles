@@ -115,3 +115,7 @@ nnoremap Q @q
 " use F7 for pasting
 set pastetoggle=<F7>
 
+" expand and reduce visual selection region
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
