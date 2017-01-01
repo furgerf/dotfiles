@@ -5,22 +5,9 @@
 " allow saving files as sudo
 cnoremap w!! w !sudo tee % > /dev/null
 
-" This rewires n and N to do the highlighing...
-" TODO: fix - maybe that was introduced with vim 8..?
-nnoremap <silent> n   n:call HLNext(0.4)<cr>
-nnoremap <silent> N   N:call HLNext(0.4)<cr>
-
-" add blinkhighlight when browsing trough matches
-function! HLNext (blinktime)
-  let [bufnum, lnum, col, off] = getpos('.')
-  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
-  let target_pat = '\c\%#\%('.@/.'\)'
-  let ring = matchadd('ErrorMsg', target_pat, 101)
-  redraw
-  exec 'sleep ' . float2nr(a:blinktime * 500) . 'm'
-  call matchdelete(ring)
-  redraw
-endfunction
+" rewire n and N to highlight the current match
+nnoremap n n:call functions#HLNext(0.2)<CR>
+nnoremap N N:call functions#HLNext(0.2)<CR>
 
 " map save, close all
 noremap <C-s> <esc>:w<CR>
@@ -118,4 +105,19 @@ set pastetoggle=<F7>
 " expand and reduce visual selection region
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+
+" vim-interestingwords:
+" - use random colors
+let g:interestingWordsRandomiseColors = 1
+" - call the actual function directly in normal mode to avoid a strange delay
+nnoremap <leader>k :call InterestingWords('n')<CR>
+" - use the plugin command in visual mode
+"   NOTE: If there's no map for the plugin command at all, the plugin adds its
+"         own mappings, overwriting `n` and `N` too in the process...
+vmap <leader>k <Plug>InterestingWords
+nmap <leader>K <Plug>InterestingWordsClear
+" - could also map these to cycle through interesting words but that is tricky
+"   to get right with the match highlighting and it doesn't work reliably anyway
+" nmap n <Plug>InterestingWordsForeward
+" nmap N <Plug>InterestingWordsBackward
 

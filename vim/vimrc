@@ -92,6 +92,10 @@ set grepprg=grep\ -nH\ $*
 set splitbelow
 set splitright
 
+" assign leaders
+let mapleader = "\<Space>"
+let localmapleader = "\\"
+
 " command wildchar expansion: show all matches, then start completing
 set wildmode=list:longest,full
 " ignore some file types when completing
@@ -195,6 +199,7 @@ let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
 let g:ctrlp_use_caching = 0
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+set diffopt+=vertical
 
 let g:indentLine_char = '┆'
 
@@ -206,10 +211,6 @@ let g:test#javascript#mocha#options = {
 
 " turn paste mode off when leaving insert mode
 autocmd InsertLeave * set nopaste
-
-" assign leaders - will be changed soon
-let mapleader = "\<Space>"
-let localmapleader = "\\"
 
 " map TeX placeholder movement
 " NOTE: mapping them here (before vim-latex is potentially loaded) because
