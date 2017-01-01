@@ -159,15 +159,6 @@ function! s:SetCursorPosition()
     end
 endfunction
 
-" git(-plugin)-related stuff
-set tags=.git/tags,tags           " Look for tags in .git/
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
-let g:gitgutter_map_keys=0
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
-nmap <Leader>hv <Plug>GitGutterPreviewHunk
-
 " use magic regex mode by default
 "nnoremap / /\v
 
@@ -197,9 +188,6 @@ let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
 " Make CtrlP use ag for listing the files. Way faster and no useless files.
 "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
-
-autocmd BufReadPost fugitive://* set bufhidden=delete
-set diffopt+=vertical
 
 let g:indentLine_char = '┆'
 
