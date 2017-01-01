@@ -86,13 +86,14 @@ set history=1000
 set undolevels=1000
 
 " modify grep command
+" NOTE: this should possibly be changed
 set grepprg=grep\ -nH\ $*
 
 " open new split panes to right and bottom
 set splitbelow
 set splitright
 
-" assign leaders
+" assign leaders - do that before defining any leader-mappings!
 let mapleader = "\<Space>"
 let localmapleader = "\\"
 
@@ -114,9 +115,6 @@ let $VIMHOME=expand('<sfile>:p:h')
 execute pathogen#infect()
 " in case help text is missing, run `call pathogen#helptags()` or `Helptags`
 
-
-" NERDTree file filter
-let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$', '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
 
 "============================================================================
 " Make :help appear in a full-screen tab, instead of a window
@@ -158,44 +156,6 @@ function! s:SetCursorPosition()
         endif
     end
 endfunction
-
-" use magic regex mode by default
-"nnoremap / /\v
-
-" CtrlP: don't use normal file listing, use git instead
-" NOTE: this may ignore files that shouldn't be ignored - maybe switch to using
-" silver search instead
-" - no caching (necessary)
-let g:ctrlp_use_caching = 0
-" - assign user command for finding files
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-    \ }
-endif
-" - ignore  some stuff
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
-  \ }
-" always look for snippets here (so UltiSnipsEdit can be used)
-let g:UltiSnipsSnippetsDir="~/git/dotfiles/vim/bundle/vim-snippets/UltiSnips/"
-
-" Make CtrlP use ag for listing the files. Way faster and no useless files.
-"let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-let g:ctrlp_use_caching = 0
-
-let g:indentLine_char = '┆'
-
-let g:test#javascript#mocha#options = {
-  \ 'file':    '--check-leaks --full-trace --inline-diffs --no-exit',
-  \ 'nearest': '--check-leaks --full-trace --inline-diffs --no-exit',
-  \ 'suite':   '--check-leaks --full-trace --inline-diffs --no-exit --recursive'
-\}
 
 " turn paste mode off when leaving insert mode
 autocmd InsertLeave * set nopaste

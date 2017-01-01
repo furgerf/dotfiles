@@ -78,10 +78,6 @@ nnoremap <BS> :bd<CR>
 " search for what's visually selected by pressing `//`
 vnoremap // y/<C-R>"<CR>
 
-map w <Plug>CamelCaseMotion_w
-map b <Plug>CamelCaseMotion_b
-map e <Plug>CamelCaseMotion_e
-
 " duplicate visual mode selection
 vnoremap D y'>p
 
@@ -90,6 +86,7 @@ vnoremap D y'>p
 vnoremap P p:call setreg('+', getreg('0'))<CR>
 
 " bind K to search word under cursor
+" TODO: Integrate better grep plugin and change mapping key
 nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " make j/k move down/up one ROW rather than one LINE
@@ -102,22 +99,6 @@ nnoremap Q @q
 " use F7 for pasting
 set pastetoggle=<F7>
 
-" expand and reduce visual selection region
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
-" vim-interestingwords:
-" - use random colors
-let g:interestingWordsRandomiseColors = 1
-" - call the actual function directly in normal mode to avoid a strange delay
-nnoremap <leader>k :call InterestingWords('n')<CR>
-" - use the plugin command in visual mode
-"   NOTE: If there's no map for the plugin command at all, the plugin adds its
-"         own mappings, overwriting `n` and `N` too in the process...
-vmap <leader>k <Plug>InterestingWords
-nmap <leader>K <Plug>InterestingWordsClear
-" - could also map these to cycle through interesting words but that is tricky
-"   to get right with the match highlighting and it doesn't work reliably anyway
-" nmap n <Plug>InterestingWordsForeward
-" nmap N <Plug>InterestingWordsBackward
+" use magic regex mode by default
+"nnoremap / /\v
 

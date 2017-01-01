@@ -34,6 +34,8 @@ set list
 set listchars=trail:~,tab:»·,eol:⏎
 " display symbol for wrapped lines on new line
 set showbreak=↪
+" use this to denote indentation
+let g:indentLine_char = '┆'
 "}}}
 
 " Highlighting "{{{
