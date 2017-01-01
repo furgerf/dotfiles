@@ -17,8 +17,7 @@ set foldminlines=4
 " close folds when leaving them
 "set foldclose=all
 
-" vim-anyfold
-let anyfold_activate=1
+" vim-anyfold - must be enabled specifically (let anyfold_activate=1) if desired
 let anyfold_identify_comments=0
 let anyfold_fold_comments=1
 let anyfold_fold_toplevel=1

@@ -29,9 +29,11 @@ nmap <F3> :w<CR><Leader>ll<CR>
 command! Texcount execute "!perl $VIMHOME/plugin/texcount.pl %"
 command! Texcountall execute "!perl $VIMHOME/plugin/tex-count-recursive %:p:h"
 
-" NOT enabling normal folding although that would be nice - first need to get
-" that to work properly though...
-" in the meantime, VIM-LaTeX' folding can be used with <Leader>rf
+" enable folding
+" NOTE: VIM-LaTeX' folding can be applied (reset?) with <Leader>rf
+setlocal foldenable
+" to fold (sub...)sections, use syntax folding
+setlocal foldmethod=syntax
 
 " " insert TeX placeholder
 " nnoremap <Leader>g i<++><Esc>hi
