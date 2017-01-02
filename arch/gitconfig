@@ -26,6 +26,8 @@
   shorty = status --short --branch
   # unstage everything from index
   unstage = reset HEAD
+  # list conflicted files
+  conflict = diff --name-only --diff-filter=U
 
   ########################
   # working with history #
@@ -33,13 +35,15 @@
   # list all different authors with their respective commit counts
   authors = shortlog -s -n --all
   # show commit graph
-  graph = log --graph --abbrev-commit --pretty=oneline
+  graph = log --graph --abbrev-commit --pretty=oneline --decorate
   # fancier commit graph
   grog = !git log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
   # show-branch with current branch and origin/master
   sb = !git show-branch $(git rev-parse --abbrev-ref HEAD) origin/master
   # show-branch-all local branches and origin/master
   sba = !git show-branch $(git for-each-ref --format='%(refname:short)' refs/heads) origin/master
+  # list changed files in a commit
+  changed-files = diff-tree --no-commit-id --name-only -r
 
   ########################
   # working with remotes #
