@@ -1,6 +1,8 @@
-" mandatory options
+" this isn't vi
 set nocompatible
+" turn on filetype detection and filetype-specific plugins and indentation
 filetype plugin indent on
+" turn on syntax highlighting
 syntax enable
 
 " TABS
@@ -123,16 +125,8 @@ execute pathogen#infect()
 "Only apply to .txt files...
 augroup HelpInTabs
   autocmd!
-  autocmd BufEnter  *.txt   call HelpInNewTab()
+  autocmd BufEnter *.txt call functions#HelpInNewTab()
 augroup END
-
-"Only apply to help files...
-function! HelpInNewTab ()
-  if &buftype == 'help'
-    "Convert the help window to a tab...
-    execute "normal \<C-W>T"
-  endif
-endfunction
 
 " NOT doing any vimrc re-sourcing because that leads to all sorts of problems...
 " augroup OnVimrcChanged
@@ -147,15 +141,7 @@ endfunction
 " augroup END
 
 " Jump to last cursor position when opening a file
-autocmd BufReadPost * call s:SetCursorPosition()
-function! s:SetCursorPosition()
-    if &filetype !~ 'svn\|commit\c'
-        if line("'\"") > 0 && line("'\"") <= line("$")
-            exe "normal! g`\""
-            normal! zz
-        endif
-    end
-endfunction
+autocmd BufReadPost * call functions#SetLastCursorPosition()
 
 " turn paste mode off when leaving insert mode
 autocmd InsertLeave * set nopaste

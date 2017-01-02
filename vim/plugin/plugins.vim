@@ -15,7 +15,7 @@
 
 " NERDTree "{{{
 " define map for opening NERDTree
-noremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
 " ignore certain file types - should be way more, though...
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$',
       \ '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
@@ -50,9 +50,9 @@ nnoremap <Leader>p :CtrlPTag<CR>
 " always look for snippets there (so UltiSnipsEdit can be used)
 let g:UltiSnipsSnippetsDir="$VIMHOME/bundle/vim-snippets/UltiSnips/"
 " insert snippet from trigger
-let g:UltiSnipsExpandTrigger="<Leader><Space>"
+let g:UltiSnipsExpandTrigger="<C-Space>"
 " show all potential snippets with current trigger
-let g:UltiSnipsListSnippets="<Leader><Tab>"
+let g:UltiSnipsListSnippets="<Localleader><Leader>"
 "}}}
 
 " vim-test "{{{
@@ -94,9 +94,9 @@ nmap <leader>K <Plug>InterestingWordsClear
 
 " vim-obsession "{{{
 " start tracking session
-noremap <Leader>o :Obsess<CR>
+nnoremap <Leader>o :Obsess<CR>
 " stop tracking session and delete session file
-noremap <Leader>O :Obsess!<CR>
+nnoremap <Leader>O :Obsess!<CR>
 "}}}
 
 " tagbar "{{{

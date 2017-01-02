@@ -3,7 +3,7 @@
 """""""""""""
 
 " highlight the current search match by blinking for `blinktime` seconds
-function! functions#HLNext (blinktime)
+function! functions#HighlightNext (blinktime)
   let [bufnum, lnum, col, off] = getpos('.')
   let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
   let target_pat = '\c\%#\%('.@/.'\)'
@@ -22,6 +22,23 @@ function! functions#RenameFile()
     exec ':saveas ' . new_name
     exec ':silent !rm ' . old_name
     redraw!
+  endif
+endfunction
+
+" move the cursor to the line it was on and center file
+function! functions#SetLastCursorPosition()
+  if &filetype !~ 'svn\|commit\c'
+    if line("'\"") > 0 && line("'\"") <= line("$")
+      exec "normal! g`\""
+      normal! zz
+    endif
+  endif
+endfunction
+
+" moves the current buffer to a new tab if it's a helpfile
+function! functions#HelpInNewTab ()
+  if &buftype == 'help'
+    exec "normal \<C-W>T"
   endif
 endfunction
 
