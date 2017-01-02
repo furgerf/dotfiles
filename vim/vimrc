@@ -40,6 +40,8 @@ set title
 set titlestring=%{ObsessionStatus('[R]','[x]')}%(\ %)%t%(\ %M%)%(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
 " add some pairs of matching characters - assignment/semicolon is debatable...
 set matchpairs+=<:>,=:;
+" no need to have vim show the mode, that is shown in airline
+set noshowmode
 
 " SEARCH
 " search incrementally and highlight matches
@@ -67,6 +69,7 @@ set formatoptions=c,q,r,t
 " CLIPBOARD
 " enable the mouse in the following modes
 " NOTE: if there's an issue, go back to 'nr'
+" NOTE: also checkout `ttymouse` option
 set mouse=a
 " share the plus register with the system clipboard
 " TODO: check out h x11-selection to maybe understand and configure better

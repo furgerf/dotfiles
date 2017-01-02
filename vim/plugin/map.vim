@@ -100,6 +100,9 @@ nnoremap N N:call functions#HighlightNext(0.2)<CR>
 " use F7 for pasting
 set pastetoggle=<F7>
 
+" use F6 to toggle local spellchecking
+nnoremap <F6> :setlocal spell!<CR>
+
 " Execute macro in q
 nnoremap Q @q
 
