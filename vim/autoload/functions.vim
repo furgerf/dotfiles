@@ -3,7 +3,7 @@
 """""""""""""
 
 " highlight the current search match by blinking for `blinktime` seconds
-function! functions#HighlightNext (blinktime)
+function! functions#HighlightNext(blinktime)
   let [bufnum, lnum, col, off] = getpos('.')
   let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
   let target_pat = '\c\%#\%('.@/.'\)'
@@ -36,9 +36,20 @@ function! functions#SetLastCursorPosition()
 endfunction
 
 " moves the current buffer to a new tab if it's a helpfile
-function! functions#HelpInNewTab ()
+function! functions#HelpInNewTab()
   if &buftype == 'help'
     exec "normal \<C-W>T"
+  endif
+endfunction
+
+" closes the current buffer or exits vim if the current buffer is empty
+function! functions#DeleteBufferOrExit()
+  if line('$') == 1 && getline(1) == ''
+    q
+    " exec ':silent q'
+  else
+    bd
+    " exec ':silent bd'
   endif
 endfunction
 
