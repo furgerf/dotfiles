@@ -46,10 +46,9 @@ endfunction
 function! functions#DeleteBufferOrExit()
   if line('$') == 1 && getline(1) == ''
     q
-    " exec ':silent q'
   else
-    bd
-    " exec ':silent bd'
+    " just doing `bd` seems to close two buffers (?)
+    exec "normal! :bd<CR>"
   endif
 endfunction
 
