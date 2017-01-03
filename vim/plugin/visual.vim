@@ -12,6 +12,7 @@ let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_number_column='bg1'
 let g:gruvbox_improved_warnings='1'
+set background=dark
 colorscheme gruvbox
 "}}}
 

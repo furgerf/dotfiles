@@ -23,6 +23,7 @@
   # delete all merged local branches except the current
   prune-local = !git branch --merged | grep -v '*' | xargs -n1 git branch -d
   # short status output
+  st = status --short --branch
   shorty = status --short --branch
   # unstage everything from index
   unstage = reset HEAD
@@ -44,6 +45,8 @@
   sba = !git show-branch $(git for-each-ref --format='%(refname:short)' refs/heads) origin/master
   # list changed files in a commit
   changed-files = diff-tree --no-commit-id --name-only -r
+  # trigger ctag generation using script from hook
+  ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
 
   ########################
   # working with remotes #
