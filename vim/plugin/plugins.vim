@@ -108,3 +108,14 @@ nnoremap <Leader>t :TagbarToggle<CR>
 " don't CD when opening file
 let g:startify_change_to_dir=0
 "}}}
+
+" rainbow_csv "{{{
+" don't map any keys
+let g:rcsv_map_keys=0
+"}}}
+
+" colorizer "{{{
+" disable colorizer for large files - it makes startup reeeeally slow
+let g:colorizer_maxlines=1000
+"}}}
+

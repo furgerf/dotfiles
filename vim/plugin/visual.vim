@@ -42,11 +42,12 @@ let g:indentLine_char = '┆'
 " Highlighting "{{{
 " CurrentBuffer: draw darker background (more contrast)
 augroup BgHighlight
-  autocmd!
+  autocmd! * <buffer>
+
   " update colorcolumn depending on whether the buffer is active
-  autocmd VimEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
-  autocmd WinEnter * execute "set colorcolumn=" . join(range(101, 355), ',')
-  autocmd WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
+  autocmd VimEnter <buffer> execute "set colorcolumn=" . join(range(101, 335), ',')
+  autocmd WinEnter <buffer> execute "set colorcolumn=" . join(range(101, 355), ',')
+  autocmd WinLeave <buffer> execute "set colorcolumn=" . join(range(1, 355), ',')
 
   " could also (un-)set cursor line/column if desired
   " autocmd VimEnter * set cul cuc
@@ -59,7 +60,7 @@ augroup END
 " but, for it to fit, I'm manually taking the colors from there
 
 " OverLength highlighting starts at column 81
-highlight OverLength ctermfg=167 guifg=#fb4934
+highlight! OverLength ctermfg=167 guifg=#fb4934
 " because `match`-ing only affects the current window, we re-apply it each time
 " we open a buffer
 autocmd! BufWinEnter * match OverLength /\%81v.\+/
