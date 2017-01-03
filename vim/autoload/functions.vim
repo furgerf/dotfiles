@@ -53,3 +53,32 @@ function! functions#DeleteBufferOrExit()
   endif
 endfunction
 
+function! functions#HighlightColumns(delimiter, colors)
+  if len(a:colors) < 2
+    return
+  endif
+
+  for groupid in range(len(a:colors))
+    let match = 'column' . groupid
+    let nextgroup = groupid + 1 % len(a:colors)
+
+    " match with nextgroup if we haven't already matched for all a:colors
+    if nextgroup
+      let cmd = 'syntax match %s /%s[^%s]*/ nextgroup=column%d'
+      exec printf(cmd, match, a:delimiter, a:delimiter, nextgroup)
+    else
+      let cmd = 'syntax match %s /%s[^%s]*/'
+      exec printf(cmd, match, a:delimiter, a:delimiter)
+    endif
+
+    " add color for match
+    let cmd = 'highlight %s ctermfg=%s guifg=%s'
+    exec printf(cmd, match, a:colors[groupid][0], a:colors[groupid][1])
+  endfor
+
+  let cmd = 'syntax match startcolumn /^[^%s]*/ nextgroup=column1'
+  exec printf(cmd, a:delimiter)
+  let cmd = 'highlight startcolumn ctermfg=%s guifg=%s'
+  exec printf(cmd, a:colors[0][0], a:colors[0][1])
+endfunc
+
