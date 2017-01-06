@@ -42,12 +42,12 @@ let g:indentLine_char = '┆'
 " Highlighting "{{{
 " CurrentBuffer: draw darker background (more contrast)
 augroup BgHighlight
-  autocmd! * <buffer>
+  autocmd! *
 
   " update colorcolumn depending on whether the buffer is active
-  autocmd VimEnter <buffer> execute "set colorcolumn=" . join(range(101, 335), ',')
-  autocmd WinEnter <buffer> execute "set colorcolumn=" . join(range(101, 355), ',')
-  autocmd WinLeave <buffer> execute "set colorcolumn=" . join(range(1, 355), ',')
+  autocmd VimEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
+  autocmd WinEnter * execute "set colorcolumn=" . join(range(101, 355), ',')
+  autocmd WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
 
   " could also (un-)set cursor line/column if desired
   " autocmd VimEnter * set cul cuc

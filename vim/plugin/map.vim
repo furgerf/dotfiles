@@ -94,8 +94,8 @@ cabbrev man help
 cnoremap w!! w !sudo tee % > /dev/null
 
 " rewire n and N to highlight the current match
-nnoremap n n:call functions#HighlightNext(0.2)<CR>
-nnoremap N N:call functions#HighlightNext(0.2)<CR>
+nnoremap <silent> n n:call functions#HighlightNext(0.2)<CR>
+nnoremap <silent> N N:call functions#HighlightNext(0.2)<CR>
 
 " use F7 for pasting
 set pastetoggle=<F7>
@@ -119,5 +119,8 @@ vmap <silent> p p']
 nmap <silent> p p']
 vmap <silent> P P']
 nmap <silent> P P']
+
+" show me when I use `gu` because that's mostly by accident
+noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
 "}}}
 "

@@ -79,8 +79,20 @@ vmap <C-v> <Plug>(expand_region_shrink)
 " vim-interestingwords "{{{
 " use random colors
 let g:interestingWordsRandomiseColors = 1
+" use gruvbox color palette
+let g:interestingWordsTermColors = [
+      \ 124, 167,
+      \ 106, 142,
+      \ 172,
+      \ 66, 109,
+      \ 132, 175,
+      \ 72, 108,
+      \ 166, 208,
+      \ 242, 244,
+      \ 250, 223, 229
+      \ ]
 " call the actual function directly in normal mode to avoid a strange delay
-nnoremap <leader>k :call InterestingWords('n')<CR>
+nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 " use the plugin command in visual mode
 " NOTE: If there's no map for the plugin command at all, the plugin adds its
 "       own mappings, overwriting `n` and `N` too in the process...
