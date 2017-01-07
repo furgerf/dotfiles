@@ -99,6 +99,7 @@ set splitbelow
 set splitright
 
 " assign leaders - do that before defining any leader-mappings!
+" TODO: Find out why the leader doesn't seem to work in insert mode
 let mapleader = "\<Space>"
 let localmapleader = "\\"
 

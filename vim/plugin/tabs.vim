@@ -9,6 +9,7 @@ map <F8> :tabn<CR>
 map <S-F8> :tabp<CR>
 
 " directly navigate to tabs with alt-nr
+" note that this also maps to <Esc>
 nnoremap 1 1gt
 nnoremap 2 2gt
 nnoremap 3 3gt

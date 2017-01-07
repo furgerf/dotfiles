@@ -6,36 +6,46 @@
 " while typing.
 
 " edit/source vimrc
-noremap <Leader>vim :e $MYVIMRC<CR>
-noremap <Leader>ss :so $MYVIMRC<CR>
+nnoremap <Leader>vim :e $MYVIMRC<CR>
+nnoremap <Leader>ss :so $MYVIMRC<CR>
 
 " edit bashrc
-noremap <Leader>b :e ~/.bashrc<CR>
+nnoremap <Leader>b :e ~/.bashrc<CR>
+
+" save and close
+nnoremap <Leader>x :x<CR>
 
 " edit another file in the same directory as the current file
-noremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
-noremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-noremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+nnoremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
+nnoremap <Leader>sh :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
+nnoremap <Leader>sv :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 
 " open alternate file in split
-noremap <Leader>shl :split #<CR>
-noremap <Leader>svl :vnew #<CR>
+nnoremap <Leader>shl :split #<CR>
+nnoremap <Leader>svl :vnew #<CR>
 
 " rename file (prompts for new filename)
-noremap <Leader>rn :call functions#RenameFile()<CR>
+nnoremap <Leader>rn :call functions#RenameFile()<CR>
 
 " yank entire file
-noremap <Leader>y ggVGy
+nnoremap <Leader>y ggVGy
 
 " remove trailing whitelines
-noremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
+nnoremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
+
+" convert tabs to spaces
+nnoremap <Leader>rt :retab<CR>
+vnoremap <Leader>rt :retab<CR>
 
 " unhighlight search results
-noremap <Leader>q :nohlsearch<CR>
+nnoremap <Leader>q :nohlsearch<CR>
 
 " cycle through buffers
-noremap <Leader>w <C-w>w
+nnoremap <Leader>w <C-w>w
 
 " close preview and quickfix window
-noremap <Leader><Space> :ccl<CR>:pclose<CR>
+nnoremap <Leader><Space> :ccl<CR>:pclose<CR>
+
+" start opening help
+nnoremap <Leader>h :help 
 

@@ -5,14 +5,12 @@
 " Saving, closing, ... "{{{
 " use common Ctrl-shortcuts
 " NOTE: <C-o> isn't mapped because that's more useful for the jumplist
-noremap <C-s> <esc>:w<CR>
-inoremap <C-s> <esc>:w<CR>a
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>a
 
-noremap <C-c> <esc>:q<CR>
-inoremap <C-c> <esc>:q<CR>
+nnoremap <C-c> :q<CR>
 
-noremap <C-q> <esc>:qa<CR>
-inoremap <C-q> <esc>:qa<CR>
+nnoremap <C-l> :qa<CR>
 
 " Backspace deletes buffer.
 nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>:bd<CR>
@@ -36,6 +34,10 @@ nnoremap <Leader><Tab> <C-^>
 " make j/k move down/up one ROW rather than one LINE
 nnoremap j gj
 nnoremap k gk
+
+" use <C-\> to return after tag jump with <C-]>
+" (<C-[> is something with alt/esc...)
+nnoremap <C-\> :pop<CR>
 "}}}
 
 " Visual mode "{{{
@@ -108,7 +110,7 @@ nnoremap Q @q
 
 " bind K to search word under cursor
 " TODO: Integrate better grep plugin and change mapping key
-nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K <Nop>
 
 " use magic regex mode by default
 "nnoremap / /\v

@@ -45,9 +45,8 @@ augroup BgHighlight
   autocmd! *
 
   " update colorcolumn depending on whether the buffer is active
-  autocmd VimEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
-  autocmd WinEnter * execute "set colorcolumn=" . join(range(101, 355), ',')
-  autocmd WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
+  autocmd BufWinEnter,WinEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
+  autocmd BufWinLeave,WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
 
   " could also (un-)set cursor line/column if desired
   " autocmd VimEnter * set cul cuc
