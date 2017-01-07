@@ -10,7 +10,7 @@ inoremap <C-s> <Esc>:w<CR>a
 
 nnoremap <C-c> :q<CR>
 
-nnoremap <C-l> :qa<CR>
+nnoremap <C-q> :qa<CR>
 
 " Backspace deletes buffer.
 nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>:bd<CR>
@@ -112,11 +112,11 @@ nnoremap Q @q
 "nnoremap / /\v
 
 " go automatically to the end of the text after yanking/pasting
-vnoremap <silent> y y']
-vmap <silent> p p']
-nmap <silent> p p']
-vmap <silent> P P']
-nmap <silent> P P']
+vnoremap <silent> y y`]
+vmap <silent> p p`]
+nmap <silent> p p`]
+vmap <silent> P P`]
+nmap <silent> P P`]
 
 " show me when I use `gu` because that's mostly by accident
 noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>

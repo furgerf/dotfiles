@@ -37,6 +37,8 @@ set vi-cmd-mode-string \1\033[1;31m\2:\1\e[0;37m\2
 set keymap vi-command
 # insert previous command
 "p": "i !!\r"
+# clears the screen
+Control-l: clear-screen
 
 # VI insert
 set keymap vi-insert
@@ -46,6 +48,8 @@ TAB: menu-complete
 "\e[Z": menu-complete-backward
 # executes last command again (in vi-command mode)
 "p": self-insert
+# clears the screen
+Control-l: clear-screen
 
 # ctrl-arrow navigation
 "\e[1;5C": forward-word

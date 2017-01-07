@@ -1134,6 +1134,7 @@ function is_class_opaque(class_name)
   }
 
   for index, value in ipairs(opaque_classes) do
+    -- TODO: Support wildcards/regex
     if string.lower(value) == string.lower(class_name) then
       return true
     end

@@ -106,6 +106,7 @@
 [submodule "vim/bundle/vim-expand-region"]
   path = vim/bundle/vim-expand-region
   url = git@github.com:terryma/vim-expand-region
+  ignore = untracked
 [submodule "vim/bundle/vim-grepper"]
   path = vim/bundle/vim-grepper
   url = git@github.com:mhinz/vim-grepper

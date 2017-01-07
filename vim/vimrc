@@ -119,7 +119,8 @@ let $VIMHOME=expand('<sfile>:p:h')
 
 " load pathogen
 execute pathogen#infect()
-" in case help text is missing, run `call pathogen#helptags()` or `Helptags`
+" build plugin helpfiles
+call pathogen#helptags()
 
 
 "============================================================================

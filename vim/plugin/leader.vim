@@ -44,8 +44,8 @@ nnoremap <Leader>q :nohlsearch<CR>
 nnoremap <Leader>w <C-w>w
 
 " close preview and quickfix window
-nnoremap <Leader><Space> :ccl<CR>:pclose<CR>
+nnoremap <Leader><Space> :cclose<CR>:pclose<CR>
 
-" start opening help
-nnoremap <Leader>h :help 
+" start opening help (manual)
+nnoremap <Leader>m :help 
 
