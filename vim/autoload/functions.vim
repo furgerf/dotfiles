@@ -47,6 +47,8 @@ function! functions#DeleteBufferOrExit()
   if line('$') == 1 && getline(1) == ''
     q
   else
+    " close location list
+    lclose
     " just doing `bd` seems to close two buffers (?)
     exec "normal! :bd<CR>"
   endif

@@ -110,3 +110,6 @@
 [submodule "vim/bundle/vim-grepper"]
   path = vim/bundle/vim-grepper
   url = git@github.com:mhinz/vim-grepper
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = git@github.com:vim-syntastic/syntastic

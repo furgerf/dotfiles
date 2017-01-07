@@ -146,3 +146,19 @@ nmap gs <Plug>(GrepperOperator)
 xmap gs <Plug>(GrepperOperator)
 "}}}
 
+" syntastic "{{{
+" keep updating the location list
+let g:syntastic_always_populate_loc_list = 1
+
+" open location list when there are errors and close when there are none
+let g:syntastic_auto_loc_list = 1
+
+" check for errors when opening file and don't check when writing AND closing
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" aggregate errors from different checkers
+let g:syntastic_aggregate_errors = 1
+
+"}}}
+
