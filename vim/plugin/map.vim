@@ -108,10 +108,6 @@ nnoremap <F6> :setlocal spell!<CR>
 " Execute macro in q
 nnoremap Q @q
 
-" bind K to search word under cursor
-" TODO: Integrate better grep plugin and change mapping key
-nnoremap K <Nop>
-
 " use magic regex mode by default
 "nnoremap / /\v
 

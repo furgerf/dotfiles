@@ -131,3 +131,18 @@ let g:rcsv_map_keys=0
 let g:colorizer_maxlines=1000
 "}}}
 
+" vim-grepper "{{{
+" don't automatically switch to quickfix window
+let g:grepper = {}
+let g:grepper.switch = 0
+
+" bind K to search word under cursor
+nnoremap K :Grepper -cword<CR>
+
+" grep with...
+" ... gs+motion
+nmap gs <Plug>(GrepperOperator)
+" ... visual selection+gs
+xmap gs <Plug>(GrepperOperator)
+"}}}
+

@@ -28,7 +28,6 @@ nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gg :Ggrep 
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gc :Gcommit<CR>
