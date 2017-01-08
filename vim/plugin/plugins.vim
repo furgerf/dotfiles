@@ -162,3 +162,34 @@ let g:syntastic_aggregate_errors = 1
 
 "}}}
 
+" vim-notes "{{{
+" by default, use parent directory
+" but also use subdirectories (and their index notes)
+let g:notes_directories = [
+      \ '~/dropbox/notes',
+      \ '~/dropbox/notes/programming',
+      \ '~/dropbox/notes/mse'
+      \ ]
+
+" append .txt for windows
+let g:notes_suffix = '.txt'
+
+" prompt about renaming file/changing title (for now)
+" let g:notes_title_sync = 'one of: no|change_title|rename_file'
+
+" DON'T disable the ugly 'smart' quotes because that also disables the bullet
+" points, arrows, etc.
+" let g:notes_smart_quotes = 0
+
+" change the ruler to something that makes a bit more sense
+let g:notes_ruler_text = repeat("*", 80)
+
+" don't (un-)indent with alt-left/right
+let g:notes_alt_indents = 0
+
+nnoremap <Leader>no :Note 
+nnoremap <Leader>ns :SearchNotes 
+nnoremap <Leader>nr :RelatedNotes<CR>
+nnoremap <Leader>nt :ShowTaggedNotes<CR>
+"}}}
+
