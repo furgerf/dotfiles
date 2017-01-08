@@ -120,5 +120,9 @@ nmap <silent> P P`]
 
 " show me when I use `gu` because that's mostly by accident
 noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
+
+" calculate stats on numbers like sum, avg, ...
+vnoremap <expr> ++ VMATH_YankAndAnalyse()
+nmap ++ vip++
 "}}}
 "
