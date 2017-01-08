@@ -111,5 +111,11 @@
   path = vim/bundle/vim-grepper
   url = git@github.com:mhinz/vim-grepper
 [submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
-	url = git@github.com:vim-syntastic/syntastic
+  path = vim/bundle/syntastic
+  url = git@github.com:vim-syntastic/syntastic
+[submodule "vim/bundle/vim-notes"]
+  path = vim/bundle/vim-notes
+  url = git@github.com:xolox/vim-notes
+[submodule "vim/bundle/vim-misc"]
+  path = vim/bundle/vim-misc
+  url = git@github.com:xolox/vim-misc
