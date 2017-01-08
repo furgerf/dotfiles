@@ -21,6 +21,12 @@ set foldminlines=4
 "set foldopen=all
 " close folds when leaving them
 "set foldclose=all
+
+augroup AutoView
+  autocmd! *
+  autocmd BufWinLeave ?* mkview
+  autocmd BufWinEnter ?* silent loadview
+augroup END
 "}}}
 
 " vim-anyfold "{{{

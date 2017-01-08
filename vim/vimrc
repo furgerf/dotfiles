@@ -111,6 +111,9 @@ set wildignore+=*.swp,*.pyc,__init__.py
 " do not store runtimepath in session file - that doesn't work with pathogen
 set sessionoptions-=options
 
+" do not store options in view file
+set viewoptions-=options
+
 " manually set the runtime path - I don't think that's needed (anymore)
 " set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 

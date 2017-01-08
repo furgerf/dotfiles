@@ -6,3 +6,5 @@ arch/bash-sourcer.sh
 vim/.netrwhist
 # vim spellfile binary
 vim/spell/*.spl
+# vim view directory
+vim/view
