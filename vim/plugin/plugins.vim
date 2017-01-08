@@ -15,7 +15,7 @@
 
 " NERDTree "{{{
 " define map for opening NERDTree
-nnoremap <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>ne :NERDTreeToggle<CR>
 " ignore certain file types - should be way more, though...
 let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$',
       \ '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
@@ -144,6 +144,9 @@ nnoremap K :Grepper -cword<CR>
 nmap gs <Plug>(GrepperOperator)
 " ... visual selection+gs
 xmap gs <Plug>(GrepperOperator)
+
+" add map for 'find'
+nnoremap <Leader>f :Grepper<CR>
 "}}}
 
 " syntastic "{{{
@@ -188,6 +191,7 @@ let g:notes_ruler_text = repeat("*", 80)
 let g:notes_alt_indents = 0
 
 nnoremap <Leader>no :Note 
+nnoremap <Leader>nn viw:SplitNoteFromSelectedText<CR>
 nnoremap <Leader>ns :SearchNotes 
 nnoremap <Leader>nr :RelatedNotes<CR>
 nnoremap <Leader>nt :ShowTaggedNotes<CR>

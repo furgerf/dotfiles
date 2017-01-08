@@ -96,8 +96,8 @@ cabbrev man help
 cnoremap w!! w !sudo tee % > /dev/null
 
 " rewire n and N to highlight the current match
-nnoremap <silent> n n:call functions#HighlightNext(0.2)<CR>
-nnoremap <silent> N N:call functions#HighlightNext(0.2)<CR>
+nnoremap <silent> n nzv:call functions#HighlightNext(0.2)<CR>
+nnoremap <silent> N Nzv:call functions#HighlightNext(0.2)<CR>
 
 " use F7 for pasting
 set pastetoggle=<F7>
@@ -105,7 +105,7 @@ set pastetoggle=<F7>
 " use F6 to toggle local spellchecking
 nnoremap <F6> :setlocal spell!<CR>
 
-" Execute macro in q
+" execute macro in q
 nnoremap Q @q
 
 " use magic regex mode by default
