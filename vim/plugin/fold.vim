@@ -22,11 +22,19 @@ set foldminlines=4
 " close folds when leaving them
 "set foldclose=all
 
+" automatically save/load view
+" http://vim.wikia.com/wiki/Make_views_automatic
 augroup AutoView
   autocmd! *
-  autocmd BufWinLeave ?* mkview
-  autocmd BufWinEnter ?* silent loadview
+
+  autocmd BufWinLeave * if functions#IsNonspecialBuffer() | mkview | endif
+  autocmd BufWinEnter * if functions#IsNonspecialBuffer() | silent loadview | endif
 augroup END
+
+" move to next/previous level-1-fold
+" http://superuser.com/questions/816005/move-to-next-fold-of-level-1-in-vim/816085#816085
+nnoremap <silent> zj :let max = &fdn<bar>let &fdn = 1<CR>zj:let &fdn=max<CR>
+nnoremap <silent> zk :let max = &fdn<bar>let &fdn = 1<CR>zk:let &fdn=max<CR>
 "}}}
 
 " vim-anyfold "{{{

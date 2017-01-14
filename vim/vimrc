@@ -109,10 +109,10 @@ set wildmode=list:longest,full
 set wildignore+=*.swp,*.pyc,__init__.py
 
 " do not store runtimepath in session file - that doesn't work with pathogen
-set sessionoptions-=options
+set sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize
 
 " do not store options in view file
-set viewoptions-=options
+set viewoptions=cursor,folds
 
 " manually set the runtime path - I don't think that's needed (anymore)
 " set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
