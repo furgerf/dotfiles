@@ -81,5 +81,16 @@ function! functions#HighlightColumns(delimiter, colors)
   exec printf(cmd, a:delimiter)
   let cmd = 'highlight startcolumn ctermfg=%s guifg=%s'
   exec printf(cmd, a:colors[0][0], a:colors[0][1])
-endfunc
+endfunction
+
+" returns true if the current buffer is a special buffer
+" eg quickfix, preview, location list
+function! functions#IsSpecialBuffer()
+  return (&filetype =~ 'qf')
+endfunction
+
+" returns true if the current buffer is NOT a special buffer
+function! functions#IsNonspecialBuffer()
+  return ! functions#IsSpecialBuffer()
+endfunction
 

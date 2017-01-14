@@ -45,8 +45,12 @@ augroup BgHighlight
   autocmd! *
 
   " update colorcolumn depending on whether the buffer is active
-  autocmd BufWinEnter,WinEnter * execute "set colorcolumn=" . join(range(101, 335), ',')
-  autocmd BufWinLeave,WinLeave * execute "set colorcolumn=" . join(range(1, 355), ',')
+  autocmd BufWinEnter,WinEnter * if functions#IsNonspecialBuffer() |
+        \ execute "set colorcolumn=" . join(range(101, 335), ',') | endif
+  autocmd BufWinLeave,WinLeave * if functions#IsNonspecialBuffer() |
+        \ execute "set colorcolumn=" . join(range(1, 355), ',') | endif
+  autocmd FileType * if functions#IsSpecialBuffer() |
+        \ execute "set colorcolumn=" | endif
 
   " could also (un-)set cursor line/column if desired
   " autocmd VimEnter * set cul cuc
@@ -62,6 +66,7 @@ augroup END
 highlight! OverLength ctermfg=167 guifg=#fb4934
 " because `match`-ing only affects the current window, we re-apply it each time
 " we open a buffer
-autocmd! BufWinEnter * match OverLength /\%81v.\+/
+autocmd! FileType * if functions#IsNonspecialBuffer() |
+      \ match OverLength /\%81v.\+/ | endif
 "}}}
 
