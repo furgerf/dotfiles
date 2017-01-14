@@ -43,8 +43,7 @@ nnoremap <Leader>q :nohlsearch<CR>
 " cycle through buffers
 nnoremap <Leader>w <C-w>w
 
-" close preview and quickfix window
-nnoremap <Leader><Space> :cclose<CR>:pclose<CR>
+nnoremap <silent> <Leader><Space> :call functions#ToggleErrors()<CR>
 
 " start opening help (manual)
 nnoremap <Leader>m :help 

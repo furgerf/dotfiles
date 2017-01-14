@@ -94,3 +94,27 @@ function! functions#IsNonspecialBuffer()
   return ! functions#IsSpecialBuffer()
 endfunction
 
+" close all quickfix, preview, location list OR open location list (syntastic)
+" http://stackoverflow.com/questions/17512794/toggle-error-location-panel-in-syntastic/17515778#17515778
+function! functions#ToggleErrors()
+  if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+    " no location/quickfix list shown, open syntastic error location panel
+    " NOTE: This means you can't close preview/quickfix if current window has no errors
+    Errors
+  else
+    " remember current window number
+    let current_window = winnr()
+    " close preview, quickfix, and ALL location lists
+    pclose
+    cclose
+    " http://superuser.com/questions/355325/close-all-locations-list-or-quick-fix-windows-in-vim/764500#764500
+    windo if &buftype == "quickfix" || &buftype == "locationlist" | lclose | endif
+
+    " move to previously active window
+    let windows_off = (current_window - winnr() + winnr('$')) % winnr('$')
+    if windows_off
+      execute windows_off . "wincmd w"
+    endif
+  endif
+endfunction
+
