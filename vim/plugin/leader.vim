@@ -43,8 +43,17 @@ nnoremap <Leader>q :nohlsearch<CR>
 " cycle through buffers
 nnoremap <Leader>w <C-w>w
 
-nnoremap <silent> <Leader><Space> :call functions#ToggleErrors()<CR>
+" close preview, quickfix, location list
+" NOTE: Since the location list is local to the window, only the one in the current window is closed
+" The function `functions#ToggleErrors` could be adapted to close all location lists
+nnoremap <silent> <Leader><Space> :pclose<CR>:cclose<CR>:lclose<CR>
 
 " start opening help (manual)
 nnoremap <Leader>m :help 
+
+" simple get/put for diff
+nnoremap <Leader>dg do
+vnoremap <Leader>dg :diffget<CR>
+nnoremap <Leader>dp dp
+vnoremap <Leader>dp :diffput<CR>
 

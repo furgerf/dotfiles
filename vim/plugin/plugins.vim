@@ -128,7 +128,7 @@ let g:rcsv_map_keys=0
 
 " colorizer "{{{
 " disable colorizer for large files - it makes startup reeeeally slow
-let g:colorizer_maxlines=1000
+let g:colorizer_maxlines=200
 "}}}
 
 " vim-grepper "{{{
@@ -146,7 +146,8 @@ nmap gs <Plug>(GrepperOperator)
 xmap gs <Plug>(GrepperOperator)
 
 " add map for 'find'
-nnoremap <Leader>f :Grepper<CR>
+nnoremap <Leader>f :Grepper -tool grep<CR>
+nnoremap <Leader>gg :Grepper -tool git<CR>
 "}}}
 
 " syntastic "{{{
@@ -154,7 +155,7 @@ nnoremap <Leader>f :Grepper<CR>
 let g:syntastic_always_populate_loc_list = 1
 
 " open location list when there are errors and close when there are none
-let g:syntastic_auto_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
 
 " check for errors when opening file and don't check when writing AND closing
 let g:syntastic_check_on_open = 1
@@ -163,6 +164,11 @@ let g:syntastic_check_on_wq = 0
 " aggregate errors from different checkers
 let g:syntastic_aggregate_errors = 1
 
+" syntastic mappings
+nnoremap <Leader>se :Errors<CR>
+nnoremap <Leader>sm :SyntasticToggleMode<CR>
+nnoremap <Leader>sc :SyntasticCheck<CR>
+nnoremap <Leader>si :SyntasticInfo<CR>
 "}}}
 
 " vim-notes "{{{

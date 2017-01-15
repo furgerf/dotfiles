@@ -42,10 +42,10 @@ let g:indentLine_char = '┆'
 " Highlighting "{{{
 " CurrentBuffer: draw darker background (more contrast)
 augroup BgHighlight
-  autocmd! *
+  autocmd!
 
   " update colorcolumn depending on whether the buffer is active
-  autocmd BufWinEnter,WinEnter * if functions#IsNonspecialBuffer() |
+  autocmd BufWinEnter,WinEnter,BufUnload * if functions#IsNonspecialBuffer() |
         \ execute "set colorcolumn=" . join(range(101, 335), ',') | endif
   autocmd BufWinLeave,WinLeave * if functions#IsNonspecialBuffer() |
         \ execute "set colorcolumn=" . join(range(1, 355), ',') | endif

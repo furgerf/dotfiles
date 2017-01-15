@@ -30,7 +30,7 @@ set relativenumber
 " show the line and column number of the cursor - has no effect with vim-airline
 set ruler
 " briefly jump to matching brackets when inserting
-set showmatch
+" set showmatch
 " show command in status line - I don't think this has any effect on vim-airline
 set showcmd
 " always show 5 lines of context around cursor
@@ -99,7 +99,6 @@ set splitbelow
 set splitright
 
 " assign leaders - do that before defining any leader-mappings!
-" TODO: Find out why the leader doesn't seem to work in insert mode
 let mapleader = "\<Space>"
 let localmapleader = "\\"
 
@@ -108,14 +107,10 @@ set wildmode=list:longest,full
 " ignore some file types when completing
 set wildignore+=*.swp,*.pyc,__init__.py
 
-" do not store runtimepath in session file - that doesn't work with pathogen
+" reduce the things to store in session file...
 set sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize
-
-" do not store options in view file
+" ... store even less in views
 set viewoptions=cursor,folds
-
-" manually set the runtime path - I don't think that's needed (anymore)
-" set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
 
 " remember vim home directory
 let $VIMHOME=expand('<sfile>:p:h')
@@ -125,16 +120,20 @@ execute pathogen#infect()
 " build plugin helpfiles
 call pathogen#helptags()
 
+" open help files in new tabs
+autocmd! FileType help call functions#HelpInNewTab()
+" jump to last cursor position when opening a file
+autocmd! BufReadPost * call functions#SetLastCursorPosition()
+" turn paste mode off when leaving insert mode
+autocmd! InsertLeave * set nopaste
 
-"============================================================================
-" Make :help appear in a full-screen tab, instead of a window
-"============================================================================
-
-"Only apply to .txt files...
-augroup HelpInTabs
-  autocmd!
-  autocmd BufEnter *.txt call functions#HelpInNewTab()
-augroup END
+" map TeX placeholder movement
+" NOTE: mapping them here (before vim-latex is potentially loaded) because
+" it re-maps <C-j> if `<Plug>IMAP_JumpForward` isn't already mapped
+imap <Localleader>j <Plug>IMAP_JumpForward
+nmap <Localleader>j <Plug>IMAP_JumpForward
+imap <Localleader>k <Plug>IMAP_JumpBackward
+nmap <Localleader>k <Plug>IMAP_JumpBackward
 
 " NOT doing any vimrc re-sourcing because that leads to all sorts of problems...
 " augroup OnVimrcChanged
@@ -147,18 +146,4 @@ augroup END
 "   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/camelcasemotion/autoload/camelcasemotion.vim
 "   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/ctrlp.vim/autoload/ctrlp.vim
 " augroup END
-
-" Jump to last cursor position when opening a file
-autocmd BufReadPost * call functions#SetLastCursorPosition()
-
-" turn paste mode off when leaving insert mode
-autocmd InsertLeave * set nopaste
-
-" map TeX placeholder movement
-" NOTE: mapping them here (before vim-latex is potentially loaded) because
-" it re-maps <C-j> if `<Plug>IMAP_JumpForward` isn't already mapped
-imap <Localleader>j <Plug>IMAP_JumpForward
-nmap <Localleader>j <Plug>IMAP_JumpForward
-imap <Localleader>k <Plug>IMAP_JumpBackward
-nmap <Localleader>k <Plug>IMAP_JumpBackward
 

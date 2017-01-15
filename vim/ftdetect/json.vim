@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.jshintrc set filetype=json
+autocmd! BufNewFile,BufRead *.jshintrc set filetype=json

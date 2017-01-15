@@ -20,7 +20,7 @@ nmap <Leader>hv <Plug>GitGutterPreviewHunk
 
 " Fugitive "{{{
 " delete all fugitive buffers as soon as the're no longer displayed
-autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd! BufReadPost fugitive://* set bufhidden=delete
 " use vertical diff by default - note that this is a vim option
 set diffopt+=vertical
 " add a bunch of mappings

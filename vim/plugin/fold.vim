@@ -25,10 +25,10 @@ set foldminlines=4
 " automatically save/load view
 " http://vim.wikia.com/wiki/Make_views_automatic
 augroup AutoView
-  autocmd! *
+  autocmd!
 
-  autocmd BufWinLeave * if functions#IsNonspecialBuffer() | mkview | endif
-  autocmd BufWinEnter * if functions#IsNonspecialBuffer() | silent loadview | endif
+  autocmd BufWinLeave ?* if functions#IsNonspecialBuffer() | mkview | endif
+  autocmd BufWinEnter ?* if functions#IsNonspecialBuffer() | silent loadview | endif
 augroup END
 
 " move to next/previous level-1-fold
@@ -66,6 +66,6 @@ function! CustomFoldText()
   let expansionString = " " . repeat("•", 3 + w - strwidth(foldSizeStr.line.foldPercentage.foldLevelStr))
   return substitute(line, " ", "•", "g") . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
-autocmd User anyfoldLoaded set foldtext=CustomFoldText()
+autocmd! User anyfoldLoaded set foldtext=CustomFoldText()
 "}}}
 
