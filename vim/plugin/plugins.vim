@@ -200,6 +200,7 @@ nnoremap <Leader>no :Note
 nnoremap <Leader>nn viw:SplitNoteFromSelectedText<CR>
 nnoremap <Leader>ns :SearchNotes 
 nnoremap <Leader>nr :RelatedNotes<CR>
+nnoremap <Leader>nm :RecentNotes<CR>
 nnoremap <Leader>nt :ShowTaggedNotes<CR>
 "}}}
 
