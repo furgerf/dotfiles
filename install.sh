@@ -35,6 +35,7 @@ prompt-file() {
 
 echo "* LINUX"
 prompt-file $PWD/vim $HOME/.vim
+prompt-file $PWD/awesome $HOME/.config/awesome
 prompt-file $PWD/arch/bashrc $HOME/.bashrc
 prompt-file $PWD/arch/bash-sourcer.sh $HOME/.bash-sourcer.sh
 prompt-file $PWD/arch/inputrc $HOME/.inputrc

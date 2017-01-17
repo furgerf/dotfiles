@@ -39,6 +39,7 @@ end
 
 -- {{{ Variables
 beautiful.init("/usr/share/awesome/themes/archdove/theme.lua")
+hints.init()
 
 terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "vim"
@@ -793,7 +794,6 @@ globalkeys = awful.util.table.join(
   -- CLIENT NAVIGATION
   awful.key({ modkey, }, "j",
   function ()
-    --hints.focus()
     awful.client.focus.byidx( 1)
     if client.focus then client.focus:raise() end
   end),
@@ -814,6 +814,7 @@ globalkeys = awful.util.table.join(
       awful.util.spawn("firefox -new-tab http://en.wikipedia.org/wiki/" .. word)
     end)
   end),
+  awful.key({ modkey, }, "s", function () hints.focus() end),
 
   awful.key({ modkey, "Shift"   }, "w",      function ()
     info = true

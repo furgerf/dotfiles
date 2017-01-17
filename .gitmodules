@@ -119,3 +119,9 @@
 [submodule "vim/bundle/vim-misc"]
   path = vim/bundle/vim-misc
   url = git@github.com:xolox/vim-misc
+[submodule "awesome/modules/hints"]
+  path = awesome/modules/hints
+  url = git@github.com:zackpete/hints
+[submodule "awesome/modules/awesome-shifty"]
+  path = awesome/modules/awesome-shifty
+  url = git@github.com:cdump/awesome-shifty
