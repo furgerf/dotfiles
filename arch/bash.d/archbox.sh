@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # exports
-export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools:$HOME/git/linux-scripts:$HOME/git/linux-scripts/*"
+export PATH="$PATH:/opt/android-sdk/tools:/opt/android-sdk/build-tools:/opt/android-sdk/platform-tools"
+export PATH="$PATH:$HOME/git/linux-scripts:$HOME/git/linux-scripts/*"
 export PERL_LOCAL_LIB_ROOT="$PERL_LOCAL_LIB_ROOT:/home/fabian/perl5"
 export PERL_MB_OPT="--install_base /home/fabian/perl5"
 export PERL_MM_OPT="INSTALL_BASE=/home/fabian/perl5"
@@ -39,39 +40,29 @@ alias cp='acp -agi'
 alias mv='amv -gi'
 
 # development
-alias gourcevideo='gource -1279x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4'
-alias git-pullall="git-pull $HOME/git"
-alias logcat="$HOME/git/linux-scripts/logcat"
+alias gourcevideo='gource -1279x720 -o - | ffmpeg -y -r 60 -f image2pipe -vcodec \\
+  ppm -i - -vcodec libx264 -preset ultrafast -pix_fmt yuv420p -crf 1 -threads 0 -bf 0 gource.mp4'
+alias git-pullall='git-pull $HOME/git'
+alias logcat='$HOME/git/linux-scripts/logcat'
 alias refresh-conky='killall -SIGUSR1 conky'
-pjson() {
-  JS_FILE=$HOME/git/linux-scripts/pjson.js
-  PY_FILE=$HOME/git/linux-scripts/pjson.py
-  if type node &> /dev/null && [ -f $JS_FILE ]; then
-    node $JS_FILE
-  elif type python2 &> /dev/null && [ -f $PY_FILE ]; then
-    python2 $PY_FILE
-  else
-    echo "No node or python JSON-formatter found"
-  fi
-}
 alias tv-show-dev='tmux-node-dev tv-show-torrent-downloader'
 
 # image/office stuff
 alias image='geeqie'
 alias imagefind='find . -name "*" -exec file {} \; | /usr/bin/grep -o -P "^.+: \w+ image"'
-pdf() { okular $1 &> /dev/null & }
+pdf() { okular "$1" &> /dev/null & }
 pdfa() {
-  if [ -d $1 ]; then
+  if [ -d "$1" ]; then
     for i in ${1%/}/*.pdf; do
-      pdf $(printf %q $i) # this should escape spaces but doesn't work
+      pdf "$(printf %q "$i")" # this should escape spaces but doesn't work
     done
   fi
 }
 
 # win-partition related
 alias winmount="mount /dev/sdb1 /win"
-alias winhibernate="sudo $HOME/git/linux-scripts/winboot -h"
-alias winboot="sudo $HOME/git/linux-scripts/winboot"
+alias winhibernate='sudo $HOME/git/linux-scripts/winboot -h'
+alias winboot='sudo $HOME/git/linux-scripts/winboot'
 
 # raspi - MAKE SURE TO KEEP SSH CONFIG IN SSH_CONFIG
 alias raspi='ssh raspi'
@@ -81,14 +72,14 @@ alias raspi-extern-session='while true; do raspi-extern; echo -n "Waiting 10s be
 alias raspi-tunnel='ssh -N raspi-tunnel'
 raspi-backup(){
   echo "Device to back up: "
-  read DEVICE
-  sudo dd bs=4M  if="$DEVICE" | gzip > raspi-image-$(date +%Y-%m-%d).gz
+  read -r DEVICE
+  sudo dd bs=4M  if="$DEVICE" | gzip > "raspi-image-$(date +%Y-%m-%d).gz"
 }
 raspi-restore(){
   echo "Device to restore to: "
-  read DEVICE
+  read -r DEVICE
   echo "Backup file: "
-  read BACKUP
+  read -r BACKUP
   gzip -dc "$BACKUP" | sudo dd bs=4M of="$DEVICE"
 }
 
@@ -108,8 +99,8 @@ todo() {
   if [[ "$#" -eq 0 ]]; then
     cat -n "$todoFile"
     echo -ne "----------------------------\nType a number to remove: "
-    read NUMBER
-    sed -ie ${NUMBER}d "$todoFile"
+    read -r NUMBER
+    sed -ie "${NUMBER}d" "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-l" ]]; then
     cat -n "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-h" ]]; then
@@ -118,11 +109,11 @@ todo() {
     echo > "$todoFile"
     echo > "$todoHistory"
   elif [[ "$#" -eq 1 && $1 =~ $re ]]; then
-    sed -ie ${1}d "$todoFile"
+    sed -ie "${1}d" "$todoFile"
     cat -n "$todoFile"
   else
     echo "$@" >> "$todoFile"
-    echo $(date "+%A, %B %d, %Y [%T]") "$@" >> "$todoHistory"
+    echo "$(date '+%A, %B %d, %Y [%T]')" "$@" >> "$todoHistory"
     cat -n "$todoFile"
   fi
 }
@@ -137,7 +128,7 @@ yoghurt () {
   first=1
   sudo echo "foo" > /dev/null
   ping 8.8.8.8 -c 1 -w 1 &> /dev/null
-  while [ $? -ne 0 ]; do
+  while [ "$?" -ne 0 ]; do
     if [ $first -eq 1 ]; then
       echo "Waiting for connection..."
       first=0
@@ -156,5 +147,5 @@ alias spiral='x=0;y=0;while [[ $y -lt 500 ]] ; do xdotool mousemove --polar $x $
 alias mirror='mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2'
 alias speak='time echo \""$@"\" | ( Equalizer || espeak || say -v Fred || cat)' # FIX ME :(
 alias labyrinth='while ( true ) ; do if [ $( expr $RANDOM % 2 ) -eq 0 ] ; then echo -ne "\xE2\x95\xB1" ; else echo -ne "\xE2\x95\xB2" ; fi ; done'
-say(){ curl -A RG translate\.google\.com/translate_tts -d "tl=en&q=$@" | mpg123 -; }
+say(){ curl -A RG 'translate.google.com/translate_tts' -d 'tl=en&q=$@' | mpg123 -; }
 

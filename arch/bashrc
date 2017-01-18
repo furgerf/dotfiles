@@ -9,25 +9,25 @@
 #[[ -z "$TMUX" ]] && exec tmux
 
 # prompt
-BLACK="\[$(tput setaf 0)\]"
-RED="\[$(tput setaf 1)\]"
-GREEN="\[$(tput setaf 2)\]"
-BROWN="\[$(tput setaf 3)\]"
-BLUE="\[$(tput setaf 4)\]"
-MAGENTA="\[$(tput setaf 5)\]"
-CYAN="\[$(tput setaf 6)\]"
-LGRAY="\[$(tput setaf 7)\]"
+COLOR_BLACK="\[$(tput setaf 0)\]"
+COLOR_RED="\[$(tput setaf 1)\]"
+COLOR_GREEN="\[$(tput setaf 2)\]"
+COLOR_BROWN="\[$(tput setaf 3)\]"
+COLOR_BLUE="\[$(tput setaf 4)\]"
+COLOR_MAGENTA="\[$(tput setaf 5)\]"
+COLOR_CYAN="\[$(tput setaf 6)\]"
+COLOR_LGRAY="\[$(tput setaf 7)\]"
 
-DGRAY="\[$(tput setaf 8)\]"
-LRED="\[$(tput setaf 9)\]"
-LGREEN="\[$(tput setaf 10)\]"
-YELLOW="\[$(tput setaf 11)\]"
-LBLUE="\[$(tput setaf 12)\]"
-LMAGENTA="\[$(tput setaf 13)\]"
-LCYAN="\[$(tput setaf 14)\]"
-WHITE="\[$(tput setaf 15)\]"
+COLOR_DGRAY="\[$(tput setaf 8)\]"
+COLOR_LRED="\[$(tput setaf 9)\]"
+COLOR_LGREEN="\[$(tput setaf 10)\]"
+COLOR_YELLOW="\[$(tput setaf 11)\]"
+COLOR_LBLUE="\[$(tput setaf 12)\]"
+COLOR_LMAGENTA="\[$(tput setaf 13)\]"
+COLOR_LCYAN="\[$(tput setaf 14)\]"
+COLOR_WHITE="\[$(tput setaf 15)\]"
 
-RESET="\[$(tput sgr0)\]"
+COLOR_RESET="\[$(tput sgr0)\]"
 
 echo -e "$(tput sgr0)Welcome to the $(tput setaf 12)other side$(tput sgr0)...\n"
 
@@ -37,7 +37,16 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM="auto" # verbose
-PS1="${DGRAY}[${WHITE}\$?\$(if [[ \$? == 0 ]]; then echo \"  ${LGREEN}\342\234\223\"; else printf '%-3s' ${LRED}\342\234\227; fi)${DGRAY}][${WHITE}\A${DGRAY}][${WHITE}\u${DGRAY}@${WHITE}\h${DGRAY}][${WHITE}\w\$([[ \$(__git_ps1) ]] && echo -n "$DGRAY➤" && __git_ps1 | tr -d ' =')${DGRAY}]${RESET}${LBLUE}\$ ${RESET}"
+
+PS1="${COLOR_DGRAY}["
+PS1+="${COLOR_WHITE}\$?"
+PS1+="\$(if [[ \$? == 0 ]]; then echo \"  ${COLOR_LGREEN}\342\234\223\";"
+PS1+="else printf '%-3s' ${COLOR_LRED}\342\234\227; fi)${COLOR_DGRAY}]"
+PS1+="[${COLOR_WHITE}\A${COLOR_DGRAY}]"
+PS1+="[${COLOR_WHITE}\u${COLOR_DGRAY}@${COLOR_WHITE}\h${COLOR_DGRAY}]"
+PS1+="[${COLOR_WHITE}\w"
+PS1+="\$([[ \$(__git_ps1) ]]&&echo -n "$COLOR_DGRAY➤"&&__git_ps1|tr -d ' =')"
+PS1+="${COLOR_DGRAY}]${COLOR_RESET}${COLOR_LBLUE}\$ ${COLOR_RESET}"
 
 # exports
 export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
@@ -75,7 +84,7 @@ shopt -s checkwinsize
 CDPATH=".:~/git:/data"
 cl() {
   if [[ -d "$1" ]]; then
-    cd "$1"
+    cd "$1" || exit 1
     ls -Alh
   else
     echo "bash: cl: '$1': Directory not found"
@@ -130,6 +139,7 @@ alias xclip='xclip -selection c'
 alias xpaste='xclip -o'
 alias da='date "+%A, %B %d, %Y [%T]"'
 alias du1='du --max-depth=1'
+alias du1s='du1 | sort -h'
 alias hist='history | grep'      # requires an argument
 alias :q='exit'
 alias :Q='exit'
@@ -137,11 +147,12 @@ alias :Q='exit'
 # new diagnostic commands
 alias openports='ss --all --numeric --processes --ipv4 --ipv6'
 recent() {
-  #if [[ "$1" =~ '^[0-9]+$' ]]; then
   if [ "$1" -eq "$1" ] 2>/dev/null; then
-    find -maxdepth "$1" -type f -mtime -1 -printf "%T@ - %Tk:%TM - %f\n" | sort -rn | cut -d- -f2-
+    find . -maxdepth "$1" -type f -mtime -1 -printf "%T@ - %Tk:%TM - %f\n" \
+      | sort -rn | cut -d- -f2-
   else
-    find -maxdepth 1 -type f -mtime -1 -printf "%T@ - %Tk:%TM - %f\n" | sort -rn | cut -d- -f2-
+    find . -maxdepth 1 -type f -mtime -1 -printf "%T@ - %Tk:%TM - %f\n" \
+      | sort -rn | cut -d- -f2-
   fi
 }
 p8 () {
@@ -159,13 +170,12 @@ p8 () {
 }
 alias files='file $(/usr/bin/ls -aH)'
 alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)'
-alias pg='ps -Af | grep $1'         # requires an argument (note: /usr/bin/pg is installed by the util-linux package; maybe a different alias name should be used)
 
 # git
 # `g` -> `git status`, `g foobar` -> `git foobar`
 function g {
-   if [[ $# > 0 ]]; then
-     git $@
+   if [[ $# -gt 0 ]]; then
+     git "$@"
    else
      git status  || ls
    fi
@@ -195,12 +205,13 @@ alias v='/usr/bin/vim'
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
-sus(){ sort | uniq -c | sort $@; }
-eval $(dircolors -b)   # highlight broken symlinks
+sus(){ sort | uniq -c | sort "$@"; }
+eval "$(dircolors -b)"   # highlight broken symlinks
 stty -ixon   # disable flow control (to use ctrl+s in vim)
-alias kill-zombies="ps ax -o state -o ppid | awk '$1==\"Z\"{print $2}' | xargs kill -9"
-shrug(){ echo -n "¯\_(ツ)_/¯" | (xsel||pbcopy);echo "¯\_(ツ)_/¯ copied to your clipboard"; }
-alias imgprint='convert label:@- $1'
+shrug(){
+  echo -n "¯\_(ツ)_/¯" | (xclip||xsel||pbcopy);echo "¯\_(ツ)_/¯ copied"
+}
+imgprint(){ convert label:@- "$1"; }
 x(){
   if [ -f "$1" ] ; then
     case "$1" in
@@ -227,11 +238,11 @@ alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
 function box() {
   t="$1xxxx"
   c=${2:-#}
-  echo ${t//?/$c}
+  echo "${t//?/$c}"
   echo "$c $1 $c"
-  echo ${t//?/$c}
+  echo "${t//?/$c}"
 }
 
 # source other files
-test -s $HOME/.bash-sourcer.sh && source $HOME/.bash-sourcer.sh
+test -s "$HOME/.bash-sourcer.sh" && source "$HOME/.bash-sourcer.sh"
 
