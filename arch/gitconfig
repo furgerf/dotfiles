@@ -3,9 +3,18 @@
   email = furgerfabian@hotmail.com
 [color]
   ui = true
+[color "diff-highlight"]
+  changeHunkIndicators = true
+  oldNormal = "red bold"
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
 [core]
   editor = vim
   excludefile = ~/.gitignore
+  # use diff-so-fancy when paging and use a default pattern for easier diff navigation
+  # Note: using the pattern invalidates -F (quit less if it fits on the screen)
+  pager = "diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified): '"
 [fetch]
   prune = true
 [pull]
