@@ -40,6 +40,8 @@
   conflict = diff --name-only --diff-filter=U
   # list all todos
   todo = grep -n TODO
+  # create patch output
+  patch = !git --no-pager diff --no-color
 
   ########################
   # working with history #

@@ -29,8 +29,8 @@ set number
 set relativenumber
 " show the line and column number of the cursor - has no effect with vim-airline
 set ruler
-" briefly jump to matching brackets when inserting
-" set showmatch
+" don't jump to matching brackets when inserting
+set noshowmatch
 " show command in status line - I don't think this has any effect on vim-airline
 set showcmd
 " always show 5 lines of context around cursor

@@ -1,16 +1,8 @@
+" source! /home/fabian/.vimperatorrc.local
+
+
 js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
 
-"3.9 (created: 2015/02/15 15:49:05)
-
-source! /home/fabian/.vimperatorrc.local
-
-" vim: set ft=vimperator:
-
-noremap l gt
-noremap h gT
-map <C-b> <C-6>
-
-"===[ Settings ]========================================================
 
 " Autocomplete using Firefox Awesomebar subsystem
 set complete=l
@@ -30,22 +22,49 @@ set wildmode='list:full'
 " Don't beep
 "set noerrorbells
 
+
+" left-right navigation
+nnoremap l gt
+nnoremap h gT
+
+" common sites
+nnoremap gw :tabopen whoscored.com<CR>
+
+" jump to last tab
+map <C-b> <C-6>
+
+" Press 'F10' to toggle Vimperator
+"noremap <F10> :vimperatortoggle<CR>
+
+" Press 'c' to change to a buffer, instead of 'b'
+noremap c b
+
+" Press 'b' to page up, instead of crazy CTRL-B
+noremap b <PageUp>
+
+" Press 'm' to go to previous tab
+"noremap m :tabprevious<CR>
+
+" Press ',' to go to next tab
+"noremap , :tabnext<CR>
+
+" Press 'q' to delete current tab
+"noremap q :bdelete<CR>
+
+" Press 'C-a' to select all
+"noremap <C-a> <C-v><C-a>
+
+" Press 'C-Insert' to copy and 'S-Insert' to paste
+nnoremap <C-Insert> <C-v><C-c>
+nnoremap <S-Insert> <C-v><C-v>
+cnoremap <C-Insert> <C-v><C-c>
+cnoremap <S-Insert> <C-v><C-v>
+inoremap <C-Insert> <C-v><C-c>
+inoremap <S-Insert> <C-v><C-v>
+
+
 " Make Firefox run faster by using JIT
 set! javascript.options.jit.chrome=true
-
-"===[ Status bars ]=====================================================
-
-" Adds RSS icon on the bottom status bar.
-" From: http://blog.thetoast.net/2009/02/vimp-update.html
-"javascript <<EOF
-"(function(){
-"    var feedPanel = document.createElement("statusbarpanel");
-"    feedPanel.setAttribute("id", "feed-panel-clone");
-"    feedPanel.appendChild(document.getElementById("feed-button"));
-"    feedPanel.firstChild.setAttribute("style", "padding: 0; max-height: 16px;");
-"    document.getElementById("status-bar").insertBefore(feedPanel, document.getElementById("security-button"));
-"})();
-"EOF
 
 " Make bar yellow when focused.
 " From: http://www.reddit.com/r/linux/comments/99d55/i_could_use_a_little_vimperator_help_also/
@@ -60,25 +79,8 @@ javascript <<EOF
     })();
 EOF
 
-"===[ Auto commands ]===================================================
-
 " Pass through all keys (like CTRL-Z) on Gmail and Google Reader:
 "autocmd LocationChange .* :js modes.passAllKeys = /mail\.google\.com|www\.google\.com\/reader\/view/.test(buffer.URL)
-
-"===[ Custom commands ]=================================================
-
-" Run :vimperatortoggle to enable or disable Vimperator as needed.
-"javascript function vimperatortoggle() { if (is_vimperator_active) { liberator.execute(':disable') } else { liberator.execute(':enable') }; }
-"command! vimperatortoggle javascript vimperatortoggle()
-
-" Run :disable to disable Vimperator and resume normal Firefox behavior.
-"javascript function disable() { is_vimperator_active = false; liberator.execute(':set guioptions=TnbrmB showtabline=1'); modes.passAllKeys = true; }
-"command! disable javascript disable()
-
-" Run :enable to enable Vimperator.
-"javascript function enable() { is_vimperator_active = true; liberator.execute('set guioptions=nbr showtabline=1') }
-"command! enable javascript enable()
-":enable
 
 " Load configuration file into current browser, useful for updating after editing this file.
 command! sourcerc :source ~/.vimperatorrc
@@ -93,38 +95,4 @@ function inspect(what) {
 }
 EOB
 
-"===[ Mappings ]========================================================
-
-" Press 'F10' to toggle Vimperator
-"noremap <F10> :vimperatortoggle<CR>
-
-" Press 'c' to change to a buffer, instead of 'b'
-noremap c b
-
-" Press 'b' to page up, instead of crazy CTRL-B
-noremap b <PageUp>
-
-" Press 'm' to go to previous tab
-"noremap m :tabprevious<CR>
-" Press ',' to go to next tab
-"noremap , :tabnext<CR>
-" Press 'q' to delete current tab
-"noremap q :bdelete<CR>
-
-" Press 'C-a' to select all
-"noremap <C-a> <C-v><C-a>
-
-" Press 'C-c' to copy, 'C-v' or 'S-Insert' to paste, or 'C-x' to cut
-"noremap <C-c> <C-v><C-c>
-"noremap <C-v> <C-v><C-v>
-"noremap <C-x> <C-v><C-x>
-"cnoremap <C-c> <C-v><C-c>
-"cnoremap <C-v> <C-v><C-v>
-"cnoremap <S-Insert> <C-v><C-v>
-"cnoremap <C-x> <C-v><C-x>
-"inoremap <C-c> <C-v><C-c>
-"inoremap <C-v> <C-v><C-v>
-"inoremap <S-Insert> <C-v><C-v>
-"inoremap <C-x> <C-v><C-x>
-
-"===[ fin ]=============================================================
+" vim: set ft=vim:
