@@ -16,3 +16,6 @@ setlocal foldenable
 " also enable anyfold
 let anyfold_activate=1
 
+" add mappings to sort imports
+nnoremap <LocalLeader>i :Isort<CR>
+

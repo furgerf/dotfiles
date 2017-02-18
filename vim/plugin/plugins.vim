@@ -201,6 +201,12 @@ nnoremap <Leader>nn viw:SplitNoteFromSelectedText<CR>
 nnoremap <Leader>ns :SearchNotes 
 nnoremap <Leader>nr :RelatedNotes<CR>
 nnoremap <Leader>nm :RecentNotes<CR>
-nnoremap <Leader>nt :ShowTaggedNotes<CR>
+nnoremap <Leader>ni :ShowTaggedNotes<CR> " 'notes index'
+"}}}
+
+" vim-isort "{{{
+" disable default visual-mode mapping
+let g:vim_isort_map = ''
+" (custom mappings are added in ftplugin/python.vim)
 "}}}
 

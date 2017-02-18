@@ -125,3 +125,6 @@
 [submodule "awesome/modules/awesome-shifty"]
   path = awesome/modules/awesome-shifty
   url = git@github.com:cdump/awesome-shifty
+[submodule "vim/bundle/vim-isort"]
+  path = vim/bundle/vim-isort
+  url = git@github.com:fisadev/vim-isort
