@@ -12,8 +12,10 @@ nnoremap <Leader>ss :so $MYVIMRC<CR>
 " edit bashrc
 nnoremap <Leader>b :e ~/.bashrc<CR>
 
-" save and close
+" save (and/or) close
+nnoremap <Leader>qq :qa<CR>
 nnoremap <Leader>x :x<CR>
+nnoremap <Leader>w :w<CR>
 
 " edit another file in the same directory as the current file
 nnoremap <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
@@ -41,7 +43,7 @@ vnoremap <Leader>rt :retab<CR>
 nnoremap <Leader>q :nohlsearch<CR>
 
 " cycle through buffers
-nnoremap <Leader>w <C-w>w
+" nnoremap <Leader>w <C-w>w
 
 " close preview, quickfix, location list
 " NOTE: Since the location list is local to the window, only the one in the current window is closed

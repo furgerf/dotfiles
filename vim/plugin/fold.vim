@@ -13,9 +13,9 @@ set nofoldenable
 " set default foldlevel when opening new file
 set foldlevelstart=1
 " number of columns to use for displaying folds (lefthand-side)
-set foldcolumn=4
+set foldcolumn=1
 " don't create folds for less than 4 lines
-set foldminlines=4
+set foldminlines=0
 
 " open folds when moving into them
 "set foldopen=all
@@ -27,8 +27,8 @@ set foldminlines=4
 augroup AutoView
   autocmd!
 
-  autocmd BufWinLeave ?* if functions#IsNonspecialBuffer() | mkview | endif
-  autocmd BufWinEnter ?* if functions#IsNonspecialBuffer() | silent loadview | endif
+  " autocmd BufWinLeave ?* if functions#IsNonspecialBuffer() | mkview | endif
+  " autocmd BufWinEnter ?* if functions#IsNonspecialBuffer() | silent loadview | endif
 augroup END
 
 " move to next/previous level-1-fold

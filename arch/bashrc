@@ -194,6 +194,17 @@ alias push='git push'
 alias publish='git publish'
 alias gitall='git add . && git commit . && git push'
 
+# pip
+pip-activate() {
+  pattern="*venv"
+  venvs=($pattern)
+  venv=${venvs[0]}
+  echo "Activating $venv..."
+  source "$venv/bin/activate"
+}
+alias pip-rstore='pip freeze > requirements.txt'
+alias pip-rload='pip install -r requirements.txt'
+
 # misc
 alias ='exit'
 alias ='fg' # hit  to resume background paused process (fg)
