@@ -3,7 +3,7 @@
 fortune | cowsay | lolcat
 PS1="\[\033[1;30m\][\[\033[0;31m\]\$?\$(if [[ \$? == 0 ]]; then echo \"  \[\033[01;32m\]\342\234\223\"; else echo \"\[\033[01;31m\]\342\234\227\"; fi)\[\033[1;30m\]][\[\033[0;31m\]\A\[\033[1;30m\]][\[\033[0;31m\]\u\[\033[1;30m\]@\[\033[0;31m\]\h\[\033[1;30m\]][\[\033[0;31m\]\w\[\033[1;30m\]]\[\033[1;34m\]\$\[\033[0;37m\] "
 
-source /usr/share/git/completion/git-completion.bash
+source ~/git/completion/git-completion.bash
 
 # pacman
 alias pac="sudo /usr/bin/pacman -S"         # default action       - install one or more packages

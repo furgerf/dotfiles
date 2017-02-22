@@ -8,6 +8,8 @@
 # auto-start each session in tmux
 #[[ -z "$TMUX" ]] && exec tmux
 
+export TERM="screen-256color"
+
 # prompt
 COLOR_BLACK="\[$(tput setaf 0)\]"
 COLOR_RED="\[$(tput setaf 1)\]"
@@ -31,7 +33,7 @@ COLOR_RESET="\[$(tput sgr0)\]"
 
 echo -e "$(tput sgr0)Welcome to the $(tput setaf 12)other side$(tput sgr0)...\n"
 
-GIT_PS1_FILE='/usr/share/git/git-prompt.sh'
+GIT_PS1_FILE="$HOME/git/dotfiles/arch/third-party/git-prompt.sh"
 [[ -f "$GIT_PS1_FILE" ]] && source "$GIT_PS1_FILE"
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
@@ -53,8 +55,6 @@ export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
 export EDITOR="vim"
 export VISUAL="vim"
 export PAGER="/bin/less"
-export TERM="screen-256color"
-#export TERM="xterm-256color"
 
 # history configuration
 # append to the history file, don't overwrite it

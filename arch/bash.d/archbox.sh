@@ -10,7 +10,7 @@ export PERL5LIB="/home/fabian/perl5/lib/perl5:$PERL5LIB"
 
 # "command not found" hook
 source /usr/share/doc/pkgfile/command-not-found.bash
-source /usr/share/git/completion/git-completion.bash
+source ~/git/completion/git-completion.bash
 
 # pacman
 alias pac="sudo /usr/bin/pacman -S"         # default action       - install one or more packages
