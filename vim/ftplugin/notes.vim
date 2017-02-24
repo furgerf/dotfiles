@@ -17,3 +17,5 @@ setlocal textwidth=80
 nnoremap <Localleader>nh :NoteToHtml<CR>
 nnoremap <Localleader>nm :NoteToMarkdown<CR>
 
+:call functions#TurnOnMathematicMode()
+

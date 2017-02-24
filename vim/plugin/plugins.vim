@@ -210,3 +210,12 @@ let g:vim_isort_map = ''
 " (custom mappings are added in ftplugin/python.vim)
 "}}}
 
+" mathematic.vim "{{{
+" turn on mathematic keymap and increase timeoutlen
+noremap <silent> <Leader>mm :call functions#TurnOnMathematicMode()<CR>
+" turn off mathematic keymap and decrease timeoutlen
+noremap <silent> <Leader>mn :call functions#TurnOffMathematicMode()<CR>
+" show keymaps
+noremap <Leader>ms :sp ~/git/dotfiles/vim/bundle/mathematic.vim/keymap/mathematic.vim<CR>
+"}}}
+
