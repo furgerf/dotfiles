@@ -125,5 +125,5 @@
   path = vim/bundle/vim-isort
   url = git@github.com:fisadev/vim-isort
 [submodule "vim/bundle/mathematic.vim"]
-	path = vim/bundle/mathematic.vim
-	url = https://github.com/Rykka/mathematic.vim
+  path = vim/bundle/mathematic.vim
+  url = git@github.com:Rykka/mathematic.vim

@@ -34,6 +34,8 @@ nnoremap <Leader>y ggVGy
 
 " remove trailing whitelines
 nnoremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
+" convert tabs to whitespace
+nnoremap <Leader>cw :%s/\t/  /g<cr>:nohlsearch<cr>
 
 " convert tabs to spaces
 nnoremap <Leader>rt :retab<CR>
