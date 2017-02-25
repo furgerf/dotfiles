@@ -12,3 +12,6 @@ setlocal textwidth=72
 setlocal nonumber
 setlocal norelativenumber
 
+" no longer highlight past column 80
+hi! OverLength none
+

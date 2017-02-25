@@ -19,3 +19,6 @@ let anyfold_activate=1
 " add mappings to sort imports
 nnoremap <LocalLeader>i :Isort<CR>
 
+" let g:syntastic_python_checkers = [ 'pylint' ]
+let g:syntastic_check_on_open = 0
+
