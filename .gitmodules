@@ -127,3 +127,6 @@
 [submodule "vim/bundle/mathematic.vim"]
   path = vim/bundle/mathematic.vim
   url = git@github.com:Rykka/mathematic.vim
+[submodule "vim/bundle/Nvim-R"]
+  path = vim/bundle/Nvim-R
+  url = git@github.com:jalvesaq/Nvim-R
