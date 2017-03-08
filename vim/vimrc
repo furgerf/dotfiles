@@ -134,6 +134,8 @@ imap <Localleader>j <Plug>IMAP_JumpForward
 nmap <Localleader>j <Plug>IMAP_JumpForward
 imap <Localleader>k <Plug>IMAP_JumpBackward
 nmap <Localleader>k <Plug>IMAP_JumpBackward
+" interpret all .tex files as latex files (this also can't be in ftplugin)
+let g:tex_flavor = "latex"
 
 " NOT doing any vimrc re-sourcing because that leads to all sorts of problems...
 " augroup OnVimrcChanged

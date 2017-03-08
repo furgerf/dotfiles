@@ -3,8 +3,8 @@
 """"""""""""""""""""""""""""
 
 " add maps to easily insert commas/semicolons
-nnoremap <leader>, :CommaOrSemiColon<CR>
-inoremap <leader>, <c-o>:CommaOrSemiColon<CR>
+nnoremap <localleader>, :CommaOrSemiColon<CR>
+inoremap <localleader>, <c-o>:CommaOrSemiColon<CR>
 
 " enable folding
 setlocal foldenable

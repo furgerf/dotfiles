@@ -33,3 +33,15 @@ tradeoffs
 WLAN
 IoT
 IoT
+async
+struct
+SVM
+TP
+FP
+FN
+TPR
+TNR
+AUC
+FPR
+underfitting
+overfitting

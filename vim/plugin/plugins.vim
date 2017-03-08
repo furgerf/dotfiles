@@ -1,17 +1,6 @@
 """""""""""""""""""""""""""""""""
 " Various plugins configuration "
 """""""""""""""""""""""""""""""""
-" Contains configuration for the following plugins:
-" - NERDTree
-" - CtrlP
-" - UltiSnips
-" - vim-test
-" - CamelCaseMotion
-" - expand-region
-" - vim-interestingwords
-" - vim-obsession
-" - tagbar
-" - startify
 
 " NERDTree "{{{
 " define map for opening NERDTree

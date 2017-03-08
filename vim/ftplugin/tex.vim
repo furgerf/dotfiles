@@ -6,8 +6,6 @@
 setlocal spell
 
 " assign some TeX settings
-" interpret all .tex files as latex files
-let g:tex_flavor = "latex"
 " don't jump to compilation errors
 let g:Tex_GotoError=0
 " produce PDFs by default compilation (\ll)
