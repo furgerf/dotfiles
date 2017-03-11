@@ -123,16 +123,15 @@ function! functions#TurnOnMathematicMode()
   if &keymap ==# 'mathematic'
     return
   endif
-
   set keymap=mathematic
-  set timeoutlen=2000
+  set timeoutlen=1500
   echo 'Turned on mathematic mode!'
 endfunction
+
 function! functions#TurnOffMathematicMode()
   if &keymap !=# 'mathematic'
     return
   endif
-
   set keymap=
   set timeoutlen=500
   echo 'Turned off mathematic mode!'

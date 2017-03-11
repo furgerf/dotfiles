@@ -3,6 +3,8 @@ pcm.!default {
     slave.pcm "softvol"
 }
 
+# defaults.pcm.device 3
+
 pcm.softvol {
   type softvol
     slave {

@@ -24,6 +24,8 @@ let g:airline#extensions#tabline#enabled = 1
 " display 'straight' tabs
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
+" also count words in 'notes' files
+let g:airline#extensions#wordcount#filetypes .= '|notes'
 "}}}
 
 " General "{{{

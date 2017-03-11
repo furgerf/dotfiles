@@ -42,6 +42,7 @@ let g:UltiSnipsSnippetsDir="$VIMHOME/bundle/vim-snippets/UltiSnips/"
 let g:UltiSnipsExpandTrigger="<C-Space>"
 " show all potential snippets with current trigger
 let g:UltiSnipsListSnippets="<Localleader><Leader>"
+" triggers to jump forward/backward are left to defaults: <C-j>/<C-k>
 "}}}
 
 " vim-test "{{{

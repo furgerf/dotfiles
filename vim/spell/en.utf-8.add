@@ -45,3 +45,6 @@ AUC
 FPR
 underfitting
 overfitting
+transductive
+learnable
+learnability
