@@ -13,6 +13,9 @@ setlocal spell
 " use syntax folding
 " setlocal foldmethod=syntax
 
+" no longer highlight past column 80
+hi! OverLength none
+
 " 'compile' current note
 nnoremap <Localleader>nh :NoteToHtml<CR>
 nnoremap <Localleader>nm :NoteToMarkdown<CR>

@@ -61,3 +61,9 @@ vnoremap <Leader>dg :diffget<CR>
 nnoremap <Leader>dp dp
 vnoremap <Leader>dp :diffput<CR>
 
+" flash cuc/cul
+map <silent> <Leader>jk cox:sleep 100m<CR>cox
+
+" delete paranthesis under cursor and matching
+nnoremap <Leader>X %x<C-o>x
+
