@@ -130,3 +130,6 @@
 [submodule "vim/bundle/Nvim-R"]
   path = vim/bundle/Nvim-R
   url = git@github.com:jalvesaq/Nvim-R
+[submodule "vim/bundle/gundo.vim"]
+  path = vim/bundle/gundo.vim
+  url = git@github.com:sjl/gundo.vim
