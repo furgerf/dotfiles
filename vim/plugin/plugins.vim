@@ -31,6 +31,7 @@ let g:ctrlp_use_caching = 0
 let g:ctrlp_custom_ignore = {
   \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
   \ }
+let g:ctrlp_switch_buffer = 0 " always open files in new buffers
 " define map for opening CtrlP for tags instead of files (probably quite slow!)
 nnoremap <Leader>p :CtrlPTag<CR>
 "}}}
@@ -207,5 +208,9 @@ noremap <silent> <Leader>mm :call functions#TurnOnMathematicMode()<CR>
 noremap <silent> <Leader>mn :call functions#TurnOffMathematicMode()<CR>
 " show keymaps
 noremap <Leader>ms :sp ~/git/dotfiles/vim/bundle/mathematic.vim/keymap/mathematic.vim<CR>
+"}}}
+
+" gundo.vim "{{{
+noremap <Leader>u :GundoToggle<CR>
 "}}}
 

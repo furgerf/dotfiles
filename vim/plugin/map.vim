@@ -38,6 +38,10 @@ nnoremap k gk
 " use <C-\> to return after tag jump with <C-]>
 " (<C-[> is something with alt/esc...)
 nnoremap <C-\> :pop<CR>
+
+" make <C-e>/<C-y> scroll faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 "}}}
 
 " Visual mode "{{{

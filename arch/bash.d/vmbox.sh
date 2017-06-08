@@ -50,3 +50,5 @@ pdf() { okular "$1" &> /dev/null & }
 alias sau='sudo apt update && sudo apt upgrade'
 alias sai='sudo apt install '
 
+alias move-downloads-here='ls ~/downloads/*; mv ~/downloads/* .'
+
