@@ -35,6 +35,9 @@ augroup END
 " http://superuser.com/questions/816005/move-to-next-fold-of-level-1-in-vim/816085#816085
 nnoremap <silent> zj :let max = &fdn<bar>let &fdn = 1<CR>zj:let &fdn=max<CR>
 nnoremap <silent> zk :let max = &fdn<bar>let &fdn = 1<CR>zk:let &fdn=max<CR>
+
+" make zO open recursively even when the cursor is on an open fold
+nnoremap <silent> zO :call functions#RecursivelyOpenFold()<CR>
 "}}}
 
 " vim-anyfold "{{{

@@ -133,3 +133,6 @@
 [submodule "vim/bundle/gundo.vim"]
   path = vim/bundle/gundo.vim
   url = git@github.com:sjl/gundo.vim
+[submodule "vim/bundle/deleft.vim"]
+  path = vim/bundle/deleft.vim
+  url = git@github.com:AndrewRadev/deleft.vim.git
