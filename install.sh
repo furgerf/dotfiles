@@ -42,6 +42,7 @@ prompt-file $PWD/arch/inputrc $HOME/.inputrc
 prompt-file $PWD/arch/tmux.conf $HOME/.tmux.conf
 prompt-file $PWD/arch/vimperatorrc $HOME/.vimperatorrc
 prompt-file $PWD/arch/asoundrc $HOME/.asoundrc
+prompt-file $PWD/arch/pulseaudio-ctl-config $HOME/.config/pulseaudio-ctl/config
 prompt-file $PWD/arch/gitconfig $HOME/.gitconfig
 prompt-file $PWD/arch/xinitrc $HOME/.xinitrc
 prompt-file $PWD/arch/ctags $HOME/.ctags
@@ -51,6 +52,7 @@ prompt-file $PWD/arch/fonts $HOME/.fonts
 
 echo "* LINUX (root)"
 prompt-file $PWD/arch/slim.conf /etc/slim.conf sudo
+prompt-file $PWD/arch/acpi-handler.sh /etc/acpi/handler.sh sudo
 prompt-file $PWD/arch/locale.conf /etc/locale.conf sudo
 prompt-file $PWD/arch/locale.gen /etc/locale.gen sudo
 prompt-file $PWD/arch/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf sudo
