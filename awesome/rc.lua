@@ -407,7 +407,7 @@ function(widget, args)
   elseif args[1]>50 and args[1]<=75 then
     volicon:set_image(beautiful.sound_51_75)
     volicon:set_resize(false)
-  elseif args[1]>75 and args[1]<=100 then
+  elseif args[1]>75 then
     volicon:set_image(beautiful.sound_76_100)
     volicon:set_resize(false)
   else
@@ -743,14 +743,17 @@ globalkeys = awful.util.table.join(
   awful.key({ }, "XF86ScreenSaver", function ()
      awful.util.spawn("slock")
      awful.util.spawn("xset dpms force off")  end),
-  --awful.key({ }, "XF86AudioRaiseVolume", function ()
-  --   awful.util.spawn("amixer sset Master unmute")
-  --   awful.util.spawn("amixer set Master 3%+") end),
-  --awful.key({ }, "XF86AudioLowerVolume", function ()
-  --   awful.util.spawn("amixer sset Master unmute")
-  --   awful.util.spawn("amixer set Master 3%-") end),
-  --awful.key({ }, "XF86AudioMute", function ()
-  --   awful.util.spawn("amixer sset Master toggle") end),
+  awful.key({ }, "XF86AudioRaiseVolume", function ()
+    awful.util.spawn("pulseaudio-ctl mute no")
+    awful.util.spawn("pulseaudio-ctl up")
+  end),
+  awful.key({ }, "XF86AudioLowerVolume", function ()
+    awful.util.spawn("pulseaudio-ctl mute no")
+    awful.util.spawn("pulseaudio-ctl down")
+  end),
+  awful.key({ }, "XF86AudioMute", function ()
+    awful.util.spawn("pulseaudio-ctl mute")
+  end),
   awful.key({ }, "XF86Display", function ()
      awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
   --awful.key({ }, "XF86Sleep", function ()
@@ -1136,7 +1139,7 @@ function is_class_opaque(class_name)
 
   for index, value in ipairs(opaque_classes) do
     -- TODO: Support wildcards/regex
-    if string.lower(value) == string.lower(class_name) then
+    if value ~= nil and string.lower(value) == string.lower(class_name) then
       return true
     end
   end
