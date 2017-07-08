@@ -1,8 +1,11 @@
 " source! /home/fabian/.vimperatorrc.local
 
-
 js services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
 
+ignorekeys add google.com/calendar -except g,H,h,l,b,o,d,u,f,F,r,:
+ignorekeys add twitter|facebook    -except g,H,h,l,b,o,d,u,f,F,r,:,t
+ignorekeys add .pdf                -except g,H,h,l,b,o,d,u,f,F,r,:,t
+ignorekeys add duolingo.com        -except g,H,h,l,b,o,d,u,f,F,r,:,t,j,k
 
 " Autocomplete using Firefox Awesomebar subsystem
 set complete=l
