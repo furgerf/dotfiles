@@ -19,6 +19,14 @@
   prune = true
 [pull]
   rebase = true
+[push]
+  default = simple
+[merge]
+  ff = only
+[status]
+  showUntrackedFiles = all
+[transfer]
+  fsckobjects = true
 [alias]
   #################
   # general stuff #

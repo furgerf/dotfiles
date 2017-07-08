@@ -257,6 +257,11 @@ function box() {
   echo "$c $1 $c"
   echo "${t//?/$c}"
 }
+function save-as-image() {
+  # pipe text to save to this function and add filename
+  # e.g. ls | save-as-image foo.png
+  convert label:@- "$1"
+}
 
 # source other files
 test -s "$HOME/.bash-sourcer.sh" && source "$HOME/.bash-sourcer.sh"

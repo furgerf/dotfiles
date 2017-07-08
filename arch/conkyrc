@@ -48,7 +48,7 @@ ${alignc 8}${font Open Sans:size=10}${exec whoami}@$nodename
 # SYS
 ${font Open Sans:Bold:size=10}${color0}SYSTEM${hr 2}$color${font}
 $sysname $kernel ($machine) $alignr Running for $alignr$uptime_short
-Temperature / Fan $alignr ${execpi 30 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 36 103 "sensors | grep 'Physical id 0:' | cut -d '+' -f 2 | cut -d '.' -f 1"}°$color / ${execi 60 sensors | grep 'fan1:' | cut -c14-18}RPM
+Temperature / Fan $alignr ${execpi 30 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 36 103 "sensors | grep 'Package id 0:' | cut -d '+' -f 2 | cut -d '.' -f 1"}°$color / ${execi 60 sensors | grep 'fan1:' | cut -c14-18}RPM
 System load $alignr${execi 10 uptime | rev | cut -d ':' -f 1 | rev}
 # CPU
 ${font Open Sans:Bold:size=10}${color0}CPU${hr 2}$color${font}
