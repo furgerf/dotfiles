@@ -118,9 +118,6 @@
 [submodule "awesome/modules/hints"]
   path = awesome/modules/hints
   url = git@github.com:zackpete/hints
-[submodule "awesome/modules/awesome-shifty"]
-  path = awesome/modules/awesome-shifty
-  url = git@github.com:cdump/awesome-shifty
 [submodule "vim/bundle/vim-isort"]
   path = vim/bundle/vim-isort
   url = git@github.com:fisadev/vim-isort
@@ -137,3 +134,6 @@
   path = vim/bundle/deleft.vim
   url = git@github.com:AndrewRadev/deleft.vim.git
   ignore = untracked
+[submodule "awesome/modules/tyrannical"]
+  path = awesome/modules/tyrannical
+  url = git@github.com:Elv13/tyrannical.git
