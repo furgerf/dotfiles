@@ -4,14 +4,18 @@ local vicious = require("vicious")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local calendar2 = require("calendar2")
+-- local io = require("io")
+-- local os = require("os")
+local gears = require("gears")
+-- local root = require("root")
 
-module("mywidgets")
+local mywidgets = {}
 
-function separator ()
+function mywidgets.separator ()
   return wibox.widget.textbox(" ⚫ ")
 end
 
-function volume()
+function mywidgets.volume()
   -- TODO: Figure out what exactly to compose and return etc.
   local volwrapper = wibox.container.background()
   local volwidget = wibox.widget.textbox()
@@ -51,7 +55,7 @@ function volume()
   return vollayout
 end
 
-function cpu()
+function mywidgets.cpu()
   local cpuwrapper = wibox.container.background()
   local cpuwidget = wibox.widget.progressbar()
   local cpuicon = wibox.widget.imagebox()
@@ -70,7 +74,6 @@ function cpu()
     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
   end)
   local cpunaughty = nil
-  --[[
   cpuwrapper:connect_signal("mouse::enter", function ()
     cpunaughty = naughty.notify({ text = "CPU govenor: " .. getCpuNaughtyText() })
   end)
@@ -89,20 +92,18 @@ function cpu()
     fh:close()
     return data
   end
-  --]]
   return cpuwrapper
 end
 
-function battery()
+function mywidgets.battery()
   local battwidget = wibox.widget.textbox()
   local batticon = wibox.widget.imagebox()
   vicious.register(battwidget, vicious.widgets.bat,
   function(widget, args)
-    --[[
-    local fh = assert(io.popen("acpi | cut -d, -f 1,1 | cut -d: -f2,2 | cut -b 2-", "r"))
+    local fh = io.popen("acpi | cut -d, -f 1,1 | cut -d: -f2,2 | cut -b 2-", "r")
     local direction = fh:read("*l")
     fh.close()
-    fh = assert(io.popen("acpi | cut -d, -f 3,3 - | cut -b 2-9", "r"))
+    fh = io.popen("acpi | cut -d, -f 3,3 - | cut -b 2-9", "r")
     local charging_duration = fh:read("*l")
     fh.close()
     local direction_sign = args[1]
@@ -152,14 +153,13 @@ function battery()
     end
     batticon:set_resize(false)
     return batterypercentage
-    --]]
   end, 30, "BAT0")
   local battwrapper = wibox.container.background()
   battwrapper:set_widget(battwidget)
   return battwidget
 end
 
-function wifi()
+function mywidgets.wifi()
   local wifiwidget = wibox.widget.textbox()
   local wifiicon = wibox.widget.imagebox()
   vicious.register(wifiwidget, vicious.widgets.wifi,
@@ -177,15 +177,15 @@ function wifi()
       elseif signal > 80 and signal <=100 then
         wifiicon:set_image(beautiful.wifi5)
       else
-      -- local handle = io.popen("wget -q --tries=1 --timeout=1 --spider http://google.com &> /dev/null ; echo $?")
-      -- local inet = handle:read("*a")
-      -- handle:close()
-      --if inet:sub(1, #inet - 1) == "0" then
-      --  wifiicon:set_image(beautiful.ethernet)
-      --  name = "ethernet"
-      --else
+       local handle = io.popen("wget -q --tries=1 --timeout=1 --spider http://google.com &> /dev/null ; echo $?")
+       local inet = handle:read("*a")
+       handle:close()
+      if inet:sub(1, #inet - 1) == "0" then
+        wifiicon:set_image(beautiful.ethernet)
+        name = "ethernet"
+      else
         wifiicon:set_image(beautiful.wifinone)
-      --end
+      end
     end
     wifiicon:set_resize(false)
     return name
@@ -195,10 +195,59 @@ function wifi()
   return wifiwidget
 end
 
-function clock()
+function mywidgets.clock()
   local mytextclock = wibox.widget.textclock("%A, %B %e, <span color='#1793D1'>%H:%M</span>", 29)
   calendar2.addCalendarToWidget(mytextclock, "<span color='#1793D1'>%s</span>") -- TODO port
   local tclockwrapper = wibox.container.background()
   tclockwrapper:set_widget(mytextclock)
   return mytextclock
 end
+
+function mywidgets.caps_lock()
+  local box = wibox.widget.textbox("CAPS")
+  local handle = io.popen("xset q | grep Caps | cut -d ' ' -f 10")
+  local data = handle:read("*l")
+  handle:close()
+  box.visible = data == "on"
+
+  local function toggle_capslock ()
+    box.visible = not box.visible
+  end
+
+  root.keys(gears.table.join(root.keys(),
+    awful.key({ }, "Caps_Lock", toggle_capslock),
+    awful.key({"Shift"}, "Caps_Lock", toggle_capslock),
+    awful.key({"Control"}, "Caps_Lock", toggle_capslock),
+    awful.key({modkey}, "Caps_Lock", toggle_capslock),
+    awful.key({altkey}, "Caps_Lock", toggle_capslock)
+  ))
+
+  return box
+end
+
+function mywidgets.keyboardlayout ()
+  -- TODO: Add switching with mousepress and displaying options on hover...
+  local kblayouticon = wibox.widget.imagebox()
+  local num_layouts = 2
+  layouts = {
+    [0] = "us",
+    [1] = "ch"
+  }
+
+  local function set_layout_icon (self)
+    local layout = layouts[awesome.xkb_get_layout_group()]
+    local image = "/usr/share/awesome/themes/archdove/icons/" .. layout .. ".png"
+    self.image = image
+  end
+
+  -- awesome.connect_signal("xkb::map_changed", function () set_layout_icon() end)
+  awesome.connect_signal("xkb::group_changed", function () set_layout_icon(kblayouticon) end)
+  kblayouticon:connect_signal("button::release", function () awesome.xkb_set_layout_group(util.cycle(num_layouts, awesome.xkb_get_layout_group())) end)
+
+  set_layout_icon(kblayouticon)
+
+  return kblayouticon
+end
+
+return mywidgets
+

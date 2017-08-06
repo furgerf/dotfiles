@@ -237,6 +237,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist, -- Middle widget
     { -- Right widgets
       layout = wibox.layout.fixed.horizontal,
+      mywidgets.caps_lock(),
+      mywidgets.separator(),
       mywidgets.volume(),
       mywidgets.separator(),
       mywidgets.battery(),
@@ -245,7 +247,7 @@ awful.screen.connect_for_each_screen(function(s)
       mywidgets.separator(),
       mywidgets.cpu(),
       mywidgets.separator(),
-      awful.widget.keyboardlayout(),
+      mywidgets.keyboardlayout(),
       mywidgets.separator(),
       wibox.widget.systray(),
       mywidgets.separator(),
@@ -402,6 +404,12 @@ globalkeys = gears.table.join(
   awful.key({ modkey }, "a", function () hints.focus() end),
   -- awful.key({ modkey }, "r",      function () awful.util.spawn("bashrun") end),
   awful.key({ modkey }, "e",      function () awful.util.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end),
+  awful.key({ modkey, "Shift"   }, "f",      function () awful.util.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end),
+  -- awful.key({ modkey,           }, "b",      function ()
+  --   for s in screen do
+  --     s.mywibox[mouse.screen].visible = not s.mywibox[mouse.screen].visible
+  --   end
+  -- end),
 
   -- Tag navigation
   awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -691,7 +699,7 @@ clientbuttons = gears.table.join(
 )
 
 -- Set keys
-root.keys(globalkeys)
+root.keys(gears.table.join(root.keys(), globalkeys))
 -- }}}
 
 -- {{{ Rules
