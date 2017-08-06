@@ -52,13 +52,13 @@ function volume()
 end
 
 function cpu()
-  local cpuwrapper = wibox.widget.background()
-  local cpuwidget = awful.widget.progressbar()
+  local cpuwrapper = wibox.container.background()
+  local cpuwidget = wibox.widget.progressbar()
   local cpuicon = wibox.widget.imagebox()
   cpuicon:set_image(beautiful.widget_cpu)
-  cpuwidget:set_width(8)
-  cpuwidget:set_height(10)
-  cpuwidget:set_vertical(true)
+  cpuwidget.forced_width = 8
+  cpuwidget.forced_height = 10
+  -- cpuwidget:set_vertical(true) TODO: rotate
   cpuwidget:set_background_color(beautiful.cpu_bg)
   cpuwidget:set_color(beautiful.cpu_fg)
   vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
@@ -154,7 +154,7 @@ function battery()
     return batterypercentage
     --]]
   end, 30, "BAT0")
-  local battwrapper = wibox.widget.background()
+  local battwrapper = wibox.container.background()
   battwrapper:set_widget(battwidget)
   return battwidget
 end
@@ -190,15 +190,15 @@ function wifi()
     wifiicon:set_resize(false)
     return name
   end, 3, "wlp3s0")
-  local wifiwrapper = wibox.widget.background()
+  local wifiwrapper = wibox.container.background()
   wifiwrapper:set_widget(wifiwidget)
   return wifiwidget
 end
 
 function clock()
-  local mytextclock = awful.widget.textclock("%A, %B %e, <span color='#1793D1'>%H:%M</span>", 29)
+  local mytextclock = wibox.widget.textclock("%A, %B %e, <span color='#1793D1'>%H:%M</span>", 29)
   calendar2.addCalendarToWidget(mytextclock, "<span color='#1793D1'>%s</span>") -- TODO port
-  local tclockwrapper = wibox.widget.background()
+  local tclockwrapper = wibox.container.background()
   tclockwrapper:set_widget(mytextclock)
   return mytextclock
 end

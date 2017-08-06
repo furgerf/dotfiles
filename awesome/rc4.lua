@@ -633,8 +633,10 @@ function retrieve_tag_by_position(i)
   -- try to find tag to create
   tag = find_tag_by_position(tyrannical.tags_by_name, i)
   if tag == nil then return end
-
-  -- create and move to tag
+  -- we found a tag we need to create
+  -- but, the tag may be "recycled" and already be assigned to some screen
+  -- -> clear the screen to have it created on the current screen
+  tag.screen = nil
   return awful.tag.add(tag.name, tag)
 end
 
