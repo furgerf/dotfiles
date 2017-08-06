@@ -342,13 +342,27 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+
+function run_webprompt(title, url, history)
+  awful.prompt.run({
+    prompt       = title,
+    textbox      = awful.screen.focused().mypromptbox.widget,
+    exe_callback = function (word)
+      if string.len(word) == 0 then return end
+      word = string.gsub(word, " ", "%%20")
+      awful.util.spawn("firefox -new-tab " .. url .. word)
+    end,
+    history_path = awful.util.get_cache_dir() .. "/history_" .. history
+  })
+end
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
   -- custom bindings (HERE FOR NOW)
   awful.key({ modkey,           }, "o",      function () awful.screen.focus_relative(1) end,
     {description = "cycle focus through screens", group = "custom"}),
-  awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen, -- TODO: This throws errors
-    {description = "move client to next screen", group = "custom"}),
+  -- awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen, -- TODO: This throws errors
+  --   {description = "move client to next screen", group = "custom"}),
   -- MEDIA KEYS
   awful.key({ }, "XF86MonBrightnessUp", function ()
      awful.util.spawn("xbacklight -inc 15") end),
@@ -365,7 +379,7 @@ globalkeys = gears.table.join(
     awful.util.spawn("pulseaudio-ctl mute no")
     awful.util.spawn("pulseaudio-ctl down")
   end),
-  awful.key({ }, "XF86AudioMute", function () -- TODO: Button doesn't seem to work
+  awful.key({ }, "XF86AudioMicMute", function () -- fallback to mic muting because normal mute doesn't seem to work
     awful.util.spawn("pulseaudio-ctl mute")
   end),
   awful.key({ }, "XF86Display", function ()
@@ -398,6 +412,16 @@ globalkeys = gears.table.join(
     {description = "view next", group = "tag"}),
   awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
     {description = "go back", group = "tag"}),
+
+  -- Tag manipulation
+  awful.key({ modkey, "Shift"   }, "d", function ()
+    local t = awful.screen.focused().selected_tag
+    if not t then return end
+    t:delete()
+  end),
+    -- NOT added from shifty:
+    -- - dynamic tag creation (by name)
+    -- - tag rename
 
   -- Client navigation
   awful.key({ modkey,           }, "j", function ()
@@ -471,20 +495,72 @@ globalkeys = gears.table.join(
     {description = "run prompt", group = "launcher"}),
   awful.key({ modkey }, "x",
   function ()
-    awful.prompt.run {
+    awful.prompt.run({
       prompt       = "Run Lua code: ",
       textbox      = awful.screen.focused().mypromptbox.widget,
       exe_callback = awful.util.eval,
       history_path = awful.util.get_cache_dir() .. "/history_eval"
-    }
+    })
   end,
     {description = "lua execute prompt", group = "awesome"}),
   awful.key({ modkey }, "q", function() menubar.show() end,
-    {description = "show the menubar", group = "launcher"})
-  -- TODO: Add all the own prompts
+    {description = "show the menubar", group = "launcher"}),
+  awful.key({ modkey,           }, "w",      function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end),
+  awful.key({ modkey, "Shift"   }, "w",      function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end),
+  awful.key({ modkey,           }, "t",      function () run_webprompt("Torrent: ", "http://thepiratebay.se/search/", "torrent") end),
+  awful.key({ modkey,           }, "g",      function () run_webprompt("Google: ", "http://google.com/search?q=", "google") end),
+  awful.key({ modkey,           }, "d",      function ()
+    awful.prompt.run({
+      prompt       = "Define: ",
+      textbox      = awful.screen.focused().mypromptbox.widget,
+      exe_callback = function (word)
+        if string.len(word) == 0 then return end
+        local f = io.popen("dict -d wn " .. word .. " 2>&1")
+        local fr = ""
+        for line in f:lines() do
+          fr = fr .. line .. '\n'
+        end
+        f:close()
+        naughty.notify({ text = fr, timeout = 90, width = 400 })
+      end,
+      history_path = awful.util.get_cache_dir() .. "/history_define"
+    }) end),
+  awful.key({ modkey,           }, "c",      function ()
+    awful.prompt.run({
+      prompt       = "Calc: ",
+      textbox      = awful.screen.focused().mypromptbox.widget,
+      exe_callback = function (word)
+        if string.len(word) == 0 then return end
+        local f = io.popen("calc " .. word)
+        local fr = word .. "="
+        for line in f:lines() do
+          fr = fr .. line
+        end
+        f:close()
+        naughty.notify({ text = fr, timeout = 30})
+      end,
+      history_path = awful.util.get_cache_dir() .. "/history_calc"
+    }) end),
+  awful.key({ modkey, "Control" }, "c",      function ()
+    awful.prompt.run({
+      prompt       = "Units: ",
+      textbox      = awful.screen.focused().mypromptbox.widget,
+      exe_callback = function (input)
+      if string.len(input) == 0 then return end
+      local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
+      local split = input:gmatch("[^%s]+")
+      local fr = split() .. " is "
+      for line in f:lines() do
+        fr = fr .. line
+      end
+      f:close()
+      fr = fr .. split()
+      naughty.notify({ text = fr, timeout = 30})
+    end,
+    history_path = awful.util.get_cache_dir() .. "/history_units"
+  }) end)
 )
 
--- TODO CONTINUE HERE
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
         function (c)
@@ -498,9 +574,9 @@ clientkeys = gears.table.join(
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
+    awful.key({ modkey, "Shift"   }, "o",      function (c) c:move_to_screen()               end,
               {description = "move to screen", group = "client"}),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
+    awful.key({ modkey, "Shift"   }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
@@ -542,79 +618,65 @@ function find_tag_by_position(tags, position)
   return nil
 end
 
+-- ensures that the tag with the requested position exists
+-- if it already exists, it is returned, otherwise it's created
+function retrieve_tag_by_position(i)
+  -- try and retrieve tag on current screen
+  local screen = awful.screen.focused()
+  local tag = find_tag_by_position(screen.tags, i)
+  if tag then return tag end
+
+  -- try and retrieve tag on any screen
+  tag = find_tag_by_position(root.tags(), i)
+  if tag then return tag end
+
+  -- try to find tag to create
+  tag = find_tag_by_position(tyrannical.tags_by_name, i)
+  if tag == nil then return end
+
+  -- create and move to tag
+  return awful.tag.add(tag.name, tag)
+end
+
 for i = 1, 9 do
   globalkeys = gears.table.join(globalkeys,
   -- View tag only.
   awful.key({ modkey }, "#" .. i + 9,
   function ()
-    -- try and retrieve tag on current screen
-    local screen = awful.screen.focused()
-    local tag = find_tag_by_position(screen.tags, i)
-    if tag then
-      -- found -> view it and return
-      tag:view_only()
-      return
-    end
-
-    -- try and retrieve tag on any screen
-    tag = find_tag_by_position(root.tags(), i)
-    if tag then
-      -- found -> view it and return
-      tag:view_only()
-      awful.screen.focus(tag.screen)
-      return
-    end
-
-    -- try to find tag to create
-    tag = find_tag_by_position(tyrannical.tags_by_name, i)
-    --   failed -> abort and return
-    if tag == nil then
-      return
-    end
-
-    -- create and move to tag
-    tag = awful.tag.add(tag.name, tag)
+    local tag = retrieve_tag_by_position(i)
+    if tag == nil then return end
     tag:view_only()
-    awful.screen.focus(tag.screen) -- it's possible that the tag is forced on another screen
+    awful.screen.focus(tag.screen)
   end,
     {description = "view tag #"..i, group = "tag"}),
 
   -- Toggle tag display.
   awful.key({ modkey, "Control" }, "#" .. i + 9,
   function ()
-    -- TODO: Make this work with not-yet-created tags (if I ever start using this)
-    local screen = awful.screen.focused()
-    local tag = screen.tags[i]
-    if tag then
-      awful.tag.viewtoggle(tag)
-    end
+    local tag = retrieve_tag_by_position(i)
+    if tag == nil then return end
+    awful.tag.viewtoggle(tag)
   end,
     {description = "toggle tag #" .. i, group = "tag"}),
 
   -- Move client to tag.
   awful.key({ modkey, "Shift" }, "#" .. i + 9,
   function ()
-    -- TODO: Make this work with not-yet-created tags
-    if client.focus then
-      local tag = client.focus.screen.tags[i]
-      if tag then
-        client.focus:move_to_tag(tag)
-        tag:view_only()
-      end
-    end
+    if not client.focus then return end
+    local tag = retrieve_tag_by_position(i)
+    if tag == nil then return end
+    client.focus:move_to_tag(tag)
+    tag:view_only()
   end,
     {description = "move focused client to tag #"..i, group = "tag"}),
 
   -- Toggle tag on focused client.
   awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
   function ()
-    -- TODO: Make this work with not-yet-created tags (if I ever start using this)
-    if client.focus then
-      local tag = client.focus.screen.tags[i]
-      if tag then
-        client.focus:toggle_tag(tag)
-      end
-    end
+    if not client.focus then return end
+    local tag = retrieve_tag_by_position(i)
+    if tag == nil then return end
+    client.focus:toggle_tag(tag)
   end,
     {description = "toggle focused client on tag #" .. i, group = "tag"})
   )
