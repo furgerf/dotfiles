@@ -47,7 +47,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .. "archdove/theme.lua")
 hints.init()
 
 -- This is used later as the default terminal and editor to run.
@@ -344,7 +344,7 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-
+-- {{{ Misc
 function run_webprompt(title, url, history)
   awful.prompt.run({
     prompt       = title,
@@ -357,6 +357,48 @@ function run_webprompt(title, url, history)
     history_path = awful.util.get_cache_dir() .. "/history_" .. history
   })
 end
+
+-- Random Wallpapers - TODO: rewrite
+-- Apply a random wallpaper if not specified in AWESOME_BG
+local wallpaperTimer
+--local staticWallpaper = "/home/fabian/Desktop/wallpaper-vim-1920x1080.png"
+if os.getenv("AWESOME_BG") then
+  gears.wallpaper.maximized(os.getenv("AWESOME_BG"))
+elseif staticWallpaper ~= nil then
+  gears.wallpaper.maximized(staticWallpaper)
+else
+  -- have to initialize a seed first, else the "random" wallpapers are rather dull
+  math.randomseed(os.time())
+
+  -- Get the list of files from a directory. Must be all images or folders and non-empty.
+  function scanDir(directory)
+    local i, fileList, popen = 0, {}, io.popen
+    for filename in popen([[find "]] ..directory.. [[" -type f]]):lines() do
+      i = i + 1
+      fileList[i] = filename
+    end
+    return fileList
+  end
+  wallpaperList = scanDir(beautiful.wallpaper_path)
+
+  local wp = wallpaperList[math.random(#wallpaperList)]
+  for s = 1, screen.count() do
+    gears.wallpaper.maximized(wp, s, true)
+  end
+  -- Apply a random wallpaper every changeTime seconds.
+  changeTime = 3600
+  wallpaperTimer = timer { timeout = changeTime }
+  wallpaperTimer:connect_signal("timeout", function()
+    local wp = wallpaperList[math.random(#wallpaperList)]
+    for s = 1, screen.count() do
+        gears.wallpaper.maximized(wp, s, true)
+    end
+  end)
+
+  -- initial start when rc.lua is first run
+  wallpaperTimer:start()
+end
+--}}}
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
@@ -410,6 +452,21 @@ globalkeys = gears.table.join(
   --     s.mywibox[mouse.screen].visible = not s.mywibox[mouse.screen].visible
   --   end
   -- end),
+  -- awful.key({ modkey, "Control" }, "t", function () -- TODO: fix translation script
+  --   local clip = awful.util.pread("xclip -o")
+  --   if clip then
+  --     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/translate \'" .. clip .."\'", false)
+  --   end
+  -- end),
+  awful.key({ modkey, "Control" }, "w", function ()
+    if (wallpaperTimer ~= nil) then
+      local wp = wallpaperList[math.random(#wallpaperList)]
+      for s = 1, screen.count() do
+        gears.wallpaper.maximized(wp, s, true)
+      end
+      wallpaperTimer:again()
+    end
+  end),
 
   -- Tag navigation
   awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
