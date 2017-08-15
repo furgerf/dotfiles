@@ -18,6 +18,13 @@ local tyrannical = require("tyrannical")
 local mywidgets = require("mywidgets")
 local hints = require("hints")
 
+--[[
+-- TODO:
+-- - try removing tag `position`
+-- - document keys
+-- - cleanup file
+--]]
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -134,10 +141,6 @@ mymainmenu = awful.menu({
   }
 })
 
-mylauncher = awful.widget.launcher({
-  image = beautiful.awesome_icon, menu = mymainmenu
-})
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -187,6 +190,7 @@ local tasklist_buttons = gears.table.join(
   end)
 )
 
+--[[ TODO: Adjust to random WP
 local function set_wallpaper(s)
   -- Wallpaper
   if beautiful.wallpaper then
@@ -232,7 +236,7 @@ local shared_widgets = get_widgets()
 
 awful.screen.connect_for_each_screen(function(s)
   -- Wallpaper
-  set_wallpaper(s)
+  -- set_wallpaper(s)
 
   -- Create a promptbox for each screen
   s.mypromptbox = awful.widget.prompt()
@@ -272,23 +276,28 @@ tyrannical.tags = {
   {
     name        = "~",
     layout      = awful.layout.suit.fair,
+    index = 1,
     position = 1,
-    screen = {1, 2}, -- force tag on *all* screens
+    screen = {1, 2},
     fallback = true,
+    selected = true
   },
   {
     name        = "➋ ·web·🌏",
     layout      = awful.layout.suit.fair,
+    index = 2,
     position = 2,
     screen = 1, -- TODO: remove
     force_screen = true,
     init = false,
+    no_focus_stealing_in = true,
     class = { "firefox" },
     exec_once = "firefox",
   },
   {
     name        = "➌ ·doc·✎",
     layout      = awful.layout.suit.fair,
+    index = 3,
     position = 3,
     init = false,
     volatile = true,
@@ -297,6 +306,7 @@ tyrannical.tags = {
   {
     name        = "➍ ·code·💡",
     layout      = awful.layout.suit.max.fullscreen,
+    index    = 4,
     position    = 4,
     init = false,
     volatile = true,
@@ -304,16 +314,18 @@ tyrannical.tags = {
   {
     name        = "➎ ·media·♫",
     layout      = awful.layout.suit.floating,
+    index    = 5,
     position    = 5,
     screen      = screen.count(),
     init = false,
     volatile = true,
     class = { "Vlc", "smplayer", "Clementine" },
-    exec_once = terminal .. " --title video --working-directory /data/video", -- TODO: make it *really* spawn once
+    -- exec_once = terminal .. " --title video --working-directory /data/video", -- TODO: make it *really* spawn once
   },
   {
     name        = "➏ ·d/l·⇅",
     layout      = awful.layout.suit.tile.bottom,
+    index    = 6,
     position    = 6,
     init = false,
     volatile = true,
@@ -322,6 +334,7 @@ tyrannical.tags = {
   {
     name        = "➐ ·foo",
     layout      = awful.layout.suit.tile.bottom,
+    index    = 7,
     position    = 7,
     init = false,
     volatile = true,
@@ -330,6 +343,7 @@ tyrannical.tags = {
   {
     name        = "➑ ·bar",
     layout      = awful.layout.suit.fair,
+    index    = 8,
     position    = 8,
     init = false,
     volatile = true,
@@ -337,11 +351,11 @@ tyrannical.tags = {
   {
     name        = "➒ ·gimp",
     layout      = awful.layout.suit.floating,
+    index    = 9,
     position    = 9,
     screen      = screen.count(),
     init = false,
     volatile = true,
-    class = { "gimp" },
   },
 }
 -- }}}
@@ -360,7 +374,7 @@ function run_webprompt(title, url, history)
     exe_callback = function (word)
       if string.len(word) == 0 then return end
       word = string.gsub(word, " ", "%%20")
-      awful.util.spawn("firefox -new-tab " .. url .. word)
+      awful.spawn("firefox -new-tab " .. url .. word)
     end,
     history_path = awful.util.get_cache_dir() .. "/history_" .. history
   })
@@ -395,7 +409,7 @@ else
   end
   -- Apply a random wallpaper every changeTime seconds.
   changeTime = 3600
-  wallpaperTimer = timer { timeout = changeTime }
+  wallpaperTimer = gears.timer { timeout = changeTime }
   wallpaperTimer:connect_signal("timeout", function()
     local wp = wallpaperList[math.random(#wallpaperList)]
     for s = 1, screen.count() do
@@ -417,44 +431,44 @@ globalkeys = gears.table.join(
   --   {description = "move client to next screen", group = "custom"}),
   -- MEDIA KEYS
   awful.key({ }, "XF86MonBrightnessUp", function ()
-     awful.util.spawn("xbacklight -inc 15") end),
+     awful.spawn("xbacklight -inc 15") end),
   awful.key({ }, "XF86MonBrightnessDown", function ()
-     awful.util.spawn("xbacklight -dec 15") end),
+     awful.spawn("xbacklight -dec 15") end),
   awful.key({ }, "XF86ScreenSaver", function ()
-     awful.util.spawn("slock")
-     awful.util.spawn("xset dpms force off")  end),
+     awful.spawn("slock")
+     awful.spawn("xset dpms force off")  end),
   awful.key({ }, "XF86AudioRaiseVolume", function ()
-    awful.util.spawn("pulseaudio-ctl mute no")
-    awful.util.spawn("pulseaudio-ctl up")
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl up")
   end),
   awful.key({ }, "XF86AudioLowerVolume", function ()
-    awful.util.spawn("pulseaudio-ctl mute no")
-    awful.util.spawn("pulseaudio-ctl down")
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl down")
   end),
   awful.key({ }, "XF86AudioMicMute", function () -- fallback to mic muting because normal mute doesn't seem to work
-    awful.util.spawn("pulseaudio-ctl mute")
+    awful.spawn("pulseaudio-ctl mute")
   end),
   awful.key({ }, "XF86Display", function ()
-     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
+     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
   awful.key({modkey}, "F6", function ()
-    awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end),
+    awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end),
   awful.key({ }, "Print", function ()
-    awful.util.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end),
+    awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end),
   awful.key({ modkey }, "F3",     function ()
     local fh = io.popen("xbacklight -get | cut -d '.' -f 1")
     local light = fh:read("*l")
     fh:close()
     if light == "0" then
-      awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight")
+      awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight")
     else
-      awful.util.spawn("xbacklight -set 0 -time 0")
+      awful.spawn("xbacklight -set 0 -time 0")
     end
   end),
-  awful.key({ modkey }, "F4", function () awful.util.spawn("xset dpms force off")  end),
+  awful.key({ modkey }, "F4", function () awful.spawn("xset dpms force off")  end),
   awful.key({ modkey }, "a", function () hints.focus() end),
-  -- awful.key({ modkey }, "r",      function () awful.util.spawn("bashrun") end),
-  awful.key({ modkey }, "e",      function () awful.util.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end),
-  awful.key({ modkey, "Shift"   }, "f",      function () awful.util.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end),
+  -- awful.key({ modkey }, "r",      function () awful.spawn("bashrun") end),
+  awful.key({ modkey }, "e",      function () awful.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end),
+  awful.key({ modkey, "Shift"   }, "f",      function () awful.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end),
   -- awful.key({ modkey,           }, "b",      function ()
   --   for s in screen do
   --     s.mywibox[mouse.screen].visible = not s.mywibox[mouse.screen].visible
@@ -463,7 +477,7 @@ globalkeys = gears.table.join(
   -- awful.key({ modkey, "Control" }, "t", function () -- TODO: fix translation script
   --   local clip = awful.util.pread("xclip -o")
   --   if clip then
-  --     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/translate \'" .. clip .."\'", false)
+  --     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/translate \'" .. clip .."\'", false)
   --   end
   -- end),
   awful.key({ modkey, "Control" }, "w", function ()
@@ -559,8 +573,8 @@ globalkeys = gears.table.join(
     {description = "open a terminal", group = "launcher"}),
   awful.key({ modkey, "Control" }, "r", awesome.restart,
     {description = "reload awesome", group = "awesome"}),
-  awful.key({ modkey, "Shift"   }, "q", awesome.quit,
-    {description = "quit awesome", group = "awesome"}),
+  --awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    --{description = "quit awesome", group = "awesome"}),
 
 
   -- Prompt
@@ -720,6 +734,7 @@ for i = 1, 9 do
   function ()
     local tag = retrieve_tag_by_position(i)
     if tag == nil then return end
+    -- tag.index = i -- ensure that the tag is in the right position
     tag:view_only()
     awful.screen.focus(tag.screen)
   end,
@@ -775,13 +790,14 @@ awful.rules.rules = {
     rule = { },
     properties = {
       border_width = beautiful.border_width,
-      border_color = beautiful.border_normal,
+      -- border_color = beautiful.border_normal, -- to get the borders we want, we apparently need to set the width but not the color
       focus = awful.client.focus.filter,
       raise = true,
       keys = clientkeys,
       buttons = clientbuttons,
       screen = awful.screen.preferred,
-      placement = awful.placement.no_overlap+awful.placement.no_offscreen
+      size_hints_honor = false, -- make clients fill tile even if they can't use the space
+      placement = awful.placement.under_mouse+awful.placement.no_overlap+awful.placement.no_offscreen
     }
   },
   -- Floating clients.
@@ -901,7 +917,7 @@ function is_class_opaque(class_name)
   }
 
   for index, value in ipairs(opaque_classes) do
-    if value ~= nil and string.lower(value) == string.lower(class_name) then
+    if class_name ~= nil and string.lower(value) == string.lower(class_name) then
       return true
     end
   end
