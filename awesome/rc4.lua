@@ -201,6 +201,34 @@ local function set_wallpaper(s)
 end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
+--]]
+
+local function get_widgets()
+  local separator = mywidgets.separator()
+  return {
+    layout = wibox.layout.fixed.horizontal,
+    mywidgets.separator2(),
+    mywidgets.volume(),
+    separator,
+    mywidgets.battery(),
+    separator,
+    mywidgets.wifi(),
+    separator,
+    mywidgets.cpu(),
+    separator,
+    mywidgets.memory(),
+    separator,
+    mywidgets.hdd(),
+    separator,
+    mywidgets.caps_lock(),
+    mywidgets.keyboardlayout(),
+    wibox.widget.systray(),
+    separator,
+    mywidgets.clock(),
+    separator,
+  }
+end
+local shared_widgets = get_widgets()
 
 awful.screen.connect_for_each_screen(function(s)
   -- Wallpaper
@@ -226,36 +254,16 @@ awful.screen.connect_for_each_screen(function(s)
   s.mywibox = awful.wibar({ position = "top", screen = s, height = 16 }) -- TODO determine size based on icons
 
   -- Add widgets to the wibox
-  s.mywibox:setup {
+  s.mywibox:setup({
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      mylauncher,
       s.mytaglist,
       s.mypromptbox,
     },
     s.mytasklist, -- Middle widget
-    { -- Right widgets
-      layout = wibox.layout.fixed.horizontal,
-      mywidgets.caps_lock(),
-      mywidgets.separator(),
-      mywidgets.volume(),
-      mywidgets.separator(),
-      mywidgets.battery(),
-      mywidgets.separator(),
-      mywidgets.wifi(),
-      mywidgets.separator(),
-      mywidgets.cpu(),
-      mywidgets.separator(),
-      mywidgets.keyboardlayout(),
-      mywidgets.separator(),
-      wibox.widget.systray(),
-      mywidgets.separator(),
-      mywidgets.clock(),
-      mywidgets.separator(),
-      s.mylayoutbox,
-    },
-  }
+    gears.table.join(shared_widgets, { s.mylayoutbox }) -- Right widgets
+  })
 end)
 -- }}}
 
