@@ -18,8 +18,8 @@ function mywidgets.separator2 ()
   return wibox.layout(
   {
     layout = wibox.layout.fixed.horizontal,
-    { widget = wibox.widget.imagebox(beautiful.arr2) },
-    { widget = wibox.widget.imagebox(beautiful.arr0) },
+    wibox.widget.imagebox(beautiful.arr2),
+    wibox.widget.imagebox(beautiful.arr0)
   })
 end
 -- }}}
@@ -28,12 +28,7 @@ end
 function mywidgets.volume()
   local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget }
-  })
+  local layout = wibox.layout({ icon, widget, layout = wibox.layout.fixed.horizontal })
   vicious.register(widget, vicious.widgets.volume, function(widget, args)
     local label = { ["♫"] = "O", ["♩"] = "M" }
     local max_volume = 200
@@ -61,12 +56,7 @@ end
 function mywidgets.battery()
   local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget }
-  })
+  local layout = wibox.layout({ icon, widget, layout = wibox.layout.fixed.horizontal })
   vicious.register(widget, vicious.widgets.bat, function(widget, args)
     if args[2] <= 5 then
       icon.image = beautiful.battery1
@@ -106,12 +96,7 @@ function mywidgets.wifi()
   -- TODO: Display detailed info on hover
   local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget}
-  })
+  local layout = wibox.layout({ icon, widget, layout = wibox.layout.fixed.horizontal })
   vicious.register(widget, vicious.widgets.wifi,
   function(widget, args)
     local signal = args['{link}']
@@ -154,12 +139,8 @@ function mywidgets.cpu()
     widget = wibox.widget.graph
   }
   local icon = wibox.widget.imagebox(beautiful.widget_cpu)
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget }
-  })
+  local mirror = wibox.container.mirror(widget, { horizontal = true })
+  local layout = wibox.layout({ icon, mirror, layout = wibox.layout.fixed.horizontal })
   widget.color = {
     type = "linear",
     from = {0, widget.height},
@@ -196,12 +177,8 @@ function mywidgets.memory()
     widget = wibox.widget.graph
   }
   local icon = wibox.widget.imagebox(beautiful.widget_mem)
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget }
-  })
+  local mirror = wibox.container.mirror(widget, { horizontal = true })
+  local layout = wibox.layout({ icon, mirror, layout = wibox.layout.fixed.horizontal })
   widget.color = {
     type = "linear",
     from = {0, widget.height},
@@ -221,12 +198,8 @@ function mywidgets.hdd()
     widget = wibox.widget.graph
   }
   local icon = wibox.widget.imagebox(beautiful.widget_hdd)
-  local layout = wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    { widget = icon },
-    { widget = widget }
-  })
+  local mirror = wibox.container.mirror(widget, { horizontal = true })
+  local layout = wibox.layout({ icon, mirror, layout = wibox.layout.fixed.horizontal })
   widget.color = {
     type = "linear",
     from = {0, widget.height},
