@@ -11,6 +11,8 @@ local theme = {}
 theme.font      = "DejaVu Sans 8"
 
 -- TODO: Remove all the unnecessary/unused stuff
+-- TODO: Make icons transparent
+-- TODO: Look at (missing) default icons
 
 -- base colors
 theme.colors = {}
@@ -197,22 +199,22 @@ theme.layout_us       = themes_path .. "/archdove/icons/us.png"
 -- }}}
 
 -- {{{ Layout icons
-theme.layout_fairv      = themes_path.."/archdove/layouts/fairv.png"
-theme.layout_fairh      = themes_path.."/archdove/layouts/fairh.png"
-theme.layout_spiral     = themes_path.."/archdove/layouts/spiral.png"
-theme.layout_dwindle    = themes_path.."/archdove/layouts/dwindle.png"
-theme.layout_max        = themes_path.."/archdove/layouts/max.png"
-theme.layout_fullscreen = themes_path.."/archdove/layouts/fullscreen.png"
-theme.layout_magnifier  = themes_path.."/archdove/layouts/magnifier.png"
-theme.layout_floating   = themes_path .. "/archdove/icons/floating.png"
-theme.layout_tile       = themes_path .. "/archdove/icons/tile.png"
-theme.layout_tileleft   = themes_path .. "/archdove/icons/tileleft.png"
-theme.layout_tilebottom = themes_path .. "/archdove/icons/tilebottom.png"
-theme.layout_tiletop    = themes_path .. "/archdove/icons/tiletop.png"
--- theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
--- theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
--- theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
--- theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+theme.layout_fairv      = themes_path.."/archdove/layouts/fairvw.png"
+theme.layout_fairh      = themes_path.."/archdove/layouts/fairhw.png"
+theme.layout_spiral     = themes_path.."/archdove/layouts/spiralw.png"
+theme.layout_dwindle    = themes_path.."/archdove/layouts/dwindlew.png"
+theme.layout_max        = themes_path.."/archdove/layouts/maxw.png"
+theme.layout_fullscreen = themes_path.."/archdove/layouts/fullscreenw.png"
+theme.layout_magnifier  = themes_path.."/archdove/layouts/magnifierw.png"
+theme.layout_floating   = themes_path.."/archdove/layouts/floatingw.png"
+theme.layout_tile       = themes_path.."/archdove/layouts/tilew.png"
+theme.layout_tileleft   = themes_path.."/archdove/layouts/tileleftw.png"
+theme.layout_tilebottom = themes_path.."/archdove/layouts/tilebottomw.png"
+theme.layout_tiletop    = themes_path.."/archdove/layouts/tiletopw.png"
+theme.layout_cornernw   = themes_path.."/archdove/layouts/cornernww.png"
+theme.layout_cornerne   = themes_path.."/archdove/layouts/cornernew.png"
+theme.layout_cornersw   = themes_path.."/archdove/layouts/cornersww.png"
+theme.layout_cornerse   = themes_path.."/archdove/layouts/cornersew.png"
 -- }}}
 
 -- {{{ Titlebar icons
