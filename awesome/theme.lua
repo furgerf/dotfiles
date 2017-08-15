@@ -2,7 +2,9 @@
 
 local theme_assets = require("beautiful.theme_assets")
 local gfs = require("gears.filesystem")
+local xresources = require("beautiful.xresources")
 
+local dpi = xresources.apply_dpi
 local themes_path = gfs.get_themes_dir()
 local theme = {}
 
@@ -56,16 +58,23 @@ theme.mouse_finder_color = theme.colors.pink
 
 -- widgets
 theme.cpu_bg      = theme.bg_normal
-theme.cpu_fg      = theme.fg_normal
+theme.cpu_fg      = theme.colors.dark1
+theme.cpu_border  = theme.colors.dark4
+theme.mem_bg      = theme.bg_normal
+theme.mem_fg      = theme.colors.dark1
+theme.mem_border  = theme.colors.dark4
+theme.hdd_bg      = theme.bg_normal
+theme.hdd_fg      = theme.colors.dark1
+theme.hdd_border  = theme.colors.dark4
 theme.hdd_bg      = theme.bg_normal
 theme.batt_bg     = theme.bg_normal
 theme.net_bg      = theme.bg_normal
-theme.mem_bg      = theme.bg_normal
 theme.vol_bg      = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
-theme.border_width  = 1
+theme.useless_gap  = dpi(0)
+theme.border_width  = dpi(1)
 theme.border_normal = theme.bg_normal
 theme.border_focus  = theme.bg_focus
 theme.border_marked = theme.bg_urgent
@@ -88,8 +97,8 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = themes_path .. "default/submenu.png"
-theme.menu_height = "15"
-theme.menu_width  = "100"
+theme.menu_height = dpi(20)
+theme.menu_width  = dpi(200)
 
 -- invert normal colors to stand out (since window behind menu is likely focused)
 theme.menu_bg_normal = theme.bg_focus
@@ -98,11 +107,11 @@ theme.menu_bg_focus = theme.bg_normal
 theme.menu_fg_focus = theme.fg_normal
 
 theme.menu_border_color = theme.colors.dark4
-theme.menu_border_width = 1
+theme.menu_border_width = dpi(2)
 -- }}}
 
 -- {{{ General icons
-theme.awesome_icon                              = themes_path .. "/archdove/icons/awesome-icon.png"
+-- theme.awesome_icon                              = themes_path .. "/archdove/icons/awesome-icon.png"
 theme.clear_icon                                = themes_path .. "/archdove/icons/clear.png"
 -- theme.clear_icon                                = themes_path .. "/archdove/icons/llauncher.png"
 theme.menu_submenu_icon                         = themes_path .. "/archdove/icons/submenu.png"
