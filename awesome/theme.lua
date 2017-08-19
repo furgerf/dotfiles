@@ -1,20 +1,24 @@
 -- {{{ Main
 
+local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local gfs = require("gears.filesystem")
 local xresources = require("beautiful.xresources")
 
 local dpi = xresources.apply_dpi
-local themes_path = gfs.get_themes_dir()
+local theme_path = gfs.get_themes_dir() .. "/archdove"
 local theme = {}
 
 theme.font      = "DejaVu Sans 8"
 
 -- TODO: Remove all the unnecessary/unused stuff
--- TODO: Make icons transparent
+-- TODO: Make icons transparent (-> wifi5, ethernet, mem)
 -- TODO: Look at (missing) default icons
+-- TODO: Make icons use the same white/light gray
+-- }}}
 
--- base colors
+-- {{{ Colors
+-- color palette
 theme.colors = {}
 theme.colors.white   = "#ffffff"
 theme.colors.grey    = "#aaaaaa"
@@ -31,9 +35,7 @@ theme.colors.arch    = "#1793d1"
 theme.colors.dark   = "#051D2A"
 theme.colors.black   = "#000000"
 theme.colors.pink    = "#ff0022"
--- }}}
 
--- {{{ Colors
 -- basics
 theme.fg_normal  = theme.colors.grey
 theme.bg_normal  = theme.colors.black
@@ -63,22 +65,10 @@ theme.mouse_finder_color = theme.colors.pink
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 
 -- widgets
-theme.vol_bg      = theme.bg_urgent
-theme.cpu_bg      = theme.fg_urgent
-theme.cpu_fg_low  = theme.fg_normal
-theme.cpu_fg_high = theme.bg_focus
-theme.cpu_border  = theme.fg_urgent
-theme.mem_bg      = theme._normal
-theme.mem_fg_low  = theme.fg_normal
-theme.mem_fg_high = theme.bg_focus
-theme.mem_border  = theme.fg_urgent
-theme.hdd_bg      = theme.bg_normal
-theme.hdd_fg_low  = theme.fg_normal
-theme.hdd_fg_high = theme.bg_focus
-theme.hdd_border  = theme.fg_urgent
-theme.hdd_bg      = theme.bg_normal
-theme.batt_bg     = theme.bg_normal
-theme.net_bg      = theme.bg_normal
+theme.widget_bg   = theme.colors.black
+theme.widget_border = gears.color.transparent
+theme.widget_graph_low  = theme.colors.grey
+theme.widget_graph_high = theme.colors.arch
 -- }}}
 
 -- {{{ Borders
@@ -110,12 +100,12 @@ theme.menu_height = dpi(20)
 theme.menu_width  = dpi(200)
 
 -- invert normal colors to stand out (since window behind menu is likely focused)
-theme.menu_bg_normal = theme.bg_focus
-theme.menu_fg_normal = theme.fg_focus
-theme.menu_bg_focus = theme.bg_normal
-theme.menu_fg_focus = theme.fg_normal
+theme.menu_bg_normal = theme.bg_normal
+theme.menu_fg_normal = theme.fg_normal
+theme.menu_bg_focus = theme.bg_focus
+theme.menu_fg_focus = theme.fg_focus
 
-theme.menu_border_color = theme.colors.fg_urgent
+theme.menu_border_color = theme.fg_urgent
 theme.menu_border_width = dpi(2)
 -- }}}
 
