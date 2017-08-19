@@ -9,6 +9,7 @@ local dpi = xresources.apply_dpi
 local theme_path = gfs.get_themes_dir() .. "archdove"
 local theme = {}
 
+theme.wibox_height = 16
 theme.font = "DejaVu Sans 8"
 theme.wallpaper_path = theme_path .. "/wallpapers"
 

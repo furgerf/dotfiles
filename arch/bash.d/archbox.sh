@@ -140,7 +140,6 @@ yoghurt () {
 }
 alias dissertation='cd $HOME/git/cu/300com/300com-final-project/dissertation && pdf main.pdf && vim main.tex'
 alias compton-enable='compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3'
-alias vlc='smplayer'
 
 # misc "fun" stuff
 alias spiral='x=0;y=0;while [[ $y -lt 500 ]] ; do xdotool mousemove --polar $x $y ; x=$(($x+4));y=$(($y+1)); sleep 0.01; done'

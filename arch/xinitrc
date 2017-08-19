@@ -64,7 +64,7 @@ xset r rate 250 35
 
 session=${1:-awesome}
 case $session in
-    awesome           ) exec awesome;;
+    awesome           ) exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr;;
     bspwm             ) exec bspwm;;
     catwm             ) exec catwm;;
     cinnamon          ) exec cinnamon-session;;

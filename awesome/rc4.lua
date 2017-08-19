@@ -21,8 +21,10 @@ local hints = require("hints")
 --[[
 -- TODO:
 -- - try removing tag `position`
+-- - figure out why tag order only works sometimes
 -- - document keys
 -- - cleanup file
+-- - improve promtbox
 --]]
 
 -- {{{ Error handling
@@ -256,7 +258,7 @@ awful.screen.connect_for_each_screen(function(s)
   s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
 
   -- Create the wibox
-  s.mywibox = awful.wibar({ position = "top", screen = s, height = 16 }) -- TODO determine size based on icons
+  s.mywibox = awful.wibar({ position = "top", screen = s, height = beautiful.wibox_height })
 
   -- Add widgets to the wibox
   s.mywibox:setup({

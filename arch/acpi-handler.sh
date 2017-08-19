@@ -21,14 +21,25 @@ case "$1" in
     if [ "$?" -eq 0 ]; then
       rfkill block wlan
     else
-      refkill unblock wlan
+      rfkill unblock wlan
     fi
     ;;
 
-    # actions that are handled elsewhere:
-    button/mute)
+  # other NOPs
+  jack/headphone)
+    ;;
+  cd/play)
+    ;;
+
+  # actions that are handled elsewhere:
+  button/mute)
     # handled by awesome
     #amixer sset Master toggle
+    ;;
+  button/f20)
+    # handled by awesome
+    #amixer set Master toggle <- doesn't do what it should
+    #amixer -D pulse set Master Playback Switch toggle <- does what it should but doesn't work fro here
     ;;
   button/volumeup)
     # handled by awesome
