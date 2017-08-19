@@ -9,11 +9,14 @@ local dpi = xresources.apply_dpi
 local theme_path = gfs.get_themes_dir() .. "/archdove"
 local theme = {}
 
-theme.font      = "DejaVu Sans 8"
+theme.font = "DejaVu Sans 8"
+theme.wallpaper_path = theme_path .. "/wallpapers"
 
--- TODO: Remove all the unnecessary/unused stuff
+-- Define the icon theme for application icons. If not set then the icons
+-- from /usr/share/icons and /usr/share/icons/hicolor will be used.
+theme.icon_theme = nil
+
 -- TODO: Make icons transparent (-> wifi5, ethernet, mem)
--- TODO: Look at (missing) default icons
 -- TODO: Make icons use the same white/light gray
 -- }}}
 
@@ -79,7 +82,7 @@ theme.border_focus  = theme.bg_focus
 theme.border_marked = theme.bg_urgent
 -- }}}
 
--- Generate taglist squares:
+-- {{{ Taglist TODO
 --[[
 local taglist_square_size = 4
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
@@ -88,18 +91,15 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
+theme.taglist_squares_sel                       = theme_path .. "/taglist/square_sel.png"
+theme.taglist_squares_unsel                     = theme_path .. "/taglist/square_unsel.png"
 --]]
-
+-- }}}
 
 -- {{{ Menu
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
-theme.menu_submenu_icon = themes_path .. "default/submenu.png"
 theme.menu_height = dpi(20)
 theme.menu_width  = dpi(200)
 
--- invert normal colors to stand out (since window behind menu is likely focused)
 theme.menu_bg_normal = theme.bg_normal
 theme.menu_fg_normal = theme.fg_normal
 theme.menu_bg_focus = theme.bg_focus
@@ -107,140 +107,104 @@ theme.menu_fg_focus = theme.fg_focus
 
 theme.menu_border_color = theme.fg_urgent
 theme.menu_border_width = dpi(2)
--- }}}
 
--- {{{ General icons
--- theme.awesome_icon                              = themes_path .. "/archdove/icons/awesome-icon.png"
-theme.clear_icon                                = themes_path .. "/archdove/icons/clear.png"
--- theme.clear_icon                                = themes_path .. "/archdove/icons/llauncher.png"
-theme.menu_submenu_icon                         = themes_path .. "/archdove/icons/submenu.png"
-theme.tasklist_floating_icon                    = themes_path .. "/archdove/icons/floatingm.png"
-theme.titlebar_close_button_focus               = themes_path .. "/archdove/icons/close_focus.png"
-theme.titlebar_close_button_normal              = themes_path .. "/archdove/icons/close_normal.png"
-theme.titlebar_ontop_button_focus_active        = themes_path .. "/archdove/icons/ontop_focus_active.png"
-theme.titlebar_ontop_button_normal_active       = themes_path .. "/archdove/icons/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_inactive      = themes_path .. "/archdove/icons/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_inactive     = themes_path .. "/archdove/icons/ontop_normal_inactive.png"
-theme.titlebar_sticky_button_focus_active       = themes_path .. "/archdove/icons/sticky_focus_active.png"
-theme.titlebar_sticky_button_normal_active      = themes_path .. "/archdove/icons/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_inactive     = themes_path .. "/archdove/icons/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_inactive    = themes_path .. "/archdove/icons/sticky_normal_inactive.png"
-theme.titlebar_floating_button_focus_active     = themes_path .. "/archdove/icons/floating_focus_active.png"
-theme.titlebar_floating_button_normal_active    = themes_path .. "/archdove/icons/floating_normal_active.png"
-theme.titlebar_floating_button_focus_inactive   = themes_path .. "/archdove/icons/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_inactive  = themes_path .. "/archdove/icons/floating_normal_inactive.png"
-theme.titlebar_maximized_button_focus_active    = themes_path .. "/archdove/icons/maximized_focus_active.png"
-theme.titlebar_maximized_button_normal_active   = themes_path .. "/archdove/icons/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_inactive  = themes_path .. "/archdove/icons/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_inactive = themes_path .. "/archdove/icons/maximized_normal_inactive.png"
-theme.taglist_squares_sel                       = themes_path .. "/archdove/icons/square_sel.png"
-theme.taglist_squares_unsel                     = themes_path .. "/archdove/icons/square_unsel.png"
+-- icons for the menu
+-- theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
+theme.awesome_icon       = theme_path .. "/menu/awesome.png"
+theme.menu_submenu_icon  = theme_path .. "/menu/submenu.png"
+theme.menu_config_icon   = theme_path .. "/menu/config.png"
+theme.menu_explorer_icon = theme_path .. "/menu/explorer.png"
+theme.menu_terminal_icon = theme_path .. "/menu/terminal.png"
 -- }}}
 
 -- {{{ Widget icons
-theme.widget_battery                            = themes_path .. "/archdove/icons/battery.png"
-theme.widget_mem                                = themes_path .. "/archdove/icons/mem.png"
-theme.widget_cpu                                = themes_path .. "/archdove/icons/cpu.png"
-theme.widget_temp                               = themes_path .. "/archdove/icons/temp.png"
-theme.widget_net                                = themes_path .. "/archdove/icons/net.png"
-theme.widget_hdd                                = themes_path .. "/archdove/icons/hdd.png"
-theme.widget_music                              = themes_path .. "/archdove/icons/music.png"
-theme.widget_task                               = themes_path .. "/archdove/icons/task.png"
-theme.widget_mail                               = themes_path .. "/archdove/icons/mail.png"
-theme.widget_caps                               = themes_path .. "/archdove/icons/caps.png"
-theme.arr1                                      = themes_path .. "/archdove/icons/arr1.png"
-theme.arr2                                      = themes_path .. "/archdove/icons/arr2.png"
-theme.arr3                                      = themes_path .. "/archdove/icons/arr3.png"
-theme.arr4                                      = themes_path .. "/archdove/icons/arr4.png"
-theme.arr5                                      = themes_path .. "/archdove/icons/arr5.png"
-theme.arr6                                      = themes_path .. "/archdove/icons/arr6.png"
-theme.arr7                                      = themes_path .. "/archdove/icons/arr7.png"
-theme.arr8                                      = themes_path .. "/archdove/icons/arr8.png"
-theme.arr9                                      = themes_path .. "/archdove/icons/arr9.png"
-theme.arr0                                      = themes_path .. "/archdove/icons/arr0.png"
-theme.sound_1_25        = themes_path .. "/archdove/icons/sound_1-25.png"
-theme.sound_26_50       = themes_path .. "/archdove/icons/sound_26-50.png"
-theme.sound_51_75       = themes_path .. "/archdove/icons/sound_51-75.png"
-theme.sound_76_100        = themes_path .. "/archdove/icons/sound_76-100.png"
-theme.sound_mute        = themes_path .. "/archdove/icons/sound_mute.png"
-theme.battery1          = themes_path .. "/archdove/icons/battery1.png"
-theme.battery2          = themes_path .. "/archdove/icons/battery2.png"
-theme.battery3          = themes_path .. "/archdove/icons/battery3.png"
-theme.battery4          = themes_path .. "/archdove/icons/battery4.png"
-theme.battery5          = themes_path .. "/archdove/icons/battery5.png"
-theme.battery6          = themes_path .. "/archdove/icons/battery6.png"
-theme.battery7          = themes_path .. "/archdove/icons/battery7.png"
-theme.battery8          = themes_path .. "/archdove/icons/battery8.png"
-theme.battery9          = themes_path .. "/archdove/icons/battery9.png"
-theme.battery10         = themes_path .. "/archdove/icons/battery10.png"
-theme.battery11         = themes_path .. "/archdove/icons/battery11.png"
-theme.wifinone          = themes_path .. "/archdove/icons/nowifi.png"
-theme.wifi1         = themes_path .. "/archdove/icons/wifi1.png"
-theme.wifi2         = themes_path .. "/archdove/icons/wifi2.png"
-theme.wifi3         = themes_path .. "/archdove/icons/wifi3.png"
-theme.wifi4         = themes_path .. "/archdove/icons/wifi4.png"
-theme.wifi5         = themes_path .. "/archdove/icons/wifi5.png"
-theme.ethernet              = themes_path .. "/archdove/icons/ethernet.png"
-theme.config_icon       = themes_path .. "/archdove/icons/config.png"
-theme.explorer_icon       = themes_path .. "/archdove/icons/explorer.png"
-theme.terminal_icon       = themes_path .. "/archdove/icons/terminal.png"
-theme.layout_ch       = themes_path .. "/archdove/icons/ch.png"
-theme.layout_us       = themes_path .. "/archdove/icons/us.png"
+theme.widget_arr0           = theme_path .. "/widget/arr0.png"
+theme.widget_arr1           = theme_path .. "/widget/arr1.png"
+theme.widget_arr2           = theme_path .. "/widget/arr2.png"
+theme.widget_arr3           = theme_path .. "/widget/arr3.png"
+-- theme.widget_arr4           = theme_path .. "/widget/arr4.png"
+-- theme.widget_arr5           = theme_path .. "/widget/arr5.png"
+-- theme.widget_arr6           = theme_path .. "/widget/arr6.png"
+-- theme.widget_arr7           = theme_path .. "/widget/arr7.png"
+-- theme.widget_arr8           = theme_path .. "/widget/arr8.png"
+-- theme.widget_arr9           = theme_path .. "/widget/arr9.png"
+theme.widget_battery1       = theme_path .. "/widget/battery1.png"
+theme.widget_battery2       = theme_path .. "/widget/battery2.png"
+theme.widget_battery3       = theme_path .. "/widget/battery3.png"
+theme.widget_battery4       = theme_path .. "/widget/battery4.png"
+theme.widget_battery5       = theme_path .. "/widget/battery5.png"
+theme.widget_battery6       = theme_path .. "/widget/battery6.png"
+theme.widget_battery7       = theme_path .. "/widget/battery7.png"
+theme.widget_battery8       = theme_path .. "/widget/battery8.png"
+theme.widget_battery9       = theme_path .. "/widget/battery9.png"
+theme.widget_battery10      = theme_path .. "/widget/battery10.png"
+theme.widget_battery11      = theme_path .. "/widget/battery11.png"
+theme.widget_caps           = theme_path .. "/widget/caps.png"
+theme.widget_layout_ch      = theme_path .. "/widget/ch.png"
+theme.widget_layout_us      = theme_path .. "/widget/us.png"
+theme.widget_mem            = theme_path .. "/widget/mem.png"
+theme.widget_cpu            = theme_path .. "/widget/cpu.png"
+-- theme.widget_temp           = theme_path .. "/widget/temp.png"
+theme.widget_net            = theme_path .. "/widget/net.png"
+theme.widget_hdd            = theme_path .. "/widget/hdd.png"
+-- theme.widget_music          = theme_path .. "/widget/music.png"
+-- theme.widget_task           = theme_path .. "/widget/task.png"
+-- theme.widget_mail           = theme_path .. "/widget/mail.png"
+theme.widget_sound_1_25     = theme_path .. "/widget/sound_1-25.png"
+theme.widget_sound_26_50    = theme_path .. "/widget/sound_26-50.png"
+theme.widget_sound_51_75    = theme_path .. "/widget/sound_51-75.png"
+theme.widget_sound_76_100   = theme_path .. "/widget/sound_76-100.png"
+theme.widget_sound_mute     = theme_path .. "/widget/sound_mute.png"
+theme.widget_wifinone       = theme_path .. "/widget/nowifi.png"
+theme.widget_wifi1          = theme_path .. "/widget/wifi1.png"
+theme.widget_wifi2          = theme_path .. "/widget/wifi2.png"
+theme.widget_wifi3          = theme_path .. "/widget/wifi3.png"
+theme.widget_wifi4          = theme_path .. "/widget/wifi4.png"
+theme.widget_wifi5          = theme_path .. "/widget/wifi5.png"
+theme.widget_ethernet       = theme_path .. "/widget/ethernet.png"
 -- }}}
 
 -- {{{ Layout icons
-theme.layout_fairv      = themes_path.."/archdove/layouts/fairvw.png"
-theme.layout_fairh      = themes_path.."/archdove/layouts/fairhw.png"
-theme.layout_spiral     = themes_path.."/archdove/layouts/spiralw.png"
-theme.layout_dwindle    = themes_path.."/archdove/layouts/dwindlew.png"
-theme.layout_max        = themes_path.."/archdove/layouts/maxw.png"
-theme.layout_fullscreen = themes_path.."/archdove/layouts/fullscreenw.png"
-theme.layout_magnifier  = themes_path.."/archdove/layouts/magnifierw.png"
-theme.layout_floating   = themes_path.."/archdove/layouts/floatingw.png"
-theme.layout_tile       = themes_path.."/archdove/layouts/tilew.png"
-theme.layout_tileleft   = themes_path.."/archdove/layouts/tileleftw.png"
-theme.layout_tilebottom = themes_path.."/archdove/layouts/tilebottomw.png"
-theme.layout_tiletop    = themes_path.."/archdove/layouts/tiletopw.png"
-theme.layout_cornernw   = themes_path.."/archdove/layouts/cornernww.png"
-theme.layout_cornerne   = themes_path.."/archdove/layouts/cornernew.png"
-theme.layout_cornersw   = themes_path.."/archdove/layouts/cornersww.png"
-theme.layout_cornerse   = themes_path.."/archdove/layouts/cornersew.png"
+theme.layout_fairv      = theme_path .. "/layouts/fairvw.png"
+theme.layout_fairh      = theme_path .. "/layouts/fairhw.png"
+theme.layout_spiral     = theme_path .. "/layouts/spiralw.png"
+theme.layout_dwindle    = theme_path .. "/layouts/dwindlew.png"
+theme.layout_max        = theme_path .. "/layouts/maxw.png"
+theme.layout_fullscreen = theme_path .. "/layouts/fullscreenw.png"
+theme.layout_magnifier  = theme_path .. "/layouts/magnifierw.png"
+theme.layout_floating   = theme_path .. "/layouts/floatingw.png"
+theme.layout_tile       = theme_path .. "/layouts/tilew.png"
+theme.layout_tileleft   = theme_path .. "/layouts/tileleftw.png"
+theme.layout_tilebottom = theme_path .. "/layouts/tilebottomw.png"
+theme.layout_tiletop    = theme_path .. "/layouts/tiletopw.png"
+theme.layout_cornernw   = theme_path .. "/layouts/cornernww.png"
+theme.layout_cornerne   = theme_path .. "/layouts/cornernew.png"
+theme.layout_cornersw   = theme_path .. "/layouts/cornersww.png"
+theme.layout_cornerse   = theme_path .. "/layouts/cornersew.png"
 -- }}}
 
 -- {{{ Titlebar icons
-theme.titlebar_close_button_focus  = themes_path.."/archdove/titlebar/close_focus.png"
-theme.titlebar_close_button_normal = themes_path.."/archdove/titlebar/close_normal.png"
--- theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
--- theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
-theme.titlebar_ontop_button_focus_active  = themes_path.."/archdove/titlebar/ontop_focus_active.png"
-theme.titlebar_ontop_button_normal_active = themes_path.."/archdove/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_inactive  = themes_path.."/archdove/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_inactive = themes_path.."/archdove/titlebar/ontop_normal_inactive.png"
-theme.titlebar_sticky_button_focus_active  = themes_path.."/archdove/titlebar/sticky_focus_active.png"
-theme.titlebar_sticky_button_normal_active = themes_path.."/archdove/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_inactive  = themes_path.."/archdove/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_inactive = themes_path.."/archdove/titlebar/sticky_normal_inactive.png"
-theme.titlebar_floating_button_focus_active  = themes_path.."/archdove/titlebar/floating_focus_active.png"
-theme.titlebar_floating_button_normal_active = themes_path.."/archdove/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_inactive  = themes_path.."/archdove/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_inactive = themes_path.."/archdove/titlebar/floating_normal_inactive.png"
-theme.titlebar_maximized_button_focus_active  = themes_path.."/archdove/titlebar/maximized_focus_active.png"
-theme.titlebar_maximized_button_normal_active = themes_path.."/archdove/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_inactive  = themes_path.."/archdove/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_inactive = themes_path.."/archdove/titlebar/maximized_normal_inactive.png"
+theme.titlebar_close_button_focus               = theme_path .. "/titlebar/close_focus.png"
+theme.titlebar_close_button_normal              = theme_path .. "/titlebar/close_normal.png"
+theme.titlebar_floating_button_focus_active     = theme_path .. "/titlebar/floating_focus_active.png"
+theme.titlebar_floating_button_normal_active    = theme_path .. "/titlebar/floating_normal_active.png"
+theme.titlebar_floating_button_focus_inactive   = theme_path .. "/titlebar/floating_focus_inactive.png"
+theme.titlebar_floating_button_normal_inactive  = theme_path .. "/titlebar/floating_normal_inactive.png"
+theme.titlebar_maximized_button_focus_active    = theme_path .. "/titlebar/maximized_focus_active.png"
+theme.titlebar_maximized_button_normal_active   = theme_path .. "/titlebar/maximized_normal_active.png"
+theme.titlebar_maximized_button_focus_inactive  = theme_path .. "/titlebar/maximized_focus_inactive.png"
+theme.titlebar_maximized_button_normal_inactive = theme_path .. "/titlebar/maximized_normal_inactive.png"
+theme.titlebar_minimize_button_focus            = theme_path .. "/titlebar/minimize_focus.png"
+theme.titlebar_minimize_button_normal           = theme_path .. "/titlebar/minimize_normal.png"
+theme.titlebar_ontop_button_focus_active        = theme_path .. "/titlebar/ontop_focus_active.png"
+theme.titlebar_ontop_button_normal_active       = theme_path .. "/titlebar/ontop_normal_active.png"
+theme.titlebar_ontop_button_focus_inactive      = theme_path .. "/titlebar/ontop_focus_inactive.png"
+theme.titlebar_ontop_button_normal_inactive     = theme_path .. "/titlebar/ontop_normal_inactive.png"
+theme.titlebar_sticky_button_focus_active       = theme_path .. "/titlebar/sticky_focus_active.png"
+theme.titlebar_sticky_button_normal_active      = theme_path .. "/titlebar/sticky_normal_active.png"
+theme.titlebar_sticky_button_focus_inactive     = theme_path .. "/titlebar/sticky_focus_inactive.png"
+theme.titlebar_sticky_button_normal_inactive    = theme_path .. "/titlebar/sticky_normal_inactive.png"
 -- }}}
-
-theme.wallpaper = themes_path.."default/background.png"
-theme.wallpaper_path = themes_path.."archdove/wallpapers"
-
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
-)
-
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
 
 return theme
 
