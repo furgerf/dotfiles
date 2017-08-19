@@ -134,9 +134,9 @@ myawesomemenu = {
 }
 mymainmenu = awful.menu({
   items = {
-    { "config", myconfigmenu, beautiful.config_icon },
-    { "places terminal", myplacestermmenu, beautiful.terminal_icon },
-    { "places explorer", myplacemenu, beautiful.explorer_icon },
+    { "config", myconfigmenu, beautiful.menu_config_icon },
+    { "places terminal", myplacestermmenu, beautiful.menu_terminal_icon },
+    { "places explorer", myplacemenu, beautiful.menu_explorer_icon },
     { "awesome", myawesomemenu, beautiful.awesome_icon },
   }
 })
@@ -441,15 +441,31 @@ globalkeys = gears.table.join(
     awful.spawn("pulseaudio-ctl mute no")
     awful.spawn("pulseaudio-ctl up")
   end),
+  awful.key({ "Shift" }, "XF86AudioRaiseVolume", function ()
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl up 20")
+  end),
+  awful.key({ "Ctrl" }, "XF86AudioRaiseVolume", function ()
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl up 50")
+  end),
   awful.key({ }, "XF86AudioLowerVolume", function ()
     awful.spawn("pulseaudio-ctl mute no")
     awful.spawn("pulseaudio-ctl down")
+  end),
+  awful.key({ "Shift" }, "XF86AudioLowerVolume", function ()
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl down 20")
+  end),
+  awful.key({ "Ctrl" }, "XF86AudioLowerVolume", function ()
+    awful.spawn("pulseaudio-ctl mute no")
+    awful.spawn("pulseaudio-ctl down 50")
   end),
   awful.key({ }, "XF86AudioMicMute", function () -- fallback to mic muting because normal mute doesn't seem to work
     awful.spawn("pulseaudio-ctl mute")
   end),
   awful.key({ }, "XF86Display", function ()
-     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end),
+     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor-2") end),
   awful.key({modkey}, "F6", function ()
     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end),
   awful.key({ }, "Print", function ()

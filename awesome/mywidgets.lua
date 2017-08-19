@@ -16,15 +16,15 @@ function mywidgets.separator ()
   -- return wibox.layout(
   -- {
   --   layout = wibox.layout.fixed.horizontal,
-  --   wibox.widget.imagebox(beautiful.arr3),
-  --   wibox.widget.imagebox(beautiful.arr2)
+  --   wibox.widget.imagebox(beautiful.widget_arr3),
+  --   wibox.widget.imagebox(beautiful.widget_arr2)
   -- })
 end
 function mywidgets.separator2 ()
   return wibox.layout(
   {
     layout = wibox.layout.fixed.horizontal,
-    -- wibox.widget.imagebox(beautiful.arr2)
+    -- wibox.widget.imagebox(beautiful.widget_arr2)
   })
 end
 -- }}}
@@ -50,15 +50,15 @@ function mywidgets.volume()
     local label = { ["♫"] = "O", ["♩"] = "M" }
     local max_volume = 200
     if label[args[2]] == "M" or args[1] <= 0 then
-      icon.image = beautiful.sound_mute
+      icon.image = beautiful.widget_sound_mute
     elseif args[1] <= max_volume / 4 then
-      icon.image = beautiful.sound_1_25
+      icon.image = beautiful.widget_sound_1_25
     elseif args[1] <= max_volume / 2 then
-      icon.image = beautiful.sound_26_50
+      icon.image = beautiful.widget_sound_26_50
     elseif args[1] <= max_volume / 4 * 3 then
-      icon.image = beautiful.sound_51_75
+      icon.image = beautiful.widget_sound_51_75
     else
-      icon.image = beautiful.sound_76_100
+      icon.image = beautiful.widget_sound_76_100
     end
     return " ".. args[1] .. " "
   end, 2, "Master")
@@ -88,27 +88,27 @@ function mywidgets.battery()
   })
   vicious.register(widget, vicious.widgets.bat, function(widget, args)
     if args[2] <= 5 then
-      icon.image = beautiful.battery1
+      icon.image = beautiful.widget_battery1
     elseif args[2] <= 10 then
-      icon.image = beautiful.battery2
+      icon.image = beautiful.widget_battery2
     elseif args[2] <= 20 then
-      icon.image = beautiful.battery3
+      icon.image = beautiful.widget_battery3
     elseif args[2] <= 30 then
-      icon.image = beautiful.battery4
+      icon.image = beautiful.widget_battery4
     elseif args[2] <= 40 then
-      icon.image = beautiful.battery5
+      icon.image = beautiful.widget_battery5
     elseif args[2] <= 50 then
-      icon.image = beautiful.battery6
+      icon.image = beautiful.widget_battery6
     elseif args[2] <= 60 then
-      icon.image = beautiful.battery7
+      icon.image = beautiful.widget_battery7
     elseif args[2] <= 70 then
-      icon.image = beautiful.battery8
+      icon.image = beautiful.widget_battery8
     elseif args[2] <= 80 then
-      icon.image = beautiful.battery9
+      icon.image = beautiful.widget_battery9
     elseif args[2] <= 90 then
-      icon.image = beautiful.battery10
+      icon.image = beautiful.widget_battery10
     else
-      icon.image = beautiful.battery11
+      icon.image = beautiful.widget_battery11
     end
     local fh = io.popen("acpi | cut -d, -f 3,3 - | cut -b 2-9", "r")
     local charging_duration = fh:read("*l")
@@ -149,21 +149,21 @@ function mywidgets.wifi()
       handle:close()
       if inet:sub(1, #inet - 1) == "0" then
         -- we're connected to the internet, assume it's via ethernet
-        icon.image = beautiful.ethernet
+        icon.image = beautiful.widget_ethernet
         name = "ethernet"
       else
-        icon.image = beautiful.wifinone
+        icon.image = beautiful.widget_wifinone
       end
     elseif signal <= 20 then
-      icon.image = beautiful.wifi1
+      icon.image = beautiful.widget_wifi1
     elseif signal <= 40 then
-      icon.image = beautiful.wifi2
+      icon.image = beautiful.widget_wifi2
     elseif signal <= 60 then
-      icon.image = beautiful.wifi3
+      icon.image = beautiful.widget_wifi3
     elseif signal <= 80 then
-      icon.image = beautiful.wifi4
+      icon.image = beautiful.widget_wifi4
     else
-      icon.image = beautiful.wifi5
+      icon.image = beautiful.widget_wifi5
     end
     return name
   end, 37, "wlp3s0")
@@ -286,7 +286,7 @@ function mywidgets.hdd()
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.dio, "${sda total_kb}", 3)
+  vicious.register(widget, vicious.widgets.dio, "${sda total_mb}", 3)
   return layout
 end
 -- }}}
@@ -325,8 +325,8 @@ function mywidgets.keyboardlayout ()
   local kblayouticon = wibox.widget.imagebox()
   local num_layouts = 2
   layouts = {
-    [0] = beautiful.layout_us,
-    [1] = beautiful.layout_ch
+    [0] = beautiful.widget_layout_us,
+    [1] = beautiful.widget_layout_ch
   }
   local function set_layout_icon (self)
     self.image = layouts[awesome.xkb_get_layout_group()]

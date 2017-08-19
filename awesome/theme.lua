@@ -6,7 +6,7 @@ local gfs = require("gears.filesystem")
 local xresources = require("beautiful.xresources")
 
 local dpi = xresources.apply_dpi
-local theme_path = gfs.get_themes_dir() .. "/archdove"
+local theme_path = gfs.get_themes_dir() .. "archdove"
 local theme = {}
 
 theme.font = "DejaVu Sans 8"
@@ -16,8 +16,7 @@ theme.wallpaper_path = theme_path .. "/wallpapers"
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
--- TODO: Make icons transparent (-> wifi5, ethernet, mem)
--- TODO: Make icons use the same white/light gray
+-- TODO: Make icons: transparent, with same fg, based on same height
 -- }}}
 
 -- {{{ Colors
@@ -82,8 +81,7 @@ theme.border_focus  = theme.bg_focus
 theme.border_marked = theme.bg_urgent
 -- }}}
 
--- {{{ Taglist TODO
---[[
+-- {{{ Taglist
 local taglist_square_size = 4
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
@@ -91,9 +89,6 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
-theme.taglist_squares_sel                       = theme_path .. "/taglist/square_sel.png"
-theme.taglist_squares_unsel                     = theme_path .. "/taglist/square_unsel.png"
---]]
 -- }}}
 
 -- {{{ Menu
