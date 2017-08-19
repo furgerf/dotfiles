@@ -1,3 +1,4 @@
+-- {{{ Main
 local naughty = require("naughty")
 local awful = require("awful")
 local vicious = require("vicious")
@@ -8,7 +9,23 @@ local gears = require("gears")
 
 local mywidgets = {}
 
--- TODO: Check out vicious for more widgets
+-- helper utility
+local function get_layout_widget(icon, widget)
+  return wibox.layout({
+    {
+      icon,
+      bg = beautiful.widget_bg,
+      widget = wibox.container.background
+    },
+    {
+      widget,
+      bg = beautiful.widget_bg,
+      widget = wibox.container.background
+    },
+    layout = wibox.layout.fixed.horizontal
+  })
+end
+-- }}}
 
 -- {{{ Separators
 function mywidgets.separator ()
@@ -31,21 +48,9 @@ end
 
 -- {{{ Volume
 function mywidgets.volume()
-  local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      widget,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local widget = wibox.widget.textbox()
+  local layout = get_layout_widget(icon, widget)
   vicious.register(widget, vicious.widgets.volume, function(widget, args)
     local label = { ["♫"] = "O", ["♩"] = "M" }
     local max_volume = 200
@@ -71,21 +76,9 @@ end
 
 -- {{{ Battery
 function mywidgets.battery()
-  local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      widget,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local widget = wibox.widget.textbox()
+  local layout = get_layout_widget(icon, widget)
   vicious.register(widget, vicious.widgets.bat, function(widget, args)
     if args[2] <= 5 then
       icon.image = beautiful.widget_battery1
@@ -123,21 +116,9 @@ end
 -- {{{ Wifi
 function mywidgets.wifi()
   -- TODO: Display detailed info on hover
-  local widget = wibox.widget.textbox()
   local icon = wibox.widget.imagebox()
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      widget,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local widget = wibox.widget.textbox()
+  local layout = get_layout_widget(icon, widget)
   vicious.register(widget, vicious.widgets.wifi,
   function(widget, args)
     local signal = args['{link}']
@@ -174,34 +155,22 @@ end
 -- {{{ CPU
 function mywidgets.cpu()
   -- TODO: Display detailed info on hover
+  local icon = wibox.widget.imagebox(beautiful.widget_cpu)
   local widget = wibox.widget {
     width = 24,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
   }
-  local icon = wibox.widget.imagebox(beautiful.widget_cpu)
   local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      mirror,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local layout = get_layout_widget(icon, mirror)
   widget.color = {
     type = "linear",
     from = {0, widget.height},
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.cpu, "$1", 3)
+  vicious.register(widget, vicious.widgets.cpu, "$1", 3) -- cpu usage of all cores
 
   layout:connect_signal("button::press", function()
     awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
@@ -225,61 +194,37 @@ end
 
 -- {{{ Memory
 function mywidgets.memory()
+  local icon = wibox.widget.imagebox(beautiful.widget_mem)
   local widget = wibox.widget {
     width = 24,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
   }
-  local icon = wibox.widget.imagebox(beautiful.widget_mem)
   local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      mirror,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local layout = get_layout_widget(icon, mirror)
   widget.color = {
     type = "linear",
     from = {0, widget.height},
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.mem, "$1", 3)
+  vicious.register(widget, vicious.widgets.mem, "$1", 3) -- memory usage in %
   return layout
 end
 -- }}}
 
 -- {{{ HDD
 function mywidgets.hdd()
+  local icon = wibox.widget.imagebox(beautiful.widget_hdd)
   local widget = wibox.widget {
     width = 24,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
   }
-  local icon = wibox.widget.imagebox(beautiful.widget_hdd)
   local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = wibox.layout({
-    {
-      icon,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    {
-      mirror,
-      bg = beautiful.widget_bg,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.horizontal
-  })
+  local layout = get_layout_widget(icon, mirror)
   widget.color = {
     type = "linear",
     from = {0, widget.height},
@@ -287,6 +232,28 @@ function mywidgets.hdd()
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
   vicious.register(widget, vicious.widgets.dio, "${sda total_mb}", 3)
+  return layout
+end
+-- }}}
+
+-- {{{ Net
+function mywidgets.net()
+  local icon = wibox.widget.imagebox(beautiful.widget_net)
+  local widget = wibox.widget {
+    width = 24,
+    border_color = beautiful.widget_border,
+    background_color = gears.color.transparent,
+    widget = wibox.widget.graph
+  }
+  local mirror = wibox.container.mirror(widget, { horizontal = true })
+  local layout = get_layout_widget(icon, mirror)
+  widget.color = {
+    type = "linear",
+    from = {0, widget.height},
+    to = {0, 0},
+    stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
+  }
+  vicious.register(widget, vicious.widgets.net, "${wlp3s0 down_kb}", 3)
   return layout
 end
 -- }}}
