@@ -20,8 +20,6 @@ local hints = require("hints")
 
 --[[
 -- TODO:
--- - try removing tag `position`
--- - figure out why tag order only works sometimes
 -- - document keys
 -- - cleanup file
 -- - improve promtbox
@@ -279,7 +277,6 @@ tyrannical.tags = {
   {
     name        = "~",
     layout      = awful.layout.suit.fair,
-    index = 1,
     position = 1,
     screen = {1, 2},
     fallback = true,
@@ -288,7 +285,6 @@ tyrannical.tags = {
   {
     name        = "➋ ·web·🌏",
     layout      = awful.layout.suit.fair,
-    index = 2,
     position = 2,
     screen = 1, -- TODO: remove
     force_screen = true,
@@ -300,7 +296,6 @@ tyrannical.tags = {
   {
     name        = "➌ ·doc·✎",
     layout      = awful.layout.suit.fair,
-    index = 3,
     position = 3,
     init = false,
     volatile = true,
@@ -309,7 +304,6 @@ tyrannical.tags = {
   {
     name        = "➍ ·code·💡",
     layout      = awful.layout.suit.max.fullscreen,
-    index    = 4,
     position    = 4,
     init = false,
     volatile = true,
@@ -317,7 +311,6 @@ tyrannical.tags = {
   {
     name        = "➎ ·media·♫",
     layout      = awful.layout.suit.floating,
-    index    = 5,
     position    = 5,
     screen      = screen.count(),
     init = false,
@@ -328,7 +321,6 @@ tyrannical.tags = {
   {
     name        = "➏ ·d/l·⇅",
     layout      = awful.layout.suit.tile.bottom,
-    index    = 6,
     position    = 6,
     init = false,
     volatile = true,
@@ -337,7 +329,6 @@ tyrannical.tags = {
   {
     name        = "➐ ·foo",
     layout      = awful.layout.suit.tile.bottom,
-    index    = 7,
     position    = 7,
     init = false,
     volatile = true,
@@ -346,7 +337,6 @@ tyrannical.tags = {
   {
     name        = "➑ ·bar",
     layout      = awful.layout.suit.fair,
-    index    = 8,
     position    = 8,
     init = false,
     volatile = true,
@@ -354,7 +344,6 @@ tyrannical.tags = {
   {
     name        = "➒ ·gimp",
     layout      = awful.layout.suit.floating,
-    index    = 9,
     position    = 9,
     screen      = screen.count(),
     init = false,
@@ -724,6 +713,37 @@ function find_tag_by_position(tags, position)
   return nil
 end
 
+-- retrieves the tag with the smallest position among the provided table of tags
+function get_tag_with_min_position(tags)
+  local min_position_tag = tags[1]
+  for t in gears.table.iterate(tags, function (item) return true end) do
+    if min_position_tag.position > t.position then
+      min_position_tag = t
+    end
+  end
+  return min_position_tag
+end
+
+-- sorts tags by position
+function arrange_tags(tags)
+  local own_tags = gears.table.clone(tags)
+  -- iterate through tag indices to be "distributed"
+  local tag_count = gears.table.reverse(gears.table.keys(own_tags))[1]
+  for i = 1, tag_count do
+    -- find min-position tag which should receive the current index
+    local tag = get_tag_with_min_position(own_tags)
+    -- remove the tag from the table of tags that need an index
+    for k, v in pairs(own_tags) do
+      if v == tag then
+        table.remove(own_tags, k)
+        break
+      end
+    end
+    -- assign index
+    tag.index = i
+  end
+end
+
 -- ensures that the tag with the requested position exists
 -- if it already exists, it is returned, otherwise it's created
 function retrieve_tag_by_position(i)
@@ -743,7 +763,10 @@ function retrieve_tag_by_position(i)
   -- but, the tag may be "recycled" and already be assigned to some screen
   -- -> clear the screen to have it created on the current screen
   tag.screen = nil
-  return awful.tag.add(tag.name, tag)
+  -- lastly, we must make sure that all tags on the screen are in the correct order
+  tag = awful.tag.add(tag.name, tag)
+  arrange_tags(screen.tags)
+  return tag
 end
 
 for i = 1, 9 do
@@ -753,7 +776,6 @@ for i = 1, 9 do
   function ()
     local tag = retrieve_tag_by_position(i)
     if tag == nil then return end
-    -- tag.index = i -- ensure that the tag is in the right position
     tag:view_only()
     awful.screen.focus(tag.screen)
   end,
