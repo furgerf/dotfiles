@@ -10,17 +10,19 @@ local gears = require("gears")
 local mywidgets = {}
 -- }}}
 
--- helper utility
-local function get_layout_widget(icon, widget)
+-- {{{ Utils
+local function get_layout_widget(icon, widget, bg_color)
+  -- local background = bg_color ~= nil and bg_color or beautiful.widget_bg
+  local background = beautiful.widget_bg
   return wibox.layout({
     {
       icon,
-      bg = beautiful.widget_bg,
+      bg = background,
       widget = wibox.container.background
     },
     {
       widget,
-      bg = beautiful.widget_bg,
+      bg = background,
       widget = wibox.container.background
     },
     layout = wibox.layout.fixed.horizontal
@@ -30,19 +32,19 @@ end
 
 -- {{{ Separators
 function mywidgets.separator ()
-  return wibox.widget.textbox("<span color='"..beautiful.fg_urgent.."'> ⚫ </span>")
+  return wibox.widget.textbox("<span color='"..beautiful.colors.arch.."'> ⚫ </span>")
   -- return wibox.layout(
   -- {
   --   layout = wibox.layout.fixed.horizontal,
-  --   wibox.widget.imagebox(beautiful.widget_arr3),
-  --   wibox.widget.imagebox(beautiful.widget_arr2)
+  --   wibox.widget.imagebox(beautiful.widget_arr0),
+  --   -- wibox.widget.imagebox(beautiful.widget_arr2)
   -- })
 end
 function mywidgets.separator2 ()
   return wibox.layout(
   {
     layout = wibox.layout.fixed.horizontal,
-    -- wibox.widget.imagebox(beautiful.widget_arr2)
+    wibox.widget.imagebox(beautiful.widget_arr2)
   })
 end
 -- }}}
@@ -51,7 +53,7 @@ end
 function mywidgets.volume()
   local icon = wibox.widget.imagebox()
   local widget = wibox.widget.textbox()
-  local layout = get_layout_widget(icon, widget)
+  local layout = get_layout_widget(icon, widget, beautiful.colors.dark)
   vicious.register(widget, vicious.widgets.volume, function(widget, args)
     local label = { ["♫"] = "O", ["♩"] = "M" }
     local max_volume = 200
@@ -164,7 +166,7 @@ function mywidgets.cpu()
     widget = wibox.widget.graph
   }
   local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = get_layout_widget(icon, mirror)
+  local layout = get_layout_widget(icon, mirror, beautiful.colors.dark)
   widget.color = {
     type = "linear",
     from = {0, widget.height},
@@ -347,7 +349,7 @@ function mywidgets.clock()
   calendar2.addCalendarToWidget(widget, "<span color='"..beautiful.bg_focus.."'>%s</span>")
   return {
     widget,
-    bg = beautiful.widget_bg,
+    bg = beautiful.widget_background,
     widget = wibox.container.background
   }
 end
