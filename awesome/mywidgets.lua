@@ -8,6 +8,7 @@ local calendar2 = require("calendar2")
 local gears = require("gears")
 
 local mywidgets = {}
+-- }}}
 
 -- helper utility
 local function get_layout_widget(icon, widget)
@@ -66,7 +67,7 @@ function mywidgets.volume()
       icon.image = beautiful.widget_sound_76_100
     end
     return " ".. args[1] .. " "
-  end, 2, "Master")
+  end, 1, "Master")
   layout:connect_signal("button::press", function()
     awful.util.spawn("amixer sset Master toggle")
   end)
@@ -157,7 +158,7 @@ function mywidgets.cpu()
   -- TODO: Display detailed info on hover
   local icon = wibox.widget.imagebox(beautiful.widget_cpu)
   local widget = wibox.widget {
-    width = 24,
+    width = beautiful.widget_width,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
@@ -196,7 +197,7 @@ end
 function mywidgets.memory()
   local icon = wibox.widget.imagebox(beautiful.widget_mem)
   local widget = wibox.widget {
-    width = 24,
+    width = beautiful.widget_width,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
@@ -217,21 +218,52 @@ end
 -- {{{ HDD
 function mywidgets.hdd()
   local icon = wibox.widget.imagebox(beautiful.widget_hdd)
-  local widget = wibox.widget {
-    width = 24,
+  local widget1 = wibox.widget {
+    width = beautiful.widget_width,
+    height = beautiful.wibox_height / 2,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph
   }
-  local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = get_layout_widget(icon, mirror)
-  widget.color = {
+  local widget2 = wibox.widget {
+    width = beautiful.widget_width,
+    height = beautiful.wibox_height / 2,
+    border_color = beautiful.widget_border,
+    background_color = gears.color.transparent,
+    widget = wibox.widget.graph
+  }
+  local widget = wibox.layout({
+    {
+      wibox.container.mirror(widget1, { horizontal = true }),
+      bg = background,
+      widget = wibox.container.background
+    },
+    {
+      wibox.container.mirror(widget2, { horizontal = true }),
+      bg = background,
+      widget = wibox.container.background
+    },
+    layout = wibox.layout.fixed.vertical
+  })
+  local layout = get_layout_widget(icon, widget, beautiful.colors.dark)
+  widget1.color = {
     type = "linear",
-    from = {0, widget.height},
+    from = {0, widget1.height},
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.dio, "${sda total_mb}", 3)
+  widget2.color = {
+    type = "linear",
+    from = {0, widget2.height},
+    to = {0, 0},
+    stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
+  }
+  vicious.register(widget1, vicious.widgets.dio, function (widget, args)
+    local sda = args["{sda total_mb}"]
+    local sdb = args["{sdb total_mb}"]
+    widget2:add_value(tonumber(sdb))
+    return sda
+  end, 3)
   return layout
 end
 -- }}}
@@ -240,7 +272,7 @@ end
 function mywidgets.net()
   local icon = wibox.widget.imagebox(beautiful.widget_net)
   local widget = wibox.widget {
-    width = 24,
+    width = beautiful.widget_width,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
     widget = wibox.widget.graph

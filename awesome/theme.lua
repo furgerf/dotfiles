@@ -1,5 +1,4 @@
 -- {{{ Main
-
 local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local gfs = require("gears.filesystem")
@@ -9,15 +8,14 @@ local dpi = xresources.apply_dpi
 local theme_path = gfs.get_themes_dir() .. "archdove"
 local theme = {}
 
-theme.wibox_height = 16
+theme.wibox_height = dpi(16)
+theme.widget_width = dpi(48)
 theme.font = "DejaVu Sans 8"
 theme.wallpaper_path = theme_path .. "/wallpapers"
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
-
--- TODO: Make icons: transparent, with same fg, based on same height
 -- }}}
 
 -- {{{ Colors
@@ -118,12 +116,6 @@ theme.widget_arr0           = theme_path .. "/widget/arr0.png"
 theme.widget_arr1           = theme_path .. "/widget/arr1.png"
 theme.widget_arr2           = theme_path .. "/widget/arr2.png"
 theme.widget_arr3           = theme_path .. "/widget/arr3.png"
--- theme.widget_arr4           = theme_path .. "/widget/arr4.png"
--- theme.widget_arr5           = theme_path .. "/widget/arr5.png"
--- theme.widget_arr6           = theme_path .. "/widget/arr6.png"
--- theme.widget_arr7           = theme_path .. "/widget/arr7.png"
--- theme.widget_arr8           = theme_path .. "/widget/arr8.png"
--- theme.widget_arr9           = theme_path .. "/widget/arr9.png"
 theme.widget_battery1       = theme_path .. "/widget/battery1.png"
 theme.widget_battery2       = theme_path .. "/widget/battery2.png"
 theme.widget_battery3       = theme_path .. "/widget/battery3.png"
@@ -140,12 +132,8 @@ theme.widget_layout_ch      = theme_path .. "/widget/ch.png"
 theme.widget_layout_us      = theme_path .. "/widget/us.png"
 theme.widget_mem            = theme_path .. "/widget/mem.png"
 theme.widget_cpu            = theme_path .. "/widget/cpu.png"
--- theme.widget_temp           = theme_path .. "/widget/temp.png"
 theme.widget_net            = theme_path .. "/widget/net.png"
 theme.widget_hdd            = theme_path .. "/widget/hdd.png"
--- theme.widget_music          = theme_path .. "/widget/music.png"
--- theme.widget_task           = theme_path .. "/widget/task.png"
--- theme.widget_mail           = theme_path .. "/widget/mail.png"
 theme.widget_sound_1_25     = theme_path .. "/widget/sound_1-25.png"
 theme.widget_sound_26_50    = theme_path .. "/widget/sound_26-50.png"
 theme.widget_sound_51_75    = theme_path .. "/widget/sound_51-75.png"

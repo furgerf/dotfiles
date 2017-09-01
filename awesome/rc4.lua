@@ -209,17 +209,18 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 local function get_widgets()
   local separator = mywidgets.separator()
+  local separator2 = mywidgets.separator2()
   return {
     layout = wibox.layout.fixed.horizontal,
-    mywidgets.separator2(),
+    separator2,
     mywidgets.volume(),
     separator,
     mywidgets.battery(),
-    separator,
+    separator2,
     mywidgets.cpu(),
     separator,
     mywidgets.memory(),
-    separator,
+    separator2,
     mywidgets.hdd(),
     separator,
     mywidgets.net(),
@@ -348,6 +349,8 @@ tyrannical.tags = {
     screen      = screen.count(),
     init = false,
     volatile = true,
+    exclusive = true,
+    class = { "Gimp" }
   },
 }
 -- }}}
@@ -419,8 +422,6 @@ globalkeys = gears.table.join(
   -- custom bindings (HERE FOR NOW)
   awful.key({ modkey,           }, "o",      function () awful.screen.focus_relative(1) end,
     {description = "cycle focus through screens", group = "custom"}),
-  -- awful.key({ modkey, "Shift"   }, "o",      awful.client.movetoscreen, -- TODO: This throws errors
-  --   {description = "move client to next screen", group = "custom"}),
   -- MEDIA KEYS
   awful.key({ }, "XF86MonBrightnessUp", function ()
      awful.spawn("xbacklight -inc 15") end),
@@ -428,7 +429,7 @@ globalkeys = gears.table.join(
      awful.spawn("xbacklight -dec 15") end),
   awful.key({ }, "XF86ScreenSaver", function ()
      awful.spawn("slock")
-     awful.spawn("xset dpms force off")  end),
+     awful.spawn("xset dpms force standby")  end),
   awful.key({ }, "XF86AudioRaiseVolume", function ()
     awful.spawn("pulseaudio-ctl mute no")
     awful.spawn("pulseaudio-ctl up")
@@ -472,7 +473,7 @@ globalkeys = gears.table.join(
       awful.spawn("xbacklight -set 0 -time 0")
     end
   end),
-  awful.key({ modkey }, "F4", function () awful.spawn("xset dpms force off")  end),
+  awful.key({ modkey }, "F4", function () awful.spawn("xset dpms force standby")  end),
   awful.key({ modkey }, "a", function () hints.focus() end),
   -- awful.key({ modkey }, "r",      function () awful.spawn("bashrun") end),
   awful.key({ modkey }, "e",      function () awful.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end),
