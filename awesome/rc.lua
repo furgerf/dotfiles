@@ -190,22 +190,29 @@ local tasklist_buttons = gears.table.join(
   end)
 )
 
---[[ TODO: Adjust to random WP
+local current_wallpaper = beautiful.wallpaper()
 local function set_wallpaper(s)
-  -- Wallpaper
-  if beautiful.wallpaper then
-    local wallpaper = beautiful.wallpaper
-    -- If wallpaper is a function, call it with the screen
-    if type(wallpaper) == "function" then
-      wallpaper = wallpaper(s)
-    end
+  if not beautiful.wallpaper then return end
 
-    gears.wallpaper.maximized(wallpaper, s, true)
+  -- If current_wallpaper is a function, call it with the screen
+  if type(current_wallpaper) == "function" then
+    current_wallpaper = current_wallpaper(s)
   end
+
+  gears.wallpaper.maximized(current_wallpaper, s, true)
 end
+local wallpaper_timer = gears.timer({
+  timeout = 3600,
+  autostart = true,
+  callback = function ()
+    current_wallpaper = beautiful.wallpaper()
+    for s in screen do
+      set_wallpaper(s)
+    end
+  end
+})
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
---]]
 
 local function get_widgets()
   local separator = mywidgets.separator()
@@ -237,8 +244,7 @@ end
 local shared_widgets = get_widgets()
 
 awful.screen.connect_for_each_screen(function(s)
-  -- Wallpaper
-  -- set_wallpaper(s)
+  set_wallpaper(s)
 
   -- Create a promptbox for each screen
   s.mypromptbox = awful.widget.prompt()
@@ -373,47 +379,6 @@ function run_webprompt(title, url, history)
     end,
     history_path = awful.util.get_cache_dir() .. "/history_" .. history
   })
-end
-
--- Random Wallpapers - TODO: rewrite
--- Apply a random wallpaper if not specified in AWESOME_BG
-local wallpaperTimer
---local staticWallpaper = "/home/fabian/Desktop/wallpaper-vim-1920x1080.png"
-if os.getenv("AWESOME_BG") then
-  gears.wallpaper.maximized(os.getenv("AWESOME_BG"))
-elseif staticWallpaper ~= nil then
-  gears.wallpaper.maximized(staticWallpaper)
-else
-  -- have to initialize a seed first, else the "random" wallpapers are rather dull
-  math.randomseed(os.time())
-
-  -- Get the list of files from a directory. Must be all images or folders and non-empty.
-  function scanDir(directory)
-    local i, fileList, popen = 0, {}, io.popen
-    for filename in popen([[find "]] ..directory.. [[" -type f]]):lines() do
-      i = i + 1
-      fileList[i] = filename
-    end
-    return fileList
-  end
-  wallpaperList = scanDir(beautiful.wallpaper_path)
-
-  local wp = wallpaperList[math.random(#wallpaperList)]
-  for s = 1, screen.count() do
-    gears.wallpaper.maximized(wp, s, true)
-  end
-  -- Apply a random wallpaper every changeTime seconds.
-  changeTime = 3600
-  wallpaperTimer = gears.timer { timeout = changeTime }
-  wallpaperTimer:connect_signal("timeout", function()
-    local wp = wallpaperList[math.random(#wallpaperList)]
-    for s = 1, screen.count() do
-        gears.wallpaper.maximized(wp, s, true)
-    end
-  end)
-
-  -- initial start when rc.lua is first run
-  wallpaperTimer:start()
 end
 --}}}
 

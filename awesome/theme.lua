@@ -18,6 +18,22 @@ theme.wallpaper_path = theme_path .. "/wallpapers"
 theme.icon_theme = nil
 -- }}}
 
+-- {{{ Random wallpaper
+theme.wallpaper = function()
+  -- have to initialize a seed first, else the "random" wallpapers are rather dull
+  math.randomseed(os.time())
+
+  -- Get the list of files from a directory. Must be all images or folders and non-empty.
+  local i, wallpapers, popen = 0, {}, io.popen
+  for filename in popen([[find "]] .. theme.wallpaper_path .. [[" -type f]]):lines() do
+    table.insert(wallpapers, filename)
+  end
+
+  -- select one of the wallpapers
+  return wallpapers[math.random(#wallpapers)]
+end
+-- }}}
+
 -- {{{ Colors
 -- color palette
 theme.colors = {}
