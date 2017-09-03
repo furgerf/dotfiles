@@ -5,7 +5,7 @@ local gfs = require("gears.filesystem")
 local xresources = require("beautiful.xresources")
 
 local dpi = xresources.apply_dpi
-local theme_path = gfs.get_themes_dir() .. "archdove"
+local theme_path = gfs.get_themes_dir() .. "mysty"
 local theme = {}
 
 theme.wibox_height = dpi(16)
@@ -24,8 +24,8 @@ theme.wallpaper = function()
   math.randomseed(os.time())
 
   -- Get the list of files from a directory. Must be all images or folders and non-empty.
-  local i, wallpapers, popen = 0, {}, io.popen
-  for filename in popen([[find "]] .. theme.wallpaper_path .. [[" -type f]]):lines() do
+  local wallpapers = {}
+  for filename in io.popen([[find "]] .. theme.wallpaper_path .. [[" -type f]]):lines() do
     table.insert(wallpapers, filename)
   end
 

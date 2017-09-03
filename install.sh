@@ -51,6 +51,7 @@ prompt-file $PWD/arch/gitignore $HOME/.gitignore
 prompt-file $PWD/arch/fonts $HOME/.fonts
 
 echo "* LINUX (root)"
+prompt-file $PWD/awesome/theme /usr/share/awesome/themes/mysty sudo
 prompt-file $PWD/arch/slim.conf /etc/slim.conf sudo
 prompt-file $PWD/arch/acpi-handler.sh /etc/acpi/handler.sh sudo
 prompt-file $PWD/arch/locale.conf /etc/locale.conf sudo
