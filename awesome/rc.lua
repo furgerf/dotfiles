@@ -15,7 +15,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys")
 -- awful.rules = require("awful.rules")
 local tyrannical = require("tyrannical")
-local mywidgets = require("mywidgets")
+local mywidgets = require("widgets")
 local hints = require("hints")
 
 --[[
