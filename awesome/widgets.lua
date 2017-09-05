@@ -8,6 +8,8 @@ local calendar2 = require("calendar2")
 local gears = require("gears")
 
 local mywidgets = {}
+
+-- TODO: Suspend widgets when they're not needed
 -- }}}
 
 -- {{{ Utils
@@ -157,7 +159,6 @@ end
 
 -- {{{ CPU
 function mywidgets.cpu()
-  -- TODO: Display detailed info on hover
   local icon = wibox.widget.imagebox(beautiful.widget_cpu)
   local widget = wibox.widget {
     width = beautiful.widget_width,
@@ -176,20 +177,61 @@ function mywidgets.cpu()
   vicious.register(widget, vicious.widgets.cpu, "$1", 3) -- cpu usage of all cores
 
   layout:connect_signal("button::press", function()
-    awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
+    awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/cpu-toggle-govenor")
   end)
-  local cpunaughty = nil
+
+  local cpu_naughty = nil
+  local cpu_data = {}
+  local cpu_naughty_title = "CPU usage"
+
+  -- set up widgets that retrieve the CPU data
+  function extract_cpu_data(data)
+    local govenors = { ["⌁"] = "powersafe", ["⚡"] = "performance" }
+    return {
+      govenor = govenors[data[5]],
+      frequency = string.format("%.2f", data[2])
+    }
+  end
+  for i,v in pairs({"cpu0", "cpu1", "cpu2", "cpu3"}) do
+    vicious.register({}, vicious.widgets.cpufreq, function (widget, args)
+      cpu_data[v] = extract_cpu_data(args)
+      if cpu_naughty ~= nil then
+        naughty.replace_text(cpu_naughty, cpu_naughty_title, get_cpu_naughty_text())
+      end
+    end, 3, v)
+  end
+
   layout:connect_signal("mouse::enter", function ()
-    cpunaughty = naughty.notify({ text = "CPU govenor: " .. getCpuNaughtyText() })
+    cpu_naughty = naughty.notify({
+      title = cpu_naughty_title,
+      text = get_cpu_naughty_text(),
+      icon = beautiful.widget_cpu,
+      timeout = 0
+    })
   end)
   layout:connect_signal("mouse::leave", function ()
-    naughty.destroy(cpunaughty)
+    naughty.destroy(cpu_naughty)
+    cpu_naughty = nil
   end)
-  function getCpuNaughtyText()
-    local fh = io.popen("cpupower frequency-info | sed -n \"9p\" | cut -d \'\"\' -f 2")
-    local data = fh:read("*l")
-    fh:close()
-    return data
+  function get_cpu_naughty_text()
+    return string.format(
+      "\nCPU0:\n" ..
+      "    Speed:\t\t%s GHz\n" ..
+      "    Govenor:\t%s\n" ..
+      "\nCPU1:\n" ..
+      "    Speed:\t\t%s GHz\n" ..
+      "    Govenor:\t%s\n" ..
+      "\nCPU2:\n" ..
+      "    Speed:\t\t%s GHz\n" ..
+      "    Govenor:\t%s\n" ..
+      "\nCPU3:\n" ..
+      "    Speed:\t\t%s GHz\n" ..
+      "    Govenor:\t%s\t\n",
+      cpu_data.cpu0.frequency, cpu_data.cpu0.govenor,
+      cpu_data.cpu1.frequency, cpu_data.cpu1.govenor,
+      cpu_data.cpu2.frequency, cpu_data.cpu2.govenor,
+      cpu_data.cpu3.frequency, cpu_data.cpu3.govenor
+      )
   end
   return layout
 end
@@ -212,7 +254,53 @@ function mywidgets.memory()
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.mem, "$1", 3) -- memory usage in %
+
+  local memory_naughty = nil
+  local memory_data = {}
+  local memory_naughty_title = "Memory usage"
+  vicious.register(widget, vicious.widgets.mem, function (widget, args)
+    memory_data = {
+      percentage = args[1],
+      used = args[2] / 1024,
+      total = args[3] / 1024,
+      free = args[4] / 1024,
+      swap_percentage = args[5],
+      swap_used = args[6] / 1024,
+      swap_total = args[7] / 1024,
+      swap_free = args[8] / 1024,
+      -- total_usage = math.floor(args[9] / 1000)
+    }
+    if memory_naughty ~= nil then
+      naughty.replace_text(memory_naughty, memory_naughty_title, get_memory_naughty_text())
+    end
+    return args[1] -- memory usage in %
+  end, 3)
+
+  layout:connect_signal("mouse::enter", function ()
+    memory_naughty = naughty.notify({
+      title = memory_naughty_title,
+      text = get_memory_naughty_text(),
+      icon = beautiful.widget_mem,
+      timeout = 0
+    })
+  end)
+  layout:connect_signal("mouse::leave", function ()
+    naughty.destroy(memory_naughty)
+    memory_naughty = nil
+  end)
+  function get_memory_naughty_text()
+    return string.format(
+      "\nRAM:\t\t%d %%\n" ..
+      "    Used:\t%.1f GB\n" ..
+      "    Free:\t%.1f GB\n" ..
+      "    Total:\t%.1f GB\n" ..
+      "\nSwap:\t%d %%\n" ..
+      "    Used:\t%.1f GB\n" ..
+      "    Free:\t%.1f GB\n" ..
+      "    Total:\t%.1f GB\t\n",
+      memory_data.percentage, memory_data.used, memory_data.free, memory_data.total,
+      memory_data.swap_percentage, memory_data.swap_used, memory_data.swap_free, memory_data.swap_total)
+  end
   return layout
 end
 -- }}}
@@ -260,12 +348,58 @@ function mywidgets.hdd()
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
+
+  local disk_naughty = nil
+  local disk_data = {}
+  local disk_naughty_title = "Disk usage"
   vicious.register(widget1, vicious.widgets.dio, function (widget, args)
     local sda = args["{sda total_mb}"]
     local sdb = args["{sdb total_mb}"]
     widget2:add_value(tonumber(sdb))
+
+    disk_data = {
+      sda_read = args["{sda read_mb}"],
+      sda_write = args["{sda write_mb}"],
+      sda_total = args["{sda total_mb}"],
+      sda_iotime = args["{sda iotime_ms}"],
+      sdb_read = args["{sdb read_mb}"],
+      sdb_write = args["{sdb write_mb}"],
+      sdb_total = args["{sdb total_mb}"],
+      sdb_iotime = args["{sdb iotime_ms}"],
+    }
+    if disk_naughty ~= nil then
+      naughty.replace_text(disk_naughty, disk_naughty_title, get_disk_naughty_text())
+    end
     return sda
   end, 3)
+
+  layout:connect_signal("mouse::enter", function ()
+    disk_naughty = naughty.notify({
+      title = disk_naughty_title,
+      text = get_disk_naughty_text(),
+      icon = beautiful.widget_hdd,
+      timeout = 0
+    })
+  end)
+  layout:connect_signal("mouse::leave", function ()
+    naughty.destroy(disk_naughty)
+    disk_naughty = nil
+  end)
+  function get_disk_naughty_text()
+    return string.format(
+      "\n/dev/sda:\n" ..
+      "    Read:\t%.2f MB\n" ..
+      "    Write:\t%.2f MB\n" ..
+      "    Total:\t%.2f MB\n" ..
+      "    IO wait:\t%.2f ms\n" ..
+      "\n/dev/sdb:\n" ..
+      "    Read:\t%.2f MB\n" ..
+      "    Write:\t%.2f MB\n" ..
+      "    Total:\t%.2f MB\n" ..
+      "    IO wait:\t%.2f ms\t\n",
+      disk_data.sda_read, disk_data.sda_write, disk_data.sda_total, disk_data.sda_iotime,
+      disk_data.sdb_read, disk_data.sdb_write, disk_data.sdb_total, disk_data.sdb_iotime)
+  end
   return layout
 end
 -- }}}
