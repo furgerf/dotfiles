@@ -56,15 +56,15 @@ theme.colors.black   = "#000000"
 theme.colors.pink    = "#ff0022"
 
 -- basics
-theme.fg_normal  = theme.colors.grey
-theme.bg_normal  = theme.colors.black
-theme.fg_focus   = theme.colors.black
-theme.bg_focus   = theme.colors.arch
-theme.fg_urgent  = theme.colors.dark
-theme.bg_urgent  = theme.colors.light
-theme.bg_systray = theme.bg_normal
-theme.bg_minimize= theme.colors.pink --
-theme.fg_minimize= theme.colors.pink --
+theme.fg_normal   = theme.colors.grey
+theme.bg_normal   = theme.colors.black
+theme.fg_focus    = theme.colors.black
+theme.bg_focus    = theme.colors.arch
+theme.fg_urgent   = theme.colors.dark
+theme.bg_urgent   = theme.colors.light
+theme.bg_systray  = theme.bg_normal
+theme.bg_minimize = theme.colors.dark
+theme.fg_minimize = theme.colors.arch
 
 -- others
 theme.titlebar_bg_focus  = theme.bg_focus

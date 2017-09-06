@@ -14,7 +14,6 @@ local hints = require("hints")
 
 --[[
 -- TODO:
--- - document keys
 -- - improve promtbox
 -- - key to clear all naughties
 --]]
@@ -50,6 +49,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 local theme_name = "mysty"
+local wallpaper_timer
 beautiful.init(gears.filesystem.get_themes_dir() .. theme_name .. "/theme.lua")
 hints.init()
 
@@ -248,24 +248,19 @@ globalkeys = gears.table.join(
     {description = "go back", group = "tag"}),
 
   -- tag manipulation
-  awful.key({ modkey, shiftkey  }, "d", function ()
-    awful.screen.focused().selected_tag:delete()
-  end,
+  awful.key({ modkey, shiftkey  }, "d", function () awful.screen.focused().selected_tag:delete() end,
     {description = "delete tag", group = "tag"}),
     -- NOT added from shifty:
     -- - dynamic tag creation (by name)
     -- - tag rename
 
-  -- Client navigation
-  awful.key({ modkey,           }, "j", function ()
-    awful.client.focus.byidx(1)
-    -- if client.focus then client.focus:raise() end -- TODO: had this in my old rc
-  end,
+  -- client navigation
+  awful.key({ modkey,           }, "j", function () awful.client.focus.byidx(1) end,
     {description = "focus next by index", group = "client"}),
   awful.key({ modkey,           }, "k", function () awful.client.focus.byidx(-1) end,
     {description = "focus previous by index", group = "client"}),
   awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
-    {description = "jump to urgent client", group = "client"}),
+    {description = "jump to urgent", group = "client"}),
   awful.key({ modkey,           }, "Tab",
   function ()
     awful.client.focus.history.previous()
@@ -274,12 +269,15 @@ globalkeys = gears.table.join(
     end
   end,
     {description = "go back", group = "client"}),
+  awful.key({ modkey,           }, "o", function () awful.screen.focus_relative(3) end,
+    {description = "cycle focus through screens", group = "client"}),
 
-  -- Layout manipulation
+  -- layout manipulation
   awful.key({ modkey, shiftkey  }, "j", function () awful.client.swap.byidx( 1) end,
-    {description = "swap with next client by index", group = "client"}),
+    {description = "swap with next by index", group = "client"}),
   awful.key({ modkey, shiftkey  }, "k", function () awful.client.swap.byidx(-1) end,
-    {description = "swap with previous client by index", group = "client"}),
+    {description = "swap with previous by index", group = "client"}),
+  -- TODO: check why these are commented out
   -- awful.key({ modkey, ctrlkey   }, "j", function () awful.screen.focus_relative( 1) end,
   --   {description = "focus the next screen", group = "screen"}),
   -- awful.key({ modkey, ctrlkey   }, "k", function () awful.screen.focus_relative(-1) end,
@@ -294,13 +292,14 @@ globalkeys = gears.table.join(
   awful.key({ modkey, shiftkey  }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
     {description = "decrease the number of master clients", group = "layout"}),
   --]]
-  awful.key({ modkey, ctrlkey   }, "h",     function () awful.tag.incncol( 1, nil, true)    end,
+  -- TODO: figure out why these don't seem to work
+  awful.key({ modkey, ctrlkey   }, "h",     function () awful.tag.incncol( 1, nil, true) end,
     {description = "increase the number of columns", group = "layout"}),
-  awful.key({ modkey, ctrlkey   }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
+  awful.key({ modkey, ctrlkey   }, "l",     function () awful.tag.incncol(-1, nil, true) end,
     {description = "decrease the number of columns", group = "layout"}),
-  awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+  awful.key({ modkey,           }, "space", function () awful.layout.inc( 1) end,
     {description = "select next", group = "layout"}),
-  awful.key({ modkey, shiftkey  }, "space", function () awful.layout.inc(-1)                end,
+  awful.key({ modkey, shiftkey  }, "space", function () awful.layout.inc(-1) end,
     {description = "select previous", group = "layout"}),
   awful.key({ modkey, shiftkey  }, "u", function () while awful.client.urgent.get() ~= nil do awful.client.urgent.get().urgent = false end end,
     {description = "clear urgent flags", group = "client"}),
@@ -315,80 +314,84 @@ globalkeys = gears.table.join(
     {description = "restore minimized", group = "client"}),
 -- }}}
 
--- {{{ Globalkeys - programs/custom
-  awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-    {description="show help", group="awesome"}),
-    -- Standard program
-  awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
-    {description = "open a terminal", group = "launcher"}),
+-- {{{ Globalkeys - awesome/custom
   awful.key({ modkey, ctrlkey   }, "r", awesome.restart,
     {description = "reload awesome", group = "awesome"}),
   --awful.key({ modkey, shiftkey  }, "q", awesome.quit,
     --{description = "quit awesome", group = "awesome"}),
-  -- custom bindings (HERE FOR NOW)
-  awful.key({ modkey,           }, "o",      function () awful.screen.focus_relative(3) end,
-    {description = "cycle focus through screens", group = "custom"}),
-  -- MEDIA KEYS
-  awful.key({ }, "XF86MonBrightnessUp", function ()
-     awful.spawn("xbacklight -inc 15") end),
-  awful.key({ }, "XF86MonBrightnessDown", function ()
-     awful.spawn("xbacklight -dec 15") end),
-  awful.key({ }, "XF86ScreenSaver", function ()
-     awful.spawn("slock")
-     awful.spawn("xset dpms force standby")  end),
-  awful.key({ }, "XF86AudioRaiseVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl up")
-  end),
-  awful.key({ shiftkey}, "XF86AudioRaiseVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl up 20")
-  end),
-  awful.key({ "Ctrl" }, "XF86AudioRaiseVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl up 50")
-  end),
-  awful.key({ }, "XF86AudioLowerVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl down")
-  end),
-  awful.key({ shiftkey}, "XF86AudioLowerVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl down 20")
-  end),
-  awful.key({ "Ctrl" }, "XF86AudioLowerVolume", function ()
-    awful.spawn("pulseaudio-ctl mute no")
-    awful.spawn("pulseaudio-ctl down 50")
-  end),
-  awful.key({ }, "XF86AudioMicMute", function () -- fallback to mic muting because normal mute doesn't seem to work
-    awful.spawn("pulseaudio-ctl mute")
-  end),
-  awful.key({ }, "XF86Display", function ()
-     awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor-2") end),
-  awful.key({modkey}, "F6", function ()
-    awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end),
-  awful.key({ }, "Print", function ()
-    awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end),
-  awful.key({ modkey }, "F3",     function ()
-    local fh = io.popen("xbacklight -get | cut -d '.' -f 1")
-    local light = fh:read("*l")
-    fh:close()
-    if light == "0" then
-      awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight")
-    else
-      awful.spawn("xbacklight -set 0 -time 0")
-    end
-  end),
-  awful.key({ modkey }, "F4", function () awful.spawn("xset dpms force standby")  end),
-  awful.key({ modkey }, "a", function () hints.focus() end),
-  -- awful.key({ modkey }, "r",      function () awful.spawn("bashrun") end),
-  awful.key({ modkey }, "e",      function () awful.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end),
-  awful.key({ modkey, shiftkey  }, "f",      function () awful.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end),
-  -- awful.key({ modkey,           }, "b",      function ()
-  --   for s in screen do
-  --     s.mywibox[mouse.screen].visible = not s.mywibox[mouse.screen].visible
-  --   end
-  -- end),
+  awful.key({ modkey,           }, "s", hotkeys_popup.show_help,
+    {description="show help", group="awesome"}),
+  awful.key({ modkey            }, "a", function () hints.focus() end,
+    {description = "display client selection hints", group = "awesome"}),
+
+  awful.key({                   }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 15") end,
+    {description = "increase backlight", group = "special keys"}),
+  awful.key({                   }, "XF86MonBrightnessDown", function () awful.spawn("xbacklight -dec 15") end,
+    {description = "decrease backlight", group = "special keys"}),
+  awful.key({ modkey            }, "F3", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight") end,
+    {description = "toggle backlight", group = "special keys"}),
+  awful.key({                   }, "XF86ScreenSaver", function ()
+      awful.spawn("slock")
+      awful.spawn("xset dpms force standby")
+    end,
+    {description = "lock system", group = "special keys"}),
+  awful.key({                   }, "XF86AudioRaiseVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl up")
+    end,
+    {description = "increase volume by 5", group = "special keys"}),
+  awful.key({ ctrlkey           }, "XF86AudioRaiseVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl up 20")
+    end,
+    {description = "increase volume by 20", group = "special keys"}),
+  awful.key({ shiftkey          }, "XF86AudioRaiseVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl up 50")
+    end,
+    {description = "increase volume by 50", group = "special keys"}),
+  awful.key({ ctrlkey, shiftkey }, "XF86AudioRaiseVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl up 100")
+    end,
+    {description = "increase volume by 100", group = "special keys"}),
+  awful.key({                   }, "XF86AudioLowerVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl down")
+    end,
+    {description = "decrease volume by 5", group = "special keys"}),
+  awful.key({ ctrlkey           }, "XF86AudioLowerVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl down 20")
+    end,
+    {description = "decrease volume by 20", group = "special keys"}),
+  awful.key({ shiftkey          }, "XF86AudioLowerVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl down 50")
+    end,
+    {description = "decrease volume by 50", group = "special keys"}),
+  awful.key({ ctrlkey, shiftkey }, "XF86AudioLowerVolume", function ()
+      awful.spawn("pulseaudio-ctl mute no")
+      awful.spawn("pulseaudio-ctl down 100")
+    end,
+    {description = "decrease volume by 100", group = "special keys"}),
+  awful.key({                   }, "XF86AudioMicMute", function () awful.spawn("pulseaudio-ctl mute") end, -- use mic mute because normal mute doesn't work
+    {description = "toggle audio mute", group = "special keys"}),
+
+  awful.key({                   }, "XF86Display", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor-2") end,
+    {description = "toggle external display", group = "special keys"}),
+  awful.key({ modkey            }, "F6", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end,
+    {description = "toggle compton", group = "special keys"}),
+  awful.key({                   }, "Print", function ()
+    awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end,
+    {description = "take screenshot", group = "special keys"}),
+  awful.key({ modkey            }, "F4", function () awful.spawn("xset dpms force standby")  end,
+    {description = "(try to) turn off screen", group = "special keys"}),
+  -- awful.key({ modkey            }, "r",      function () awful.spawn("bashrun") end),
+  awful.key({ modkey            }, "e",      function () awful.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end,
+    {description = "open file explorer", group = "special keys"}),
+  awful.key({ modkey, shiftkey  }, "f",      function () awful.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end, -- TODO: fix
+    {description = "show fortune", group = "special keys"}),
   -- awful.key({ modkey, ctrlkey   }, "t", function () -- TODO: fix translation script
   --   local clip = awful.util.pread("xclip -o")
   --   if clip then
@@ -396,53 +399,58 @@ globalkeys = gears.table.join(
   --   end
   -- end),
   awful.key({ modkey, ctrlkey   }, "w", function ()
-    if (wallpaperTimer ~= nil) then
-      local wp = wallpaperList[math.random(#wallpaperList)]
-      for s = 1, screen.count() do
-        gears.wallpaper.maximized(wp, s, true)
+      if (wallpaper_timer ~= nil) then
+        -- TODO: Figure out how to execute the timer
+        -- local previous_timeout = wallpaper_timer.timeout
+        -- wallpaper_timer.timeout = 1
+        -- wallpaper_timer:again()
       end
-      wallpaperTimer:again()
-    end
-  end),
+    end,
+    {description = "change wallpaper", group = "special keys"}),
 -- }}}
 
--- {{{ Globalkeys - prompts
-  -- Prompt
-  awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+-- {{{ Globalkeys - launchers
+  awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
+    {description = "open a terminal", group = "launcher"}),
+  awful.key({ modkey            }, "r", function () awful.screen.focused().mypromptbox:run() end,
     {description = "run prompt", group = "launcher"}),
-  awful.key({ modkey }, "x",
-  function ()
-    awful.prompt.run({
-      prompt       = "Run Lua code: ",
-      textbox      = awful.screen.focused().mypromptbox.widget,
-      exe_callback = awful.util.eval,
-      history_path = awful.util.get_cache_dir() .. "/history_eval"
-    })
-  end,
-    {description = "lua execute prompt", group = "awesome"}),
-  awful.key({ modkey }, "q", function() menubar.show() end,
-    {description = "show the menubar", group = "launcher"}),
-  awful.key({ modkey,           }, "w",      function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end),
-  awful.key({ modkey, shiftkey  }, "w",      function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end),
-  awful.key({ modkey,           }, "t",      function () run_webprompt("Torrent: ", "http://thepiratebay.se/search/", "torrent") end),
-  awful.key({ modkey,           }, "g",      function () run_webprompt("Google: ", "http://google.com/search?q=", "google") end),
-  awful.key({ modkey,           }, "d",      function ()
-    awful.prompt.run({
-      prompt       = "Define: ",
-      textbox      = awful.screen.focused().mypromptbox.widget,
-      exe_callback = function (word)
-        if string.len(word) == 0 then return end
-        local f = io.popen("dict -d wn " .. word .. " 2>&1")
-        local fr = ""
-        for line in f:lines() do
-          fr = fr .. line .. '\n'
-        end
-        f:close()
-        naughty.notify({ text = fr, timeout = 90, width = 400 })
-      end,
-      history_path = awful.util.get_cache_dir() .. "/history_define"
-    }) end),
-  awful.key({ modkey,           }, "c",      function ()
+  awful.key({ modkey            }, "x", function ()
+      awful.prompt.run({
+        prompt       = "Run Lua code: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = awful.util.eval,
+        history_path = awful.util.get_cache_dir() .. "/history_eval"
+      })
+    end,
+    {description = "run lua execute prompt", group = "launcher"}),
+  awful.key({ modkey            }, "q", function() menubar.show() end,
+    {description = "show the application launcher", group = "launcher"}),
+  awful.key({ modkey,           }, "w", function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end,
+    {description = "run wiki prompt", group = "launcher"}),
+  awful.key({ modkey, shiftkey  }, "w", function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end,
+    {description = "run arch wiki prompt", group = "launcher"}),
+  awful.key({ modkey,           }, "t", function () run_webprompt("Torrent: ", "http://thepiratebay.se/search/", "torrent") end,
+    {description = "run torrent prompt", group = "launcher"}),
+  awful.key({ modkey,           }, "g", function () run_webprompt("Google: ", "http://google.com/search?q=", "google") end,
+    {description = "run google prompt", group = "launcher"}),
+  awful.key({ modkey,           }, "d", function ()
+      awful.prompt.run({
+        prompt       = "Define: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = function (word)
+          if string.len(word) == 0 then return end
+          local f = io.popen("dict -d wn " .. word .. " 2>&1")
+          local fr = ""
+          for line in f:lines() do
+            fr = fr .. line .. '\n'
+          end
+          f:close()
+          naughty.notify({ text = fr, timeout = 90, width = 400 })
+        end,
+        history_path = awful.util.get_cache_dir() .. "/history_define"
+      }) end,
+    {description = "run define prompt", group = "launcher"}),
+  awful.key({ modkey,           }, "c", function ()
     awful.prompt.run({
       prompt       = "Calc: ",
       textbox      = awful.screen.focused().mypromptbox.widget,
@@ -457,25 +465,27 @@ globalkeys = gears.table.join(
         naughty.notify({ text = fr, timeout = 30})
       end,
       history_path = awful.util.get_cache_dir() .. "/history_calc"
-    }) end),
-  awful.key({ modkey, ctrlkey   }, "c",      function ()
-    awful.prompt.run({
-      prompt       = "Units: ",
-      textbox      = awful.screen.focused().mypromptbox.widget,
-      exe_callback = function (input)
-      if string.len(input) == 0 then return end
-      local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
-      local split = input:gmatch("[^%s]+")
-      local fr = split() .. " is "
-      for line in f:lines() do
-        fr = fr .. line
-      end
-      f:close()
-      fr = fr .. split()
-      naughty.notify({ text = fr, timeout = 30})
-    end,
-    history_path = awful.util.get_cache_dir() .. "/history_units"
-  }) end)
+    }) end,
+    {description = "run calc prompt", group = "launcher"}),
+  awful.key({ modkey, ctrlkey   }, "c", function ()
+      awful.prompt.run({
+        prompt       = "Units: ",
+        textbox      = awful.screen.focused().mypromptbox.widget,
+        exe_callback = function (input)
+        if string.len(input) == 0 then return end
+        local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
+        local split = input:gmatch("[^%s]+")
+        local fr = split() .. " is "
+        for line in f:lines() do
+          fr = fr .. line
+        end
+        f:close()
+        fr = fr .. split()
+        naughty.notify({ text = fr, timeout = 30})
+      end,
+      history_path = awful.util.get_cache_dir() .. "/history_units"
+    }) end,
+    {description = "run units prompt", group = "launcher"})
 )
 -- }}}
 
@@ -596,47 +606,38 @@ end
 
 -- {{{ Clientkeys
 clientkeys = gears.table.join(
-    awful.key({ modkey,           }, "f",
-        function (c)
-            c.fullscreen = not c.fullscreen
-            c:raise()
-        end,
-        {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
-              {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-              {description = "toggle floating", group = "client"}),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-              {description = "move to master", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey,           }, "n",
-        function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
-    awful.key({ modkey,           }, "m",
-        function (c)
-            c.maximized = not c.maximized
-            c:raise()
-        end ,
-        {description = "(un)maximize", group = "client"}),
-    awful.key({ modkey, "Control" }, "m",
-        function (c)
-            c.maximized_vertical = not c.maximized_vertical
-            c:raise()
-        end ,
-        {description = "(un)maximize vertically", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c:raise()
-        end ,
-        {description = "(un)maximize horizontally", group = "client"})
+  awful.key({ modkey,           }, "f", function (c)
+      c.fullscreen = not c.fullscreen
+      c:raise()
+    end,
+    {description = "toggle fullscreen", group = "client"}),
+  awful.key({ modkey, shiftkey  }, "c", function (c) c:kill() end,
+    {description = "close", group = "client"}),
+  awful.key({ modkey, ctrlkey   }, "space", awful.client.floating.toggle,
+    {description = "toggle floating", group = "client"}),
+  awful.key({ modkey, ctrlkey   }, "Return", function (c) c:swap(awful.client.getmaster()) end,
+    {description = "move to master", group = "client"}),
+  awful.key({ modkey, shiftkey  }, "o", function (c) c:move_to_screen() end,
+    {description = "move to next screen", group = "client"}),
+  awful.key({ modkey, shiftkey  }, "t", function (c) c.ontop = not c.ontop end,
+    {description = "toggle keep on top", group = "client"}),
+  awful.key({ modkey,           }, "n", function (c) c.minimized = true end,
+    {description = "minimize", group = "client"}),
+  awful.key({ modkey,           }, "m", function (c)
+      c.maximized = not c.maximized
+      c:raise()
+    end ,
+    {description = "toggle maximize", group = "client"}),
+  awful.key({ modkey, ctrlkey   }, "m", function (c)
+      c.maximized_vertical = not c.maximized_vertical
+      c:raise()
+    end ,
+    {description = "toggle maximize vertically", group = "client"}),
+  awful.key({ modkey, shiftkey  }, "m", function (c)
+      c.maximized_horizontal = not c.maximized_horizontal
+      c:raise()
+    end ,
+    {description = "toggle maximize horizontally", group = "client"})
 )
 -- }}}
 
@@ -713,7 +714,7 @@ local function set_wallpaper(s)
 
   gears.wallpaper.maximized(current_wallpaper, s, true)
 end
-local wallpaper_timer = gears.timer({
+wallpaper_timer = gears.timer({
   timeout = 3600,
   autostart = true,
   callback = function ()
