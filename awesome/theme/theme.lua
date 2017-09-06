@@ -12,6 +12,8 @@ theme.wibox_height = dpi(16)
 theme.widget_width = dpi(48)
 theme.font = "DejaVu Sans 8"
 theme.wallpaper_path = theme_path .. "/wallpapers"
+theme.active_opacity = 0.95
+theme.inactive_opacity = 0.93
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

@@ -10,6 +10,7 @@ local gears = require("gears")
 local mywidgets = {}
 
 -- TODO: Suspend widgets when they're not needed
+-- TODO: Add "powersave" mode for widgets
 -- }}}
 
 -- {{{ Utils
