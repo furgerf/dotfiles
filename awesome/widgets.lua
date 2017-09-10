@@ -121,7 +121,7 @@ end
 
 -- {{{ Wifi
 function mywidgets.wifi()
-  -- TODO: Display detailed info on hover
+  -- Note: currently unused - might need some adjustment if resurrected
   local icon = wibox.widget.imagebox()
   local widget = wibox.widget.textbox()
   local layout = get_layout_widget(icon, widget)
@@ -422,7 +422,55 @@ function mywidgets.net()
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
-  vicious.register(widget, vicious.widgets.net, "${wlp3s0 down_kb}", 3)
+
+  local net_naughty = nil
+  local net_data = {}
+  local net_naughty_title = "Network usage"
+  vicious.register(widget, vicious.widgets.net, function (widget, args)
+    net_data = {
+      wifi_rx = args["{wlp3s0 rx_mb}"],
+      wifi_tx = args["{wlp3s0 tx_mb}"],
+      wifi_down = args["{wlp3s0 down_kb}"],
+      wifi_up = args["{wlp3s0 up_kb}"],
+      ethernet_rx = args["{enp0s25 rx_mb}"],
+      ethernet_tx = args["{enp0s25 tx_mb}"],
+      ethernet_down = args["{enp0s25 down_kb}"],
+      ethernet_up = args["{enp0s25 up_kb}"],
+    }
+    if net_naughty ~= nil then
+      naughty.replace_text(net_naughty, net_naughty_title, get_net_naughty_text())
+    end
+    return args["{wlp3s0 down_kb}"]
+  end, 3)
+
+  layout:connect_signal("mouse::enter", function ()
+    net_naughty = naughty.notify({
+      title = net_naughty_title,
+      text = get_net_naughty_text(),
+      icon = beautiful.widget_net,
+      timeout = 0
+    })
+  end)
+  layout:connect_signal("mouse::leave", function ()
+    naughty.destroy(net_naughty)
+    net_naughty = nil
+  end)
+  function get_net_naughty_text()
+    return string.format(
+      "\nWiFi:\n" ..
+      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
+      "    Down:\t%.1f KB\t(%.1f MB)\n" ..
+      "\nEthernet:\n" ..
+      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
+      "    Down:\t%.1f KB\t(%.1f MB)\n" ..
+      "\nTotal:\n" ..
+      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
+      "    Down:\t%.1f KB\t(%.1f MB)\t\n",
+      net_data.wifi_up, net_data.wifi_tx, net_data.wifi_down, net_data.wifi_rx,
+      net_data.ethernet_up, net_data.ethernet_tx, net_data.ethernet_down, net_data.ethernet_rx,
+      net_data.wifi_up + net_data.ethernet_up, net_data.wifi_tx + net_data.ethernet_tx,
+      net_data.wifi_down + net_data.ethernet_down, net_data.wifi_rx + net_data.ethernet_rx)
+  end
   return layout
 end
 -- }}}
