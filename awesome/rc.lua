@@ -15,7 +15,6 @@ local hints = require("hints")
 --[[
 -- TODO:
 -- - improve promtbox
--- - key to clear all naughties
 --]]
 --}}}
 
@@ -229,7 +228,7 @@ local function run_webprompt(title, url, history)
     textbox = awful.screen.focused().mypromptbox.widget,
     exe_callback = function (word)
       if string.len(word) == 0 then return end
-      word = string.gsub(word, " ", "%%20")
+      word = string.gsub(word, " ", "%%20") -- "urlencode for the lazy"
       awful.spawn("firefox -new-tab " .. url .. word)
     end,
     history_path = awful.util.get_cache_dir() .. "/history_" .. history
@@ -321,8 +320,10 @@ globalkeys = gears.table.join(
     --{description = "quit awesome", group = "awesome"}),
   awful.key({ modkey,           }, "s", hotkeys_popup.show_help,
     {description="show help", group="awesome"}),
-  awful.key({ modkey            }, "a", function () hints.focus() end,
+  awful.key({ modkey            }, "a", hints.focus,
     {description = "display client selection hints", group = "awesome"}),
+  awful.key({ modkey, shiftkey  }, "n", naughty.destroy_all_notifications,
+    {description = "remove all notifications", group = "awesome"}),
 
   awful.key({                   }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 15") end,
     {description = "increase backlight", group = "special keys"}),
@@ -423,7 +424,7 @@ globalkeys = gears.table.join(
       })
     end,
     {description = "run lua execute prompt", group = "launcher"}),
-  awful.key({ modkey            }, "q", function() menubar.show() end,
+  awful.key({ modkey            }, "q", menubar.show,
     {description = "show the application launcher", group = "launcher"}),
   awful.key({ modkey,           }, "w", function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end,
     {description = "run wiki prompt", group = "launcher"}),
