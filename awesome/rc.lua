@@ -49,6 +49,7 @@ end
 -- Themes define colours, icons, font and wallpapers.
 local theme_name = "mysty"
 local wallpaper_timer
+local wallpaper_timer_callback
 beautiful.init(gears.filesystem.get_themes_dir() .. theme_name .. "/theme.lua")
 hints.init()
 
@@ -400,12 +401,10 @@ globalkeys = gears.table.join(
   --   end
   -- end),
   awful.key({ modkey, ctrlkey   }, "w", function ()
-      if (wallpaper_timer ~= nil) then
-        -- TODO: Figure out how to execute the timer
-        -- local previous_timeout = wallpaper_timer.timeout
-        -- wallpaper_timer.timeout = 1
-        -- wallpaper_timer:again()
-      end
+      if (wallpaper_timer == nil) then return end
+      -- execute callback of timer now and re-start timer
+      wallpaper_timer_callback()
+      wallpaper_timer:again()
     end,
     {description = "change wallpaper", group = "special keys"}),
 -- }}}
@@ -715,15 +714,17 @@ local function set_wallpaper(s)
 
   gears.wallpaper.maximized(current_wallpaper, s, true)
 end
+wallpaper_timer_callback = function ()
+  current_wallpaper = beautiful.wallpaper()
+  for s in screen do
+    set_wallpaper(s)
+  end
+end
+
 wallpaper_timer = gears.timer({
   timeout = 3600,
   autostart = true,
-  callback = function ()
-    current_wallpaper = beautiful.wallpaper()
-    for s in screen do
-      set_wallpaper(s)
-    end
-  end
+  callback = wallpaper_timer_callback
 })
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
