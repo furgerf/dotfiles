@@ -142,7 +142,6 @@ tyrannical.tags = {
     name        = "➋ ·web·🌏",
     layout      = awful.layout.suit.fair,
     position = 2,
-    -- screen = 1, -- TODO: remove
     force_screen = true,
     init = false,
     no_focus_stealing_in = true,
@@ -242,6 +241,10 @@ globalkeys = gears.table.join(
   -- tag navigation
   awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
     {description = "view previous", group = "tag"}),
+  awful.key({ modkey,           }, "h",   awful.tag.viewprev,
+    {description = "view previous", group = "tag"}),
+  awful.key({ modkey,           }, "l",  awful.tag.viewnext,
+    {description = "view next", group = "tag"}),
   awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
     {description = "view next", group = "tag"}),
   awful.key({ modkey,           }, "Escape", awful.tag.history.restore,

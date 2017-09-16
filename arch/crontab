@@ -15,7 +15,4 @@ PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 0 */4 * * * cron-wrapper crontab-backup
 # update cache for "command not found"
 0 14 * * 0 cron-wrapper sudo pkgfile --update
-# trigger torrent download check - while raspi can't run its own mongodb...
-# NOTE: Disable mongodb service when no longer needed
-0 * * * * /home/fabian/trigger-autodownload
 

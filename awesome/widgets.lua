@@ -412,6 +412,7 @@ function mywidgets.net()
     width = beautiful.widget_width,
     border_color = beautiful.widget_border,
     background_color = gears.color.transparent,
+    max_value = 10, -- 1 MBps
     widget = wibox.widget.graph
   }
   local mirror = wibox.container.mirror(widget, { horizontal = true })

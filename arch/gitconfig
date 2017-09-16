@@ -47,7 +47,7 @@
   # list conflicted files
   conflict = diff --name-only --diff-filter=U
   # list all todos
-  todo = grep -n TODO
+  todo = grep -C 2 -n TODO
   # create patch output
   patch = !git --no-pager diff --no-color
 

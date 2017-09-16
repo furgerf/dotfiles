@@ -262,6 +262,9 @@ function save-as-image() {
   # e.g. ls | save-as-image foo.png
   convert label:@- "$1"
 }
+function mp4tomp3() {
+  ffmpeg -i "$1" -q:a 0 -map a "$(basename "$1" .mp4).mp3"
+}
 
 # source other files
 test -s "$HOME/.bash-sourcer.sh" && source "$HOME/.bash-sourcer.sh"

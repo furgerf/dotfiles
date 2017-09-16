@@ -15,6 +15,8 @@ theme.wallpaper_path = theme_path .. "/wallpapers"
 theme.active_opacity = 0.95
 theme.inactive_opacity = 0.93
 
+-- TODO: Figure out what warning "beautiful: can't get colorscheme from xrdb (using fallback)." means
+
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
