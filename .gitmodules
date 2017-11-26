@@ -137,3 +137,6 @@
 [submodule "awesome/modules/tyrannical"]
   path = awesome/modules/tyrannical
   url = git@github.com:Elv13/tyrannical.git
+[submodule "vim/bundle/vim-active-numbers"]
+  path = vim/bundle/vim-active-numbers
+  url = git@github.com:auwsmit/vim-active-numbers.git
