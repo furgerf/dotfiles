@@ -35,10 +35,10 @@ echo -e "$(tput sgr0)Welcome to the $(tput setaf 12)other side$(tput sgr0)...\n"
 
 GIT_PS1_FILE="$HOME/git/dotfiles/arch/third-party/git-prompt.sh"
 [[ -f "$GIT_PS1_FILE" ]] && source "$GIT_PS1_FILE"
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWSTASHSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=true
-GIT_PS1_SHOWUPSTREAM="auto" # verbose
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWUPSTREAM="auto" # verbose
 
 PS1="${COLOR_DGRAY}["
 PS1+="${COLOR_WHITE}\$?"
@@ -116,6 +116,7 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 # ls
+alias l='ls'
 alias ls='ls -lhF --color=auto'
 alias lr='ls -R'                    # recursive ls
 alias la='ls -a'
@@ -216,6 +217,8 @@ alias v='/usr/bin/vim'
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
+alias activate-venv='. venv/bin/activate'
+alias clearswap='sudo swapoff -a; sudo swapon -a'
 touniq(){ sort | uniq -c | sort "${@:--rn}"; }
 historygram(){
   history|awk '{print $4}'|sort|uniq -c|sort -rn|head -30|awk '!max{max=$1;}{r="";i=s=100*$1/max;while(i-->0)r=r"#";printf "%50s %5d %s %s",$2,$1,r,"\n";}'

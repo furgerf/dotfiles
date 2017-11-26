@@ -146,7 +146,7 @@ tyrannical.tags = {
     init = false,
     no_focus_stealing_in = true,
     class = { "firefox" },
-    exec_once = "firefox",
+    -- exec_once = "firefox",
   },
   {
     name        = "➌ ·doc·✎",
@@ -306,7 +306,7 @@ globalkeys = gears.table.join(
     {description = "select previous", group = "layout"}),
   awful.key({ modkey, shiftkey  }, "u", function () while awful.client.urgent.get() ~= nil do awful.client.urgent.get().urgent = false end end,
     {description = "clear urgent flags", group = "client"}),
-  awful.key({ modkey, ctrlkey   }, "n",
+  awful.key({ modkey, shiftkey  }, "n",
   function ()
     local c = awful.client.restore()
     if c then
@@ -326,7 +326,7 @@ globalkeys = gears.table.join(
     {description="show help", group="awesome"}),
   awful.key({ modkey            }, "a", hints.focus,
     {description = "display client selection hints", group = "awesome"}),
-  awful.key({ modkey, shiftkey  }, "n", naughty.destroy_all_notifications,
+  awful.key({ modkey, ctrlkey   }, "n", naughty.destroy_all_notifications,
     {description = "remove all notifications", group = "awesome"}),
 
   awful.key({                   }, "XF86MonBrightnessUp", function () awful.spawn("xbacklight -inc 15") end,
@@ -335,6 +335,10 @@ globalkeys = gears.table.join(
     {description = "decrease backlight", group = "special keys"}),
   awful.key({ modkey            }, "F3", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight") end,
     {description = "toggle backlight", group = "special keys"}),
+  awful.key({                   }, "XF86Launch1", function ()
+      awful.spawn("sudo s2ram")
+    end,
+    {description = "suspend system", group = "special keys"}),
   awful.key({                   }, "XF86ScreenSaver", function ()
       awful.spawn("slock")
       awful.spawn("xset dpms force standby")

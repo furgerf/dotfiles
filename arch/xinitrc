@@ -11,56 +11,42 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-# TODO: Check if stuff is already running!
-
-sudo dhcpcd -b -q enp0s25
-
 # backlight
-$HOME/git/linux-scripts/backlight
+"$HOME/git/linux-scripts/backlight"
 
 # monitor
-$HOME/git/linux-scripts/monitor enable
+"$HOME/git/linux-scripts/monitor" enable
 
 # NM UI
 nm-applet &
 
 # TP battery tresholds
-$HOME/git/linux-scripts/set-tpacpi
+# "$HOME/git/linux-scripts/set-tpacpi"
 
 # dropbox
 dropbox &
 
 # set dbus address for cron stuff
-$HOME/git/linux-scripts/set-dbus-address
+"$HOME/git/linux-scripts/set-dbus-address"
 
 # composite manager
-compton --backend glx --paint-on-overlay --vsync opengl-swc -fb -D3
+"$HOME/git/linux-scripts/compton-toggle"
 
 # start thunar in daemon mode
 thunar --daemon &
-
-# start udiskie for automounting usb's
-udiskie -2 -s &
 
 # adjust keyboard repeat rate
 xset r rate 250 35
 
 # conky
-(sleep 10 && conky -c $HOME/git/dotfiles/arch/conkyrc -d) &
+(sleep 10 && conky -c "$HOME/git/dotfiles/arch/conkyrc" -d) &
 
-# start thunderbird
+# start thunderbird and gpodder
 (sleep 10 && thunderbird) &
+(sleep 60 && gpodder) &
 
 # store boot log
 (sleep 60 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log) &
-
-#(sleep 60 && $HOME/git/linux-scripts/samba-connect) &     <-- looks like they're being connected elsewhere!
-
-(sleep 60 && gpodder) &
-
-#(sleep 60 && qbittorrent) &
-
-#env LD_PRELOAD=/home/fabian/git/fullscreenhack/libfshack-npapi.so
 
 session=${1:-awesome}
 case $session in
@@ -87,6 +73,6 @@ case $session in
     xfce|xfce4        ) exec startxfce4;;
     xmonad            ) exec xmonad;;
     # no known session, try to run it as command
-    *) exec $1;;
+    *) exec "$1";;
 esac
 

@@ -104,7 +104,9 @@ nnoremap <Leader>O :Obsess!<CR>
 
 " tagbar "{{{
 " toggle tagbar
-nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>tt :TagbarToggle<CR>
+nnoremap <Leader>tp :TagbarTogglePause<CR>
+nnoremap <Leader>tj :TagbarOpenAutoClose<CR>
 "}}}
 
 " startify "{{{
@@ -154,6 +156,9 @@ let g:syntastic_check_on_wq = 0
 
 " aggregate errors from different checkers
 let g:syntastic_aggregate_errors = 1
+
+" allow shellcheck to follow external source files
+let g:syntastic_sh_shellcheck_args = "-x"
 
 " syntastic mappings
 nnoremap <Leader>se :Errors<CR>

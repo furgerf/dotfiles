@@ -67,9 +67,7 @@ case "$1" in
     # handled by awesome
     ;;
   ibm/hotkey)
-    if [ "$2" == "LEN0068:00" ]; then
-      /home/fabian/git/linux-scripts/block-bluetooth
-    fi
+    # handled by awesome
     ;;
   #    cd/play);;
   #    cd/prev);;

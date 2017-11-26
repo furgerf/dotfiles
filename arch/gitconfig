@@ -35,6 +35,7 @@
   aliases = !git var -l | grep -e "^alias" | cut -d '.' -f 2-
   # shortcut to amend comit
   amend = commit --amend
+  amnd = commit --amend --no-edit
   # list all ignored files
   ignored = !git ls-files -v | grep "^[[:lower:]]"
   # delete all merged local branches except the current

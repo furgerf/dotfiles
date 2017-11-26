@@ -13,6 +13,7 @@ nnoremap <F2> :!"%:p"<CR>
 " enable folding - the default foldlevelstart of 1 is ok as it collapses
 " functions (assuming they're inside a class)
 setlocal foldenable
+setlocal foldlevel=999
 " also enable anyfold
 let anyfold_activate=1
 
