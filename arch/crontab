@@ -4,15 +4,21 @@
 PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # update file database for locate - probably not necessary because of the systemd service
-#0 */9 * * * cron-wrapper sudo updatedb
-# clean old package files
-0 14 * * 0 cron-wrapper sudo paccache -r -k 2
-# remind biodata entry
-#0,30 6,7,8,9,10 * * * cron-wrapper biodata
+0 */9 * * * cron-wrapper sudo updatedb
+
 # check for unpushed commits
 0 */4 * * * cron-wrapper git-status /home/fabian/git
-# export crontab to git
-0 */4 * * * cron-wrapper crontab-backup
+# export crontab to git dotfiles
+10 */4 * * * cron-wrapper crontab-backup
+
+# clean old package files
+0 14 * * 0 cron-wrapper sudo paccache -r -k 2
 # update cache for "command not found"
-0 14 * * 0 cron-wrapper sudo pkgfile --update
+10 14 * * 0 cron-wrapper sudo pkgfile --update
+
+# run backup
+0 19 * * * cron-wrapper bash -c 'raspi-backup | tail -n 17'
+
+# watch tagesschau - bypass cron-wrapper
+30 19 * * * DISPLAY=:0 firefox --new-window https://www.srf.ch/livestream/player/srf-1
 

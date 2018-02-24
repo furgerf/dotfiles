@@ -147,3 +147,8 @@ alias speak='time echo \""$@"\" | ( Equalizer || espeak || say -v Fred || cat)' 
 alias labyrinth='while ( true ) ; do if [ $( expr $RANDOM % 2 ) -eq 0 ] ; then echo -ne "\xE2\x95\xB1" ; else echo -ne "\xE2\x95\xB2" ; fi ; done'
 say(){ curl -A RG 'translate.google.com/translate_tts' -d 'tl=en&q=$@' | mpg123 -; }
 
+alias hslu-connect='/opt/cisco/anyconnect/bin/vpn -s connect vpn.enterpriselab.ch < ~/hslu-vpn-login'
+alias hslu-disconnect='/opt/cisco/anyconnect/bin/vpn disconnect'
+alias hslu-box='ssh hslubox'
+alias hslu-session='hslu-connect; hslu-box; hslu-disconnect'
+

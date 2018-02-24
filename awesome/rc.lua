@@ -926,6 +926,7 @@ end)
 local function is_class_opaque(class_name)
   opaque_classes = {
     "vlc",
+    "mplayer",
     "smplayer",
     "mirage",
     "plugin-container",

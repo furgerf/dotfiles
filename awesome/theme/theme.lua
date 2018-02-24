@@ -13,7 +13,7 @@ theme.widget_width = dpi(48)
 theme.font = "DejaVu Sans 8"
 theme.wallpaper_path = theme_path .. "/wallpapers"
 theme.active_opacity = 0.95
-theme.inactive_opacity = 0.93
+theme.inactive_opacity = 0.85
 
 -- TODO: Figure out what warning "beautiful: can't get colorscheme from xrdb (using fallback)." means
 

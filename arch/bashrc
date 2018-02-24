@@ -82,6 +82,7 @@ shopt -s cdspell
 shopt -s checkwinsize
 # add some paths for easier navigation
 CDPATH=".:~/git:/data"
+# cd+ls
 cl() {
   if [[ -d "$1" ]]; then
     cd "$1" || exit 1
@@ -90,6 +91,8 @@ cl() {
     echo "bash: cl: '$1': Directory not found"
   fi
 }
+# mkdir+cd
+mkcd() { mkdir -p "$1" && cd "$1"; }
 
 # privileged access
 if [ $UID -ne 0 ]; then
