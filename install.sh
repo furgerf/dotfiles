@@ -66,6 +66,7 @@ prompt-file "$PWD/arch/acpi-handler.sh" "/etc/acpi/handler.sh" sudo
 prompt-file "$PWD/arch/locale.conf" "/etc/locale.conf" sudo
 prompt-file "$PWD/arch/locale.gen" "/etc/locale.gen" sudo
 prompt-file "$PWD/arch/00-keyboard.conf" "/etc/X11/xorg.conf.d/00-keyboard.conf" sudo
+prompt-file "$PWD/arch/10-inactivity.conf" "/etc/X11/xorg.conf.d/10-inactivity.conf" sudo
 prompt-file "$PWD/arch/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf" sudo
 prompt-file "$PWD/arch/50-synaptics.conf" "/etc/X11/xorg.conf.d/50-synaptics.conf" sudo
 
