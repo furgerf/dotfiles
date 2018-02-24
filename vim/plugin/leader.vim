@@ -67,3 +67,7 @@ map <silent> <Leader>jk cox:sleep 100m<CR>cox
 " delete paranthesis under cursor and matching
 nnoremap <Leader>X %x<C-o>x
 
+" zoom/unzoom current window
+nnoremap <Leader>z <C-w>\|<C-w>_
+nnoremap <Leader>Z <C-w>=
+

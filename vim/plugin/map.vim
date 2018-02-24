@@ -95,6 +95,13 @@ abbrev Qa qa
 cabbrev man help
 "}}}
 
+" Split undo sequence "{{{
+inoremap . .<C-g>u
+inoremap ? ?<C-g>u
+inoremap ! !<C-g>u
+inoremap , ,<C-g>u
+"}}}
+
 " Misc "{{{
 " allow saving files as sudo
 cnoremap w!! w !sudo tee % > /dev/null
@@ -129,4 +136,4 @@ noremap gu gu:echoerr 'Did you just intend to lowercase?'<CR>
 vnoremap <expr> ++ VMATH_YankAndAnalyse()
 nmap ++ vip++
 "}}}
-"
+

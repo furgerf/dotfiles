@@ -64,7 +64,8 @@ set textwidth=256
 " c: wrap comments and automatically insert comment leader
 " q: format comments with 'gq'
 " r: insert comment leader when starting new line from comment in insert mode
-set formatoptions=c,q,r,t
+" j: remove comment leader when joining
+set formatoptions=c,q,r,t,j
 
 " CLIPBOARD
 " enable the mouse in the following modes
@@ -105,7 +106,7 @@ let localmapleader = "\\"
 " command wildchar expansion: show all matches, then start completing
 set wildmode=list:longest,full
 " ignore some file types when completing
-set wildignore+=*.swp,*.pyc,__init__.py
+set wildignore+=*.swp,*.pyc,__init__.py,*.pkl
 
 " reduce the things to store in session file...
 set sessionoptions=blank,buffers,curdir,help,tabpages,winsize

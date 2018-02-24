@@ -8,7 +8,7 @@ let test#python#nose2#options = '-F --with --coverage-report html'
 
 " execute current file with F2
 " NOTE: Might want to change that mapping at some point...
-nnoremap <F2> :!"%:p"<CR>
+nnoremap <F2> :!python "%:p"<CR>
 
 " enable folding - the default foldlevelstart of 1 is ok as it collapses
 " functions (assuming they're inside a class)
