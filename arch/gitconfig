@@ -31,6 +31,8 @@
   statusHints = false
 [transfer]
   fsckobjects = true
+[pager]
+  stash = false
 [alias]
   #################
   # general stuff #
@@ -75,12 +77,17 @@
   changed-files = diff-tree --no-commit-id --name-only -r
   # trigger ctag generation using script from hook
   ctags = "!bash -c '[ -f .git/hooks/ctags ] || git init; .git/hooks/ctags' git-ctags"
+  # swap the last two commits
+  swap = "!GIT_SEQUENCE_EDITOR=\"sed -i -n 'h;1n;2p;g;p'\" git rebase -i HEAD~2"
 
   ########################
   # working with remotes #
   ########################
+  fa = !git fetchall && git sba
   # fetch all remotes
   fetchall = fetch --all
+  # rebase on origin/master
+  rom = rebase origin/master --autostash
   # gerrit-publish
   publish = push --progress \"origin\" HEAD:refs/publish/master
   # `push --force` that fails if someone else pushed in the meantime
@@ -91,6 +98,9 @@
   #########################
   # laziness...
   b = branch -v
+  bd = branch -d
+  bdf = branch -D
+  bmv = branch -m
   co = checkout
   cob = checkout -b
   cp = cherry-pick
@@ -101,6 +111,7 @@
   # laziness...
   ss = !git stash save
   sp = !git stash pop
+  sl = !git stash list
 
   # stash only unstaged changes to tracked files
   stsh = stash --keep-index
@@ -118,6 +129,8 @@
   undo = reset HEAD~1 --mixed
   # create and discard a "WIPE SAVEPOINT" commit
   wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+  # stash, rebase, unstash
+  srp = !git stash --include-untracked && git rom && git stash pop
 
   ###########################
   # working with submodules #

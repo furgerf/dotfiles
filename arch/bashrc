@@ -187,6 +187,7 @@ function g {
 # add `git` completion for `g`
 complete -F _git g
 alias ga='git add'
+alias gap='git add -p'
 alias gc='git commit'
 alias gs='git status || ls'
 alias gd='git diff'

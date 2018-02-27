@@ -59,7 +59,7 @@ nnoremap <Leader>q :nohlsearch<CR>
 nnoremap <silent> <Leader><Space> :pclose<CR>:cclose<CR>:lclose<CR>
 
 " start opening help (manual)
-nnoremap <Leader>m :help 
+nnoremap <Leader>h<Space> :help 
 
 " simple get/put for diff
 nnoremap <Leader>dg do
