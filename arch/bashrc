@@ -272,6 +272,8 @@ function mp4tomp3() {
   ffmpeg -i "$1" -q:a 0 -map a "$(basename "$1" .mp4).mp3"
 }
 
+alias clearswap='sudo swapoff -a; sudo swapon -a'
+
 # source other files
 test -s "$HOME/.bash-sourcer.sh" && source "$HOME/.bash-sourcer.sh"
 

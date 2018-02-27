@@ -139,7 +139,7 @@ nmap gs <Plug>(GrepperOperator)
 xmap gs <Plug>(GrepperOperator)
 
 " add map for 'find'
-nnoremap <Leader>f :Grepper -tool grep<CR>
+nnoremap <Leader>gf :Grepper -tool grep<CR>
 nnoremap <Leader>gg :Grepper -tool git<CR>
 "}}}
 

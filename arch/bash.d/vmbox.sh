@@ -20,7 +20,7 @@ todo() {
     cat -n "$todoFile"
     echo -ne "----------------------------\nType a number to remove: "
     read -r NUMBER
-    sed -ie "${NUMBER}d" "$todoFile"
+    [ ! -z "$NUMBER" ] && sed -ie "${NUMBER}d" "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-l" ]]; then
     cat -n "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-h" ]]; then
@@ -48,7 +48,9 @@ finished () {
 pdf() { okular "$1" &> /dev/null & }
 
 alias sau='sudo apt update && sudo apt upgrade'
-alias sai='sudo apt install '
+alias sai='sudo apt install'
+alias sar='sudo apt remove'
 
 alias move-downloads-here='ls ~/downloads/*; mv ~/downloads/* .'
+alias eclimd='~/eclipse/eclimd'
 

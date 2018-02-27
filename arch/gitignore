@@ -2,3 +2,4 @@
 *venv/
 Session.vim
 __pycache__/
+*.pyc

@@ -106,7 +106,7 @@ let localmapleader = "\\"
 " command wildchar expansion: show all matches, then start completing
 set wildmode=list:longest,full
 " ignore some file types when completing
-set wildignore+=*.swp,*.pyc,__init__.py,*.pkl
+set wildignore+=*.class,*.swp,*.pyc,__init__.py,*.pkl
 
 " reduce the things to store in session file...
 set sessionoptions=blank,buffers,curdir,help,tabpages,winsize

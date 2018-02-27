@@ -100,7 +100,7 @@ todo() {
     cat -n "$todoFile"
     echo -ne "----------------------------\nType a number to remove: "
     read -r NUMBER
-    sed -ie "${NUMBER}d" "$todoFile"
+    [ ! -z "$NUMBER" ] && sed -ie "${NUMBER}d" "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-l" ]]; then
     cat -n "$todoFile"
   elif [[ "$#" -eq 1 && "$1" == "-h" ]]; then

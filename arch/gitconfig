@@ -23,8 +23,12 @@
   default = simple
 [merge]
   ff = only
+[commit]
+  verbose = true
 [status]
   showUntrackedFiles = all
+[advice]
+  statusHints = false
 [transfer]
   fsckobjects = true
 [alias]
@@ -51,6 +55,8 @@
   todo = grep -C 2 -n TODO
   # create patch output
   patch = !git --no-pager diff --no-color
+  # "fix" index by removing the index file and resetting
+  fix-index = !rm "$(pwd)/.git/index" && git reset
 
   ########################
   # working with history #
@@ -84,9 +90,10 @@
   # working with branches #
   #########################
   # laziness...
-  b = branch
+  b = branch -v
   co = checkout
   cob = checkout -b
+  cp = cherry-pick
 
   ######################
   # working with stash #

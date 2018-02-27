@@ -41,6 +41,12 @@ nnoremap <Leader>cw :%s/\t/  /g<cr>:nohlsearch<cr>
 nnoremap <Leader>rt :retab<CR>
 vnoremap <Leader>rt :retab<CR>
 
+" indent file
+nnoremap <Leader>ri mzgg=G`z
+
+" format file
+nmap <Leader>f <Leader>ri<Leader>rw<Leader>rt
+
 " unhighlight search results
 nnoremap <Leader>q :nohlsearch<CR>
 

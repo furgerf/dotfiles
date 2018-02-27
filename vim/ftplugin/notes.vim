@@ -6,7 +6,7 @@
 setlocal spell
 
 " wrap text
-" setlocal textwidth=100
+setlocal textwidth=512
 
 " enabling folding
 " setlocal foldenable
