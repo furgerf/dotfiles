@@ -48,7 +48,7 @@ nnoremap <Leader>ri mzgg=G`z
 nmap <Leader>f <Leader>ri<Leader>rw<Leader>rt
 
 " unhighlight search results
-nnoremap <Leader>q :nohlsearch<CR>
+nnoremap <silent> <Leader>q :nohlsearch<CR>
 
 " cycle through buffers
 " nnoremap <Leader>w <C-w>w
@@ -68,7 +68,7 @@ nnoremap <Leader>dp dp
 vnoremap <Leader>dp :diffput<CR>
 
 " flash cuc/cul
-map <silent> <Leader>jk cox:sleep 100m<CR>cox
+map <silent> <Leader>jj cox:sleep 100m<CR>cox
 
 " delete paranthesis under cursor and matching
 nnoremap <Leader>X %x<C-o>x

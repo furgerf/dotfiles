@@ -17,8 +17,8 @@ PATH=/home/fabian/git/linux-scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/us
 10 14 * * 0 cron-wrapper sudo pkgfile --update
 
 # run backup
-0 19 * * * cron-wrapper bash -c 'raspi-backup | tail -n 17'
+0 19 * * * cron-wrapper bash -c 'backup-to-raspi | tail -n 17'
 
 # watch tagesschau - bypass cron-wrapper
-30 19 * * * DISPLAY=:0 firefox --new-window https://www.srf.ch/livestream/player/srf-1
+#30 19 * * * DISPLAY=:0 firefox --new-window https://www.srf.ch/livestream/player/srf-1
 

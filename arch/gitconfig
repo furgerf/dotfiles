@@ -33,6 +33,7 @@
   fsckobjects = true
 [pager]
   stash = false
+  grep = false
 [alias]
   #################
   # general stuff #

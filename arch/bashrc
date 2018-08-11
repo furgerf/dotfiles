@@ -33,12 +33,17 @@ COLOR_RESET="\[$(tput sgr0)\]"
 
 echo -e "$(tput sgr0)Welcome to the $(tput setaf 12)other side$(tput sgr0)...\n"
 
+# set up git PS1
 GIT_PS1_FILE="$HOME/git/dotfiles/arch/third-party/git-prompt.sh"
 [[ -f "$GIT_PS1_FILE" ]] && source "$GIT_PS1_FILE"
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM="auto" # verbose
+
+# load autojump if available
+AUTOJUMP_FILE=/usr/share/autojump/autojump.bash
+[[ -f "$AUTOJUMP_FILE" ]] && source "$AUTOJUMP_FILE"
 
 PS1="${COLOR_DGRAY}["
 PS1+="${COLOR_WHITE}\$?"
@@ -62,7 +67,7 @@ shopt -s histappend
 # save multi-line commands as one command
 shopt -s cmdhist
 # record each line as it gets issued
-PROMPT_COMMAND='history -a'
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
 # history size
 export HISTSIZE=5000000
 export HISTFILESIZE=10000000
@@ -194,10 +199,6 @@ alias gd='git diff'
 alias gds='git diff --staged'
 alias gda='git diff HEAD'
 alias gf='git fetch'
-alias pull='git pull'
-alias push='git push'
-alias publish='git publish'
-alias gitall='git add . && git commit . && git push'
 
 # pip
 pip-activate() {
@@ -276,5 +277,5 @@ function mp4tomp3() {
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 
 # source other files
-test -s "$HOME/.bash-sourcer.sh" && source "$HOME/.bash-sourcer.sh"
+{ [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true
 

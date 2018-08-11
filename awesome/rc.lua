@@ -336,9 +336,14 @@ globalkeys = gears.table.join(
   awful.key({ modkey            }, "F3", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/backlight") end,
     {description = "toggle backlight", group = "special keys"}),
   awful.key({                   }, "XF86Launch1", function ()
-      awful.spawn("sudo s2ram")
+      awful.spawn("sudo s2disk")
     end,
-    {description = "suspend system", group = "special keys"}),
+    {description = "hibernate system", group = "special keys"}),
+  awful.key({ modkey            }, "XF86Launch1", function ()
+      naughty.notify({ text = "Clearing swap before suspending", timeout = 90 })
+      awful.spawn("sudo bash -c 'swapoff -a; swapon -a; s2disk'")
+    end,
+    {description = "hibernate system", group = "special keys"}),
   awful.key({                   }, "XF86ScreenSaver", function ()
       awful.spawn("slock")
       awful.spawn("xset dpms force standby")
@@ -436,7 +441,7 @@ globalkeys = gears.table.join(
     {description = "run wiki prompt", group = "launcher"}),
   awful.key({ modkey, shiftkey  }, "w", function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end,
     {description = "run arch wiki prompt", group = "launcher"}),
-  awful.key({ modkey,           }, "t", function () run_webprompt("Torrent: ", "http://thepiratebay.se/search/", "torrent") end,
+  awful.key({ modkey,           }, "t", function () run_webprompt("Torrent: ", "http://thepiratebay.org/search/", "torrent") end,
     {description = "run torrent prompt", group = "launcher"}),
   awful.key({ modkey,           }, "g", function () run_webprompt("Google: ", "http://google.com/search?q=", "google") end,
     {description = "run google prompt", group = "launcher"}),

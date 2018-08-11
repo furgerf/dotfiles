@@ -111,7 +111,7 @@ function mywidgets.battery()
     end
     local fh = io.popen("acpi | cut -d, -f 3,3 - | cut -b 2-9", "r")
     local charging_duration = fh:read("*l")
-    fh.close()
+    fh:close()
     local charging = charging_duration ~= "" and " (" .. charging_duration .. ")" or ""
     return args[2] .. "% " .. args[1] .. charging
   end, 31, "BAT0")

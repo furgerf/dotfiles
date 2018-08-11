@@ -16,6 +16,7 @@ nnoremap <C-q> :qa<CR>
 nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>:bd<CR>
 
 noremap <silent> <F5> :e<CR>
+noremap <silent> <Leader><F5> :windo :e<CR>
 "}}}
 
 " Navigation "{{{

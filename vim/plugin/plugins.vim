@@ -130,7 +130,7 @@ let g:grepper = {}
 let g:grepper.switch = 0
 
 " bind K to search word under cursor
-nnoremap K :Grepper -cword<CR>
+nnoremap K :Grepper -tool git -cword<CR>
 
 " grep with...
 " ... gs+motion

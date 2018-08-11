@@ -150,5 +150,9 @@ say(){ curl -A RG 'translate.google.com/translate_tts' -d 'tl=en&q=$@' | mpg123 
 alias hslu-connect='/opt/cisco/anyconnect/bin/vpn -s connect vpn.enterpriselab.ch < ~/hslu-vpn-login'
 alias hslu-disconnect='/opt/cisco/anyconnect/bin/vpn disconnect'
 alias hslu-box='ssh hslubox'
-alias hslu-session='hslu-connect; hslu-box; hslu-disconnect'
+hslu-session(){
+  pgrep vpnagentd > /dev/null || /opt/cisco/anyconnect/bin/vpnagentd || { echo "Unable to start VPN agent"; exit 1; }
+  ping -c 1 -w 1 10.177.1.254 > /dev/null || hslu-connect || { echo "Unable to connect to HSLU VPN"; exit 1; }
+  hslu-box && hslu-disconnect
+}
 
