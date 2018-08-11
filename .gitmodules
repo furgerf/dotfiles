@@ -140,3 +140,6 @@
 [submodule "vim/bundle/vim-active-numbers"]
   path = vim/bundle/vim-active-numbers
   url = git@github.com:auwsmit/vim-active-numbers.git
+[submodule "vim/bundle/vim-easymotion.git"]
+  path = vim/bundle/vim-easymotion.git
+  url = git@github.com:easymotion/vim-easymotion.git

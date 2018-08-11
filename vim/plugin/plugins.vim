@@ -213,9 +213,22 @@ noremap <silent> <Leader>mm :call functions#TurnOnMathematicMode()<CR>
 noremap <silent> <Leader>mn :call functions#TurnOffMathematicMode()<CR>
 " show keymaps
 noremap <Leader>ms :sp ~/git/dotfiles/vim/bundle/mathematic.vim/keymap/mathematic.vim<CR>
+" run key helper (to insert single special key)
+nnoremap <LocalLeader>kh :KeyHelper<CR>
+inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>
 "}}}
 
 " gundo.vim "{{{
 noremap <Leader>u :GundoToggle<CR>
+"}}}
+
+" vim-easymotion "{{{
+" keep cursor in same column when jumping across lines
+let g:EasyMotion_startofline = 0
+" use uppercase characters for targets but find them with lowercase keys
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_keys = 'ASDGHKLQWERTYUIOPZXCVBNMFJ;'
+" select first target with space
+let g:EasyMotion_space_jump_first = 1
 "}}}
 
