@@ -66,6 +66,7 @@ augroup END
 
 " OverLength highlighting starts at column 81
 highlight! OverLength ctermfg=167 guifg=#fb4934
+hi clear OverLength
 " because `match`-ing only affects the current window, we re-apply it each time
 " we open a buffer
 autocmd! FileType * if functions#IsNonspecialBuffer() |

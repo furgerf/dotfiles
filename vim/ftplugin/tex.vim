@@ -35,8 +35,6 @@ setlocal foldmethod=syntax
 
 setlocal textwidth=100
 
-hi! OverLength none
-
 let g:syntastic_tex_checkers = ['lacheck']
 
 " " insert TeX placeholder

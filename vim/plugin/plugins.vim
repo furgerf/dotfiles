@@ -160,6 +160,8 @@ let g:syntastic_aggregate_errors = 1
 " allow shellcheck to follow external source files
 let g:syntastic_sh_shellcheck_args = "-x"
 
+let g:syntastic_python_checkers = [ "python" ]
+
 " syntastic mappings
 nnoremap <Leader>se :Errors<CR>
 nnoremap <Leader>sm :SyntasticToggleMode<CR>

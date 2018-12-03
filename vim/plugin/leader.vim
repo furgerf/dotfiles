@@ -77,3 +77,5 @@ nnoremap <Leader>X %x<C-o>x
 nnoremap <Leader>z <C-w>\|<C-w>_
 nnoremap <Leader>Z <C-w>=
 
+nnoremap <silent> <Leader>pp :set paste<CR>:r! xclip -o<CR>:set nopaste<CR>
+
