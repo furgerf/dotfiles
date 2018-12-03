@@ -189,9 +189,13 @@ function g {
      git status  || ls
    fi
 }
+# load git completion
+GIT_COMPLETION_FILE="/usr/share/bash-completion/completions/git"
+[[ -f "$GIT_COMPLETION_FILE" ]] && source "$GIT_COMPLETION_FILE"
 # add `git` completion for `g`
 complete -F _git g
 alias ga='git add'
+alias gaa='git add -A'
 alias gap='git add -p'
 alias gc='git commit'
 alias gs='git status || ls'
