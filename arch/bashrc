@@ -269,6 +269,9 @@ function box() {
   echo "$c $1 $c"
   echo "${t//?/$c}"
 }
+function thirdline () {
+  awk '{if (NR%3==0){print "\033[32m" $0 "\033[0m"} else{print}}';
+}
 function save-as-image() {
   # pipe text to save to this function and add filename
   # e.g. ls | save-as-image foo.png
@@ -278,7 +281,8 @@ function mp4tomp3() {
   ffmpeg -i "$1" -q:a 0 -map a "$(basename "$1" .mp4).mp3"
 }
 
-alias clearswap='sudo swapoff -a; sudo swapon -a'
+alias swapclear='sudo swapoff -a; sudo swapon -a'
+alias swapexit='swapclear; exit'
 
 # source other files
 { [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true

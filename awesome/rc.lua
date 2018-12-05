@@ -435,7 +435,7 @@ globalkeys = gears.table.join(
       })
     end,
     {description = "run lua execute prompt", group = "launcher"}),
-  awful.key({ modkey            }, "q", menubar.show,
+  awful.key({ altkey,           }, "q", menubar.show,
     {description = "show the application launcher", group = "launcher"}),
   awful.key({ modkey,           }, "w", function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end,
     {description = "run wiki prompt", group = "launcher"}),

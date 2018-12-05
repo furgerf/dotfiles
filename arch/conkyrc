@@ -73,7 +73,7 @@ ${font Open Sans:bold:size=8}DATA:$font ${goto 60}${fs_used /data} ${goto 92}/ $
 # NETWORK
 ${font Open Sans:Bold:size=10}${color0}NETWORK${hr 2}$color$font
 ${font Open Sans:Bold:size=8}WAN$font${goto 80}${texeci 1800 /home/fabian/git/linux-scripts/conky/get-wan}
-${font Open Sans:Bold:size=8}raspi$font${goto 80}${texeci 1800 cat /data/Dropbox/Apps/Raspi314/raspi-ip}
+${font Open Sans:Bold:size=8}raspi$font${goto 80}${texeci 1800 cat $HOME/Dropbox/Apps/Raspi314/raspi-ip}
 ${font Open Sans:Bold:size=8}enp0s25$font${goto 80}${addr enp0s25}$alignr${downspeedf enp0s25} kbps (${totaldown enp0s25})
 ${font Open Sans:Bold:size=8}wlp3s0$font${goto 80}${addr wlp3s0} (${wireless_link_qual wlp3s0}%)$alignr${downspeedf wlp3s0} kbps (${totaldown wlp3s0})
 ${downspeedgraph enp0s25 20, 316 000000 ffffff -t}
@@ -116,7 +116,7 @@ ${voffset -33}${downspeedgraph wlp3s0 20, 320 000000 ffffff -t}
 ${execpi 5 $HOME/git/linux-scripts/conky/clementine-dbus $HOME/git/linux-scripts/conky/rp.png}
 # TODO
 ${font Open Sans:Bold:size=10}${color0}TODO${hr 2}$font$color
-${texeci 600 cat -n /data/Dropbox/misc/misc/todo.txt}
+${texeci 600 cat -n $HOME/Dropbox/misc/misc/todo.txt}
 
 
 

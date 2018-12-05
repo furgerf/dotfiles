@@ -46,7 +46,7 @@ xset r rate 250 35
 (sleep 10 && conky -c "$HOME/git/dotfiles/arch/conkyrc" -d) &
 
 # start thunderbird and gpodder
-(sleep 10 && thunderbird) &
+# (sleep 10 && thunderbird) &
 (sleep 60 && gpodder) &
 
 # store boot log

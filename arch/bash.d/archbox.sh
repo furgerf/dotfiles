@@ -87,8 +87,8 @@ raspi-restore(){
 alias term='xfce4-terminal'
 execterm () { xfce4-terminal -e "bash -c '$@; exec bash'"; }
 todo() {
-  todoFile="/data/Dropbox/misc/misc/todo.txt"
-  todoHistory="/data/Dropbox/misc/misc/todo_history.txt"
+  todoFile="$HOME/Dropbox/misc/misc/todo.txt"
+  todoHistory="$HOME/Dropbox/misc/misc/todo_history.txt"
   if [[ ! -f "$todoFile" ]]; then
     touch "$todoFile"
   fi
@@ -121,7 +121,7 @@ finished () {
   if [[ "$1" -eq "" ]]; then
     echo "Please specify a number to remove"
   else
-    sed -i "$1"d /data/Dropbox/misc/misc/todo.txt
+    sed -i "$1"d "$HOME/Dropbox/misc/misc/todo.txt"
   fi
 }
 yoghurt () {
@@ -149,10 +149,17 @@ say(){ curl -A RG 'translate.google.com/translate_tts' -d 'tl=en&q=$@' | mpg123 
 
 alias hslu-connect='/opt/cisco/anyconnect/bin/vpn -s connect vpn.enterpriselab.ch < ~/hslu-vpn-login'
 alias hslu-disconnect='/opt/cisco/anyconnect/bin/vpn disconnect'
-alias hslu-box='ssh hslubox'
 hslu-session(){
-  pgrep vpnagentd > /dev/null || /opt/cisco/anyconnect/bin/vpnagentd || { echo "Unable to start VPN agent"; exit 1; }
-  ping -c 1 -w 1 10.177.1.254 > /dev/null || hslu-connect || { echo "Unable to connect to HSLU VPN"; exit 1; }
-  hslu-box && hslu-disconnect
+  TARGET=${1:-hslubox}
+  STARTED=''
+  pgrep vpnagentd > /dev/null || /opt/cisco/anyconnect/bin/vpnagentd \
+    || { echo "Unable to start VPN agent"; exit 1; }
+  ping -c 1 -w 1 10.177.1.254 > /dev/null || { hslu-connect; STARTED="true"; } \
+    || { echo "Unable to connect to HSLU VPN"; exit 1; }
+  ssh "$TARGET"
+  test -z "$STARTED" || hslu-disconnect
 }
+
+FFF_FAV1=/data/torrents
+FFF_FAV2=/data/downloads
 

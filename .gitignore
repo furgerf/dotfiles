@@ -8,3 +8,5 @@ vim/.netrwhist
 vim/spell/*.spl
 # vim view directory
 vim/view
+# temporary font file
+arch/fonts/.uuid

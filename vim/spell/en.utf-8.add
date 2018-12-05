@@ -32,7 +32,6 @@ A4
 tradeoffs
 WLAN
 IoT
-IoT
 async
 struct
 SVM
@@ -48,7 +47,6 @@ overfitting
 transductive
 learnable
 learnability
-overfitting
 overfit
 NoSQL
 RDBMS
@@ -112,3 +110,5 @@ Gaussians
 PCA
 explorative
 TensorFlow
+backprop
+Matura

@@ -56,7 +56,7 @@ nnoremap <silent> <Leader>q :nohlsearch<CR>
 " close preview, quickfix, location list
 " NOTE: Since the location list is local to the window, only the one in the current window is closed
 " The function `functions#ToggleErrors` could be adapted to close all location lists
-nnoremap <silent> <Leader><Space> :pclose<CR>:cclose<CR>:lclose<CR>
+nnoremap <silent> <Leader><Localleader> :pclose<CR>:cclose<CR>:lclose<CR>
 
 " start opening help (manual)
 nnoremap <Leader>h<Space> :help 

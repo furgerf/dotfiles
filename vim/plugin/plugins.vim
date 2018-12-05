@@ -175,9 +175,9 @@ nnoremap <Leader>si :SyntasticInfo<CR>
 " by default, use parent directory
 " but also use subdirectories (and their index notes)
 let g:notes_directories = [
-      \ '~/dropbox/notes',
-      \ '~/dropbox/notes/programming',
-      \ '~/dropbox/notes/mse'
+      \ '~/Dropbox/notes',
+      \ '~/Dropbox/notes/programming',
+      \ '~/Dropbox/notes/mse'
       \ ]
 
 " append .txt for windows
@@ -234,5 +234,11 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_keys = 'ASDGHKLQWERTYUIOPZXCVBNMFJ;'
 " select first target with space
 let g:EasyMotion_space_jump_first = 1
+"}}}
+
+" YouCompleteMe "{{{
+" Don't open preview when completing
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
 "}}}
 
