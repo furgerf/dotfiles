@@ -23,3 +23,7 @@ nnoremap <LocalLeader>i :Isort<CR>
 " let g:syntastic_python_checkers = [ 'pylint' ]
 let g:syntastic_check_on_open = 0
 
+" don't indent python files...
+unmap <Leader>f
+nmap <Leader>f :echoerr "Don't format!!"<CR>
+

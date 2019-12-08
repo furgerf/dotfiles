@@ -69,18 +69,29 @@ vmap <C-v> <Plug>(expand_region_shrink)
 
 " vim-interestingwords "{{{
 " use random colors
-let g:interestingWordsRandomiseColors = 1
+" let g:interestingWordsRandomiseColors = 1
 " use gruvbox color palette
 let g:interestingWordsTermColors = [
-      \ 124, 167,
-      \ 106, 142,
+      \ 124,
+      \ 106,
+      \ 166,
+      \ 66,
+      \ 132,
+      \ 72,
+      \ 242,
+      \ 229,
+      \
+      \ 167,
+      \ 142,
+      \ 208,
+      \ 109,
+      \ 175,
+      \ 108,
+      \ 244,
+      \ 223,
+      \
       \ 172,
-      \ 66, 109,
-      \ 132, 175,
-      \ 72, 108,
-      \ 166, 208,
-      \ 242, 244,
-      \ 250, 223, 229
+      \ 250,
       \ ]
 " call the actual function directly in normal mode to avoid a strange delay
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>

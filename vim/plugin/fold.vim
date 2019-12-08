@@ -37,7 +37,8 @@ nnoremap <silent> zj :let max = &fdn<bar>let &fdn = 1<CR>zj:let &fdn=max<CR>
 nnoremap <silent> zk :let max = &fdn<bar>let &fdn = 1<CR>zk:let &fdn=max<CR>
 
 " make zO open recursively even when the cursor is on an open fold
-nnoremap <silent> zO :call functions#RecursivelyOpenFold()<CR>
+" disabled because that seems to work now anyway(?)
+" nnoremap <silent> zO :call functions#RecursivelyOpenFold()<CR>
 "}}}
 
 " vim-anyfold "{{{

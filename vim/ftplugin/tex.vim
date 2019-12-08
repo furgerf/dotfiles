@@ -10,6 +10,8 @@ setlocal spell
 let g:Tex_GotoError=0
 " produce PDFs by default compilation (\ll)
 let g:Tex_DefaultTargetFormat='pdf'
+" show PDFs with okular
+let g:Tex_ViewRule_pdf='okular &> /dev/null'
 
 " compile and open current file
 nnoremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" &&
@@ -17,8 +19,11 @@ nnoremap <F2> :!cd "%:p:h" && rm -f "%:p:r.pdf" && pdflatex "%:p:r.tex" &&
 
 " re-compile
 " NOTE: <Leader>ll comes from VIM-LaTeX
-imap <F3> <Esc>:w<CR><Leader>ll<CR>a
 nmap <F3> :w<CR><Leader>ll<CR>
+
+nnoremap <leader>lb :!pwd && bibtex *.aux<CR>
+" NOTE: two leader-commands in a row doesn't seem to work
+nmap <F4> <F3><Leader>lb<F3><F3><Esc>
 
 " disable ycm because it can't deal with the hidden characters and isn't very useful anyway
 let g:ycm_filetype_blacklist = { 'tex': 1 }
@@ -48,4 +53,12 @@ inoremap <silent> <C-n> <Esc>/<+.*+><CR>:nohlsearch<CR><Esc>cf>
 " insertion helpers - use Localleader twice because backslashes are used often
 inoremap <Localleader><Localleader>i \item 
 inoremap <Localleader><Localleader>c \citep{}<++><Esc>F}i
+inoremap <Localleader><Localleader>a \citeauthor{}<++><Esc>F}i
+inoremap <Localleader><Localleader>l \label{}<++><Esc>F}i
+inoremap <Localleader><Localleader>r \ref{}<++><Esc>F}i
+inoremap <Localleader><Localleader>n \note{}<++><Esc>F}i
+inoremap <Localleader><Localleader>p \pagebreak
+nnoremap <Localleader><Localleader>p o\pagebreak<CR><ESC>
+
+nnoremap <Localleader>q gqap
 

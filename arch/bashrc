@@ -126,7 +126,7 @@ alias .......='cd ../../../../../..'
 # ls
 alias l='ls'
 alias ls='ls -lhF --color=auto'
-alias lr='ls -R'                    # recursive ls
+#alias lr='ls -R'                    # recursive ls
 alias la='ls -a'
 alias lx='la -BX'                   # sort by extension
 alias lz='la -rS'                   # sort by size
@@ -197,12 +197,13 @@ complete -F _git g
 alias ga='git add'
 alias gaa='git add -A'
 alias gap='git add -p'
-alias gc='git commit'
+alias gc='git commit -v'
 alias gs='git status || ls'
 alias gd='git diff'
 alias gds='git diff --staged'
 alias gda='git diff HEAD'
 alias gf='git fetch'
+alias gaa='git add -A'
 
 # pip
 pip-activate() {
@@ -226,6 +227,7 @@ alias v='/usr/bin/vim'
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
+alias lr='less -R'
 alias activate-venv='. venv/bin/activate'
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 touniq(){ sort | uniq -c | sort "${@:--rn}"; }
