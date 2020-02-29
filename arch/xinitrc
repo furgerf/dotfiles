@@ -11,9 +11,9 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-# backlight - turn down first to ensure it's set according to charging status
-xbacklight -set 0 -time 0
-"$HOME/git/linux-scripts/backlight"
+# # backlight - turn down first to ensure it's set according to charging status
+# xbacklight -set 0 -time 0
+# "$HOME/git/linux-scripts/backlight"
 
 # monitor
 "$HOME/git/linux-scripts/monitor" enable
@@ -39,15 +39,17 @@ thunar --daemon &
 # adjust keyboard repeat rate
 xset r rate 250 35
 
+# (sleep 60 && qbittorrent &)
+
 # connect to samba shares on raspi
-(sleep 60 && "$HOME/git/linux-scripts/samba-connect") &
+# (sleep 60 && "$HOME/git/linux-scripts/samba-connect") &
 
 # conky
 (sleep 10 && conky -c "$HOME/git/dotfiles/arch/conkyrc" -d) &
 
-# start thunderbird and gpodder
-# (sleep 10 && thunderbird) &
-(sleep 60 && gpodder) &
+# # start thunderbird and gpodder
+# # (sleep 10 && thunderbird) &
+# (sleep 60 && gpodder) &
 
 # store boot log
 (sleep 60 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log) &

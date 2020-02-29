@@ -204,6 +204,7 @@ alias gds='git diff --staged'
 alias gda='git diff HEAD'
 alias gf='git fetch'
 alias gaa='git add -A'
+OM='origin/master'
 
 # pip
 pip-activate() {
