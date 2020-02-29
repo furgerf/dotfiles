@@ -15,7 +15,7 @@ nnoremap <F2> :!python "%:p"<CR>
 setlocal foldenable
 setlocal foldlevel=999
 " also enable anyfold
-let anyfold_activate=1
+AnyFoldActivate
 
 " add mappings to sort imports
 nnoremap <LocalLeader>i :Isort<CR>
