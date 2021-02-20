@@ -23,6 +23,12 @@
   default = simple
 [merge]
   ff = only
+  tool = diffconflicts
+[mergetool]
+  keepBackup = false
+[mergetool.diffconflicts]
+  cmd = 'vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
+  trustExitCode = true
 [commit]
   verbose = true
 [status]
@@ -60,6 +66,8 @@
   patch = !git --no-pager diff --no-color
   # "fix" index by removing the index file and resetting
   fix-index = !rm "$(pwd)/.git/index" && git reset
+  # easier opening of mergetool
+  mt = mergetool
 
   ########################
   # working with history #

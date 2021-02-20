@@ -143,3 +143,6 @@
 [submodule "vim/bundle/vim-easymotion.git"]
   path = vim/bundle/vim-easymotion.git
   url = git@github.com:easymotion/vim-easymotion.git
+[submodule "vim/bundle/diffconflicts"]
+  path = vim/bundle/diffconflicts
+  url = git@github.com:whiteinge/diffconflicts
