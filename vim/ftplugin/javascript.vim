@@ -2,10 +2,6 @@
 " JavaScript configuration "
 """"""""""""""""""""""""""""
 
-" add maps to easily insert commas/semicolons
-nnoremap <localleader>, :CommaOrSemiColon<CR>
-inoremap <localleader>, <c-o>:CommaOrSemiColon<CR>
-
 " enable folding
 setlocal foldenable
 

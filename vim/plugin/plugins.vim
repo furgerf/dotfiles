@@ -55,9 +55,9 @@ nnoremap <silent> <localleader>tl :TestLast<CR>
 "}}}
 
 " CamelCaseMotion "{{{
-map w <Plug>CamelCaseMotion_w
-map b <Plug>CamelCaseMotion_b
-map e <Plug>CamelCaseMotion_e
+map w <Plug>(CamelCaseMotion_w)
+map b <Plug>(CamelCaseMotion_b)
+map e <Plug>(CamelCaseMotion_e)
 "}}}
 
 " expand-region "{{{
@@ -98,12 +98,12 @@ nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 " use the plugin command in visual mode
 " NOTE: If there's no map for the plugin command at all, the plugin adds its
 "       own mappings, overwriting `n` and `N` too in the process...
-vmap <leader>k <Plug>InterestingWords
-nmap <leader>K <Plug>InterestingWordsClear
+vmap <leader>k <Plug>(InterestingWords)
+nmap <leader>K <Plug>(InterestingWordsClear)
 " could also map these to cycle through interesting words but that is tricky
 " to get right with the match highlighting and it doesn't work reliably anyway
-" nmap n <Plug>InterestingWordsForeward
-" nmap N <Plug>InterestingWordsBackward
+" nmap n <Plug>(InterestingWordsForeward)
+" nmap N <Plug>(InterestingWordsBackward)
 "}}}
 
 " vim-obsession "{{{
@@ -234,6 +234,9 @@ inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>
 "}}}
 
 " gundo.vim "{{{
+if has('python3')
+  let g:gundo_prefer_python3 = 1
+endif
 noremap <Leader>u :GundoToggle<CR>
 "}}}
 
