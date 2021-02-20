@@ -28,11 +28,10 @@ alias paclo="/usr/bin/pacman -Qdt"          # '[l]ist [o]rphans'   - list all pa
 alias pacro="/usr/bin/pacman -Qtdq > /dev/null && sudo /usr/bin/pacman -Rs \$(/usr/bin/pacman -Qtdq | sed -e ':a;N;$!ba;s/\n/ /g')" # '[r]emove [o]rphans' - recursively remove ALL orphaned packages
 
 # yaourt
-alias ya="/usr/bin/yaourt -S"
-alias yau="/usr/bin/yaourt -Syau"
-alias yas="/usr/bin/yaourt -Ss"
-alias yaq="/usr/bin/yaourt -Qs"
-alias yar="/usr/bin/yaourt -Rs"
+alias yas="/bin/yay -Ps" # stats
+alias yaq="/bin/yay -Q" # query local
+alias yar="/bin/yay -R" # remove
+alias yac="/bin/yay -Yc" # clean
 
 # modified commands
 alias libre='/usr/bin/libreoffice --nologo'

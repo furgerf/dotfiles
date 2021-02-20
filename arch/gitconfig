@@ -36,7 +36,7 @@
 [advice]
   statusHints = false
 [transfer]
-  fsckobjects = true
+  fsckobjects = false
 [pager]
   stash = false
   grep = false

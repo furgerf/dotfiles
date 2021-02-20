@@ -8,14 +8,14 @@
 
 " GitGutter "{{{
 " move to next hunk
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 " I'll map my own keys
 let g:gitgutter_map_keys=0
-nmap <Leader>hh <Plug>GitGutterNextHunk
-nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
-nmap <Leader>hv <Plug>GitGutterPreviewHunk
+nmap <Leader>hh <Plug>(GitGutterNextHunk)
+nmap <Leader>ha <Plug>(GitGutterStageHunk)
+nmap <Leader>hr <Plug>(GitGutterUndoHunk)
+nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
 "}}}
 
 " Fugitive "{{{
