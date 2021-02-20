@@ -399,6 +399,9 @@ globalkeys = gears.table.join(
   awful.key({                   }, "Print", function ()
     awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end,
     {description = "take screenshot", group = "special keys"}),
+  awful.key({ altkey            }, "Print", function ()
+    awful.spawn("scrot -u -e 'mv $f /data/image/screenshots/archlinux'") end,
+    {description = "take screenshot of current window", group = "special keys"}),
   awful.key({ modkey            }, "F4", function () awful.spawn("xset dpms force standby")  end,
     {description = "(try to) turn off screen", group = "special keys"}),
   -- awful.key({ modkey            }, "r",      function () awful.spawn("bashrun") end),
@@ -441,7 +444,7 @@ globalkeys = gears.table.join(
     {description = "run wiki prompt", group = "launcher"}),
   awful.key({ modkey, shiftkey  }, "w", function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end,
     {description = "run arch wiki prompt", group = "launcher"}),
-  awful.key({ modkey,           }, "t", function () run_webprompt("Torrent: ", "http://thepiratebay.org/search/", "torrent") end,
+  awful.key({ modkey,           }, "t", function () run_webprompt("Torrent: ", "http://thepiratebay.rocks/search/", "torrent") end,
     {description = "run torrent prompt", group = "launcher"}),
   awful.key({ modkey,           }, "g", function () run_webprompt("Google: ", "http://google.com/search?q=", "google") end,
     {description = "run google prompt", group = "launcher"}),
@@ -451,13 +454,9 @@ globalkeys = gears.table.join(
         textbox      = awful.screen.focused().mypromptbox.widget,
         exe_callback = function (word)
           if string.len(word) == 0 then return end
-          local f = io.popen("dict -d wn " .. word .. " 2>&1")
-          local fr = ""
-          for line in f:lines() do
-            fr = fr .. line .. '\n'
-          end
-          f:close()
-          naughty.notify({ text = fr, timeout = 90, width = 400 })
+          awful.spawn.easy_async("dict -d wn " .. word .. " 2>&1", function(result)
+            naughty.notify({ text = result:match("^%s*(.-)%s*$"), timeout = 90, width = 400 })
+          end)
         end,
         history_path = awful.util.get_cache_dir() .. "/history_define"
       }) end,
@@ -468,13 +467,9 @@ globalkeys = gears.table.join(
       textbox      = awful.screen.focused().mypromptbox.widget,
       exe_callback = function (word)
         if string.len(word) == 0 then return end
-        local f = io.popen("calc " .. word)
-        local fr = word .. "="
-        for line in f:lines() do
-          fr = fr .. line
-        end
-        f:close()
-        naughty.notify({ text = fr, timeout = 30})
+        awful.spawn.easy_async("calc " .. word, function(result)
+          naughty.notify({ text = result:match("^%s*(.-)%s*$"), timeout = 30})
+        end)
       end,
       history_path = awful.util.get_cache_dir() .. "/history_calc"
     }) end,
@@ -484,18 +479,12 @@ globalkeys = gears.table.join(
         prompt       = "Units: ",
         textbox      = awful.screen.focused().mypromptbox.widget,
         exe_callback = function (input)
-        if string.len(input) == 0 then return end
-        local f = io.popen("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-")
-        local split = input:gmatch("[^%s]+")
-        local fr = split() .. " is "
-        for line in f:lines() do
-          fr = fr .. line
-        end
-        f:close()
-        fr = fr .. split()
-        naughty.notify({ text = fr, timeout = 30})
-      end,
-      history_path = awful.util.get_cache_dir() .. "/history_units"
+          if string.len(input) == 0 then return end
+          awful.spawn.easy_async_with_shell("units " .. input .. " -d 5 -H '' -1 | cut -d ' ' -f 2-", function(result)
+            naughty.notify({ text = input .. ": " .. result:match("^%s*(.-)%s*$"), timeout = 30})
+          end)
+        end,
+        history_path = awful.util.get_cache_dir() .. "/history_units"
     }) end,
     {description = "run units prompt", group = "launcher"})
 )
@@ -631,6 +620,8 @@ clientkeys = gears.table.join(
     {description = "move to master", group = "client"}),
   awful.key({ modkey, shiftkey  }, "o", function (c) c:move_to_screen() end,
     {description = "move to next screen", group = "client"}),
+  awful.key({                   }, "F12", function (c) c:move_to_screen() end,
+    {description = "move to next screen", group = "client"}),
   awful.key({ modkey, shiftkey  }, "t", function (c) c.ontop = not c.ontop end,
     {description = "toggle keep on top", group = "client"}),
   awful.key({ modkey,           }, "n", function (c) c.minimized = true end,
@@ -715,23 +706,26 @@ local tasklist_buttons = gears.table.join(
   end)
 )
 
-local current_wallpaper = beautiful.wallpaper()
+local current_wallpaper = nil
+local function update_wallpaper(callback)
+  beautiful.wallpaper(function(wallpaper)
+    current_wallpaper = wallpaper
+    callback()
+  end)
+end
 local function set_wallpaper(s)
-  if not beautiful.wallpaper then return end
-
-  -- If current_wallpaper is a function, call it with the screen
-  if type(current_wallpaper) == "function" then
-    current_wallpaper = current_wallpaper(s)
-  end
-
+  if not current_wallpaper then return end
   gears.wallpaper.maximized(current_wallpaper, s, true)
 end
-wallpaper_timer_callback = function ()
-  current_wallpaper = beautiful.wallpaper()
-  for s in screen do
-    set_wallpaper(s)
-  end
+
+function wallpaper_timer_callback()
+  update_wallpaper(function()
+    for s in screen do
+      set_wallpaper(s)
+    end
+  end)
 end
+wallpaper_timer_callback()
 
 wallpaper_timer = gears.timer({
   timeout = 3600,
@@ -744,6 +738,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 local function get_widgets()
   local separator = mywidgets.separator()
   local separator2 = mywidgets.separator2()
+  awesome.sync()
   return {
     layout = wibox.layout.fixed.horizontal,
     -- separator,

@@ -109,10 +109,7 @@ function mywidgets.battery()
     else
       icon.image = beautiful.widget_battery11
     end
-    local fh = io.popen("acpi | cut -d, -f 3,3 - | cut -b 2-9", "r")
-    local charging_duration = fh:read("*l")
-    fh:close()
-    local charging = charging_duration ~= "" and " (" .. charging_duration .. ")" or ""
+    local charging = args[3] == "N/A" and "" or " (" .. args[3] .. ")"
     return args[2] .. "% " .. args[1] .. charging
   end, 31, "BAT0")
   return layout
@@ -121,7 +118,7 @@ end
 
 -- {{{ Wifi
 function mywidgets.wifi()
-  -- Note: currently unused - might need some adjustment if resurrected
+  -- Note: currently unused - might need some adjustment if resurrected; remove popen
   local icon = wibox.widget.imagebox()
   local widget = wibox.widget.textbox()
   local layout = get_layout_widget(icon, widget)
@@ -152,7 +149,7 @@ function mywidgets.wifi()
     else
       icon.image = beautiful.widget_wifi5
     end
-    return name
+    return function () return "foobar" end
   end, 37, "wlp3s0")
   return layout
 end
@@ -478,7 +475,7 @@ end
 
 -- {{{ Caps Lock
 function mywidgets.caps_lock()
-  -- initialize
+  -- initialize - NOTE: async methods called from another function always return the same xset data...
   local handle = io.popen("xset q | grep Caps | cut -d ' ' -f 10")
   local data = handle:read("*l")
   handle:close()

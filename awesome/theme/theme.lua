@@ -1,4 +1,5 @@
 -- {{{ Main
+local awful = require("awful")
 local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local gfs = require("gears.filesystem")
@@ -23,18 +24,10 @@ theme.icon_theme = nil
 -- }}}
 
 -- {{{ Random wallpaper
-theme.wallpaper = function()
-  -- have to initialize a seed first, else the "random" wallpapers are rather dull
-  math.randomseed(os.time())
-
-  -- Get the list of files from a directory. Must be all images or folders and non-empty.
-  local wallpapers = {}
-  for filename in io.popen([[find "]] .. theme.wallpaper_path .. [[" -type f]]):lines() do
-    table.insert(wallpapers, filename)
-  end
-
-  -- select one of the wallpapers
-  return wallpapers[math.random(#wallpapers)]
+theme.wallpaper = function(callback)
+  -- invokes the callback with the path to a randomly-selected wallpaper
+  awful.spawn.easy_async_with_shell("find " .. theme.wallpaper_path .. " -type f | shuf | head -1",
+  function(wallpaper_path) callback(wallpaper_path:match("^%s*(.-)%s*$")) end)
 end
 -- }}}
 
