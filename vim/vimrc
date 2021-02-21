@@ -130,11 +130,11 @@ autocmd! InsertLeave * set nopaste
 
 " map TeX placeholder movement
 " NOTE: mapping them here (before vim-latex is potentially loaded) because
-" it re-maps <C-j> if `<Plug>(IMAP_JumpForward)` isn't already mapped
-imap <Localleader>j <Plug>(IMAP_JumpForward)
-nmap <Localleader>j <Plug>(IMAP_JumpForward)
-imap <Localleader>kk <Plug>(IMAP_JumpBackward)
-nmap <Localleader>kk <Plug>(IMAP_JumpBackward)
+" it re-maps <C-j> if `<Plug>IMAP_JumpForward` isn't already mapped
+imap <Localleader>j <Plug>IMAP_JumpForward
+nmap <Localleader>j <Plug>IMAP_JumpForward
+imap <Localleader>kk <Plug>IMAP_JumpBackward
+nmap <Localleader>kk <Plug>IMAP_JumpBackward
 " interpret all .tex files as latex files (this also can't be in ftplugin)
 let g:tex_flavor = "latex"
 

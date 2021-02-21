@@ -55,9 +55,9 @@ nnoremap <silent> <localleader>tl :TestLast<CR>
 "}}}
 
 " CamelCaseMotion "{{{
-map w <Plug>(CamelCaseMotion_w)
-map b <Plug>(CamelCaseMotion_b)
-map e <Plug>(CamelCaseMotion_e)
+map w <Plug>CamelCaseMotion_w
+map b <Plug>CamelCaseMotion_b
+map e <Plug>CamelCaseMotion_e
 "}}}
 
 " expand-region "{{{
