@@ -1,0 +1,54 @@
+" put non-configured settings back to default
+sanitise tridactyllocal tridactylsync
+
+" " make gu take you back to subreddit from comments
+" bindurl reddit.com gu urlparent 4
+
+" allow Ctrl-a to select all in the commandline
+unbind --mode=ex <C-a>
+
+" sane hinting mode
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+" set hintchars 1234567890
+
+" make Tridactyl work on more sites at the expense of some security
+set csp clobber
+fixamo_quiet
+
+set searchurls.wiki https://en.wikipedia.org/wiki/Special:Search/
+set searchurls.yt https://www.youtube.com/results?search_query=
+
+" require two d's to close a tab instead of one
+unbind d
+bind dd tabclose
+
+" tab navigation
+bind h tabprev
+bind l tabnext
+bind a buffer #
+bind ,1 buffer 1
+bind ,2 buffer 2
+bind ,3 buffer 3
+bind ,4 buffer 4
+bind ,5 buffer 5
+bind ,6 buffer 6
+bind ,7 buffer 7
+bind ,8 buffer 8
+bind ,9 buffer 9
+bind ,0 tablast
+
+" modify numbers in URLs like with vimperator
+bind ,a urlincrement +1
+bind ,x urlincrement -1
+
+" misc
+bind J scrollpage +1
+bind K scrollpage -1
+bind ,d tabdetach
+
+" URL shortcuts
+bind gw tabopen https://www.whoscored.com/LiveScores
+bind gd tabopen https://dominion.games/
+
+" vim: set filetype=vim:
