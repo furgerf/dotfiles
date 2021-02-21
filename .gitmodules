@@ -134,3 +134,9 @@
 [submodule "vim/bundle/diffconflicts"]
   path = vim/bundle/diffconflicts
   url = git@github.com:whiteinge/diffconflicts
+[submodule "vim/bundle/vim-illuminate.git"]
+  path = vim/bundle/vim-illuminate.git
+  url = git@github.com:RRethy/vim-illuminate.git
+[submodule "vim/bundle/vim-conjoin.git"]
+  path = vim/bundle/vim-conjoin.git
+  url = git@github.com:flwyd/vim-conjoin.git
