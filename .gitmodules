@@ -108,7 +108,7 @@
   url = git@github.com:xolox/vim-misc
 [submodule "awesome/modules/hints"]
   path = awesome/modules/hints
-  url = git@github.com:zackpete/hints
+  url = git@github.com:furgerf/hints
 [submodule "vim/bundle/vim-isort"]
   path = vim/bundle/vim-isort
   url = git@github.com:fisadev/vim-isort
