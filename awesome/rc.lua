@@ -503,8 +503,8 @@ globalkeys = gears.table.join(
 
   awful.key({                   }, "XF86Display", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor-2") end,
     {description = "toggle external display", group = "special keys"}),
-  awful.key({ modkey            }, "F6", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/compton-toggle") end,
-    {description = "toggle compton", group = "special keys"}),
+  awful.key({ modkey            }, "F6", function () awful.spawn("sh -c 'killall picom || picom'") end,
+    {description = "toggle picom", group = "special keys"}),
   awful.key({                   }, "Print", function ()
     awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end,
     {description = "take screenshot", group = "special keys"}),

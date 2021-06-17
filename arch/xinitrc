@@ -31,7 +31,7 @@ dropbox &
 "$HOME/git/linux-scripts/set-dbus-address"
 
 # composite manager
-"$HOME/git/linux-scripts/compton-toggle"
+picom &
 
 # start thunar in daemon mode
 thunar --daemon &
