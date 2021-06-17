@@ -43,13 +43,6 @@ function mywidgets.separator ()
   --   -- wibox.widget.imagebox(beautiful.widget_arr2)
   -- })
 end
-function mywidgets.separator2 ()
-  return wibox.layout(
-  {
-    layout = wibox.layout.fixed.horizontal,
-    wibox.widget.imagebox(beautiful.widget_arr2)
-  })
-end
 -- }}}
 
 -- {{{ Volume
@@ -187,7 +180,7 @@ function mywidgets.cpu()
     local govenors = { ["⌁"] = "powersafe", ["⚡"] = "performance" }
     return {
       govenor = govenors[data[5]],
-      frequency = string.format("%.2f", data[2])
+      frequency = type(data[2]) == "int" and string.format("%.2f", data[2]) or data[2]
     }
   end
   for i,v in pairs({"cpu0", "cpu1", "cpu2", "cpu3"}) do

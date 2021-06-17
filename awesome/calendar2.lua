@@ -16,8 +16,6 @@ local naughty = require("naughty")
 local io = require("io")
 local table = require("table")
 
-module("calendar2")
-
 local calendar = {}
 local current_day_format = "<u>%s</u>"
 local widgetid
@@ -114,4 +112,8 @@ function addCalendarToWidget(mywidget, custom_current_day_format)
     awful.button({ 'Shift' }, 5, function() switchNaughtyMonth(-12) end)
   ))
 end
+
+return {
+  addCalendarToWidget = addCalendarToWidget
+}
 
