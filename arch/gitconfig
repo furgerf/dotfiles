@@ -14,7 +14,7 @@
   excludesFile = ~/.gitignore
   # use diff-so-fancy when paging and use a default pattern for easier diff navigation
   # Note: using the pattern invalidates -F (quit less if it fits on the screen)
-  pager = "diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified): '"
+  pager = "type diff-so-fancy &> /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified): ' || less -RFX"
 [fetch]
   prune = true
 [pull]
@@ -55,7 +55,6 @@
   prune-local = !git branch --merged | grep -v '*' | xargs -n1 git branch -d
   # short status output
   st = status --short --branch
-  shorty = status --short --branch
   # unstage everything from index
   unstage = reset HEAD
   # list conflicted files
@@ -97,8 +96,8 @@
   fetchall = fetch --all
   # rebase on origin/master
   rom = rebase origin/master --autostash
-  # gerrit-publish
-  publish = push --progress \"origin\" HEAD:refs/publish/master
+  # interactive rebase on origin/master
+  riom = rom -i
   # `push --force` that fails if someone else pushed in the meantime
   please = push --force-with-lease
 

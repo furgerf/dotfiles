@@ -236,8 +236,9 @@ historygram(){
   history|awk '{print $4}'|sort|uniq -c|sort -rn|head -30|awk '!max{max=$1;}{r="";i=s=100*$1/max;while(i-->0)r=r"#";printf "%50s %5d %s %s",$2,$1,r,"\n";}'
 }
 sus(){ sort | uniq -c | sort "$@"; }
-eval "$(dircolors -b)"   # highlight broken symlinks
-stty -ixon   # disable flow control (to use ctrl+s in vim)
+eval "$(dircolors -b)" # highlight broken symlinks
+stty -ixon # disable flow control (to use ctrl+s in vim)
+# stty erase '^?' # backspace is the erase character
 shrug(){
   echo -n "¯\_(ツ)_/¯" | (xclip||xsel||pbcopy);echo "¯\_(ツ)_/¯ copied"
 }
