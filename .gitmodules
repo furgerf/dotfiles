@@ -115,9 +115,6 @@
 [submodule "vim/bundle/mathematic.vim"]
   path = vim/bundle/mathematic.vim
   url = git@github.com:Rykka/mathematic.vim
-[submodule "vim/bundle/gundo.vim"]
-  path = vim/bundle/gundo.vim
-  url = git@github.com:sjl/gundo.vim
 [submodule "vim/bundle/deleft.vim"]
   path = vim/bundle/deleft.vim
   url = git@github.com:AndrewRadev/deleft.vim.git
@@ -140,3 +137,6 @@
 [submodule "vim/bundle/vim-conjoin.git"]
   path = vim/bundle/vim-conjoin.git
   url = git@github.com:flwyd/vim-conjoin.git
+[submodule "vim/bundle/vim-mundo"]
+  path = vim/bundle/vim-mundo
+  url = git@github.com:simnalamburt/vim-mundo
