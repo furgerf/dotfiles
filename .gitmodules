@@ -137,6 +137,18 @@
 [submodule "vim/bundle/vim-conjoin.git"]
   path = vim/bundle/vim-conjoin.git
   url = git@github.com:flwyd/vim-conjoin.git
+[submodule "vim/bundle/black"]
+  path = vim/bundle/black
+  url = git@github.com:psf/black.git
+[submodule "vim/bundle/python-syntax"]
+  path = vim/bundle/python-syntax
+  url = git@github.com:vim-python/python-syntax
+[submodule "vim/bundle/vim-bbye"]
+  path = vim/bundle/vim-bbye
+  url = git@github.com:moll/vim-bbye
 [submodule "vim/bundle/vim-mundo"]
   path = vim/bundle/vim-mundo
   url = git@github.com:simnalamburt/vim-mundo
+[submodule "vim/bundle/vim-matchup"]
+  path = vim/bundle/vim-matchup
+  url = git@github.com:andymass/vim-matchup
