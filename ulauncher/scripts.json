@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Lock",
+    "description": "Lock desktop",
+    "icon": null,
+    "script": "/home/fabian/git/linux-scripts/fancy-lock",
+    "default_arguments": []
+  },
+  {
+    "name": "LastPass Login",
+    "description": "Log in on LastPass",
+    "icon": null,
+    "script": "LPASS_AGENT_TIMEOUT=0 /usr/bin/lpass",
+    "default_arguments": [ "login", "fabian.furger@sedimentum.com" ]
+  },
+  {
+    "name": "Caffeine",
+    "description": "Activate/deactivate caffeine",
+    "icon": null,
+    "script": "/usr/bin/caffeine",
+    "default_arguments": []
+  },
+  {
+    "name": "AutoRandR",
+    "description": "Run AutoRandR auto-configuration",
+    "icon": null,
+    "script": "/usr/bin/autorandr",
+    "default_arguments": ["--configure"]
+  },
+  {
+    "name": "VPN",
+    "description": "Toggle VPN connection status",
+    "icon": null,
+    "script": "/usr/bin/nmcli",
+    "default_arguments": ["connection", "$(nmcli connection | grep -q tun0 && echo down|| echo up)", "id", "ff-HPNotebook"]
+  },
+  {
+    "name": "NAS",
+    "description": "Toggle NAS connection status",
+    "icon": null,
+    "script": "/home/fabian/git/linux-scripts/nasctl",
+    "default_arguments": []
+  },
+  {
+    "name": "pgAdmin",
+    "description": "Start/stop pgAdmin",
+    "icon": null,
+    "script": "/opt/pgadmin/pgadmin",
+    "default_arguments": []
+  }
+]

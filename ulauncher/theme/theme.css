@@ -1,0 +1,51 @@
+@define-color accent #1793d1;
+@define-color accent_dark #051d2a;
+@define-color bg_color #1b1d24;
+@define-color light #d1e9f6;
+@define-color grey #aaa;
+
+.app {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-color: @accent;
+}
+
+.input {
+  color: @light;
+}
+
+.input *:selected, .input *:focus, *:selected:focus {
+  background-color: alpha (@accent_dark, 0.9);
+  color: @accent;
+}
+
+.item-text {
+  color: @grey;
+}
+.item-name {
+  color: @light;
+}
+
+.selected.item-box {
+  background: @accent_dark;
+}
+
+.selected.item-box .item-text {
+  color: @grey;
+}
+
+.selected.item-box .item-name {
+  color: @light;
+}
+
+.item-shortcut {
+  color: @light;
+}
+
+.selected.item-box .item-shortcut {
+  color: @accent;
+}
+
+.prefs-btn:hover {
+  background-color: @accent_dark;
+}
+
