@@ -58,6 +58,9 @@ prompt-file "$PWD/arch/ctags" "$HOME/.ctags.d/default.ctags"
 prompt-file "$PWD/arch/git-templates" "$HOME/.git-templates"
 prompt-file "$PWD/arch/gitignore" "$HOME/.gitignore"
 prompt-file "$PWD/arch/fonts" "$HOME/.fonts"
+prompt-file "$PWD/ipython/ipython_config.py" "$HOME/.ipython/profile_default/ipython_config.py"
+prompt-file "$PWD/ipython/10-imports.py" "$HOME/.ipython/profile_default/startup/10-imports.py"
+prompt-file "$PWD/ipython/20-defs.py" "$HOME/.ipython/profile_default/startup/20-defs.py"
 
 echo -e "\n*** LINUX (root)"
 prompt-file "$PWD/awesome/theme" "/usr/share/awesome/themes/mysty" sudo
