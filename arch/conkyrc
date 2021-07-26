@@ -9,9 +9,6 @@ conky.config = {
 	own_window_argb_visual = true,
 	own_window_argb_value = 180,
 	double_buffer = true,
---own_window_argb_visual true
---own_window_argb_value 100
---own_window_type desktop
 
 	maximum_width = 320,
 	draw_shades = false,
@@ -22,9 +19,10 @@ conky.config = {
 	default_shade_color = 'red',
 	default_outline_color = 'green',
 	alignment = 'top_left',
-	gap_x = 5,--1275
+	gap_x = 5,
 	gap_y = 21,
 	text_buffer_size = 2048,
+	music_player_interval = 5,-- doesn't matter if the corresponding variables aren't used
 
 	no_buffers = true,
 	uppercase = false,
@@ -33,93 +31,63 @@ conky.config = {
 	use_spacer = 'none',
 	short_units = true,
 
--- from weather stuff...
-	override_utf8_locale = true,
-	imlib_cache_size = 0,
-
---color0 4d79ff
-	color0 = '#1793D1',-- official ARCH color
-
+	color0 = '1793D1',-- official ARCH color,
+	font0 = 'Open Sans:bold:size=10', -- headers
+	font1 = 'Open Sans:bold:size=8' -- bold
 };
 
 conky.text = [[
 
-#${texeci 900 $HOME/1b2_accuweather_conkyweather_font/1b2}
 ${alignc 8}${font Open Sans:size=20}arch${color0}linux$font$color
-${alignc 8}${font Open Sans:size=10}${exec whoami}@$nodename
+${alignc 8}${font0}${exec whoami}@${no_update $nodename}
 
 # SYS
-${font Open Sans:Bold:size=10}${color0}SYSTEM${hr 2}$color${font}
-$sysname $kernel ($machine) $alignr Running for $alignr$uptime_short
-Temperature / Fan $alignr ${texecpi 30 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 36 103 "sensors | grep 'Package id 0:' | cut -d '+' -f 2 | cut -d '.' -f 1"}°$color / ${texeci 60 sensors | grep 'fan1:' | cut -c14-18}RPM
-System load $alignr${texeci 10 uptime | rev | cut -d ':' -f 1 | rev}
+${font0}${color0}SYSTEM${hr 2}$color$font
+$sysname $kernel ($machine) $alignr Running for $uptime_short
+System load $alignr${texecpi 10 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 2 8 "uptime | rev | cut -d' ' -f3 | rev | tr -d ,"}$color, ${texecpi 10 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 2 8 "uptime | rev | cut -d' ' -f2 | rev | tr -d ,"}$color, ${texecpi 10 $HOME/git/linux-scripts/conky/conkycolor 0xbebebe 0xff0000 2 8 "uptime | rev | cut -d' ' -f1 | rev | tr -d ,"}$color
 # CPU
-${font Open Sans:Bold:size=10}${color0}CPU${hr 2}$color${font}
-Intel i7 3520M${goto 120}${font Open Sans:Bold:size=8}${freq_g cpu0}GHz, ${cpu cpu0}%$font$alignr${texeci 300 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
-${cpugauge cpu0 20, 40}${goto 100}${cpugauge cpu1 20, 40}${goto 160}${cpugauge cpu2 20, 40}${goto 220}${cpugauge cpu3 20, 40}${goto 280}${cpugauge cpu4 20, 40}
-${goto 15}${cpu cpu0 20, 40}%${goto 110}${cpu cpu1 20, 40}%${goto 170}${cpu cpu2 20, 40}%${goto 230}${cpu cpu3 20, 40}%${goto 290}${cpu cpu4 20, 40}%
+${font0}${color0}CPU${hr 2}$color$font
+${exec cat /proc/cpuinfo | grep "model name" | head -1 | cut -d: -f2 | cut -d" " -f2,4}${goto 120}${font1}${freq_g cpu0}GHz, ${cpu cpu0}%$font$alignr${texeci 300 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
+${cpugauge cpu0 20, 40}${goto 100}${cpugraph cpu1 20, 40 000000 ffffff -t}${goto 160}${cpugraph cpu2 20, 40 000000 ffffff -t}${goto 220}${cpugraph cpu3 20, 40 000000 ffffff -t}${goto 280}${cpugraph cpu4 20, 40 000000 ffffff -t}
+${goto 20}${cpu cpu0 20, 40}%${goto 100}${cpugraph cpu5 20, 40 000000 ffffff -t}${goto 160}${cpugraph cpu6 20, 40 000000 ffffff -t}${goto 220}${cpugraph cpu7 20, 40 000000 ffffff -t}${goto 280}${cpugraph cpu8 20, 40 000000 ffffff -t}
 ${cpugraph cpu0 20, 316 000000 ffffff -t}
 # PROCESSES
-${font Open Sans:Bold:size=10}${color0}PROCESSES${hr 2}$color$font
-${font Open Sans:Bold:size=8}Process${goto 110}CPU%${goto 170}Process${goto 280}Mem$font
+${font0}${color0}PROCESSES${hr 2}$color$font
+${font1}Process${goto 110}CPU%${goto 170}Process${goto 280}Mem$font
 ${top name 1}${goto 110}${top cpu 1}${goto 170}${top_mem name 1}${goto 280}${top_mem mem_res 1}
 ${top name 2}${goto 110}${top cpu 2}${goto 170}${top_mem name 2}${goto 280}${top_mem mem_res 2}
 ${top name 3}${goto 110}${top cpu 3}${goto 170}${top_mem name 3}${goto 280}${top_mem mem_res 3}
 ${top name 4}${goto 110}${top cpu 4}${goto 170}${top_mem name 4}${goto 280}${top_mem mem_res 4}
 ${top name 5}${goto 110}${top cpu 5}${goto 170}${top_mem name 5}${goto 280}${top_mem mem_res 5}
 # MEMORY
-${font Open Sans:Bold:size=10}${color0}MEMORY${hr 2}$color${font}
-${font Open Sans:bold:size=8}RAM:$font${goto 60}${mem}${goto 92}/ ${memmax}${goto 130}(${memperc}%)${goto 162}${membar}
-${font Open Sans:bold:size=8}SWAP:$font${goto 60}${swap}${goto 92}/ ${swapmax}${goto 130}(${swapperc}%)${goto 162}${swapbar}
-${font Open Sans:bold:size=8}ROOT:$font ${goto 60}${fs_used /} ${goto 92}/ ${fs_size /}${goto 130}(${fs_used_perc /}%)${goto 162}${fs_bar /}
-${font Open Sans:bold:size=8}DATA:$font ${goto 60}${fs_used /data} ${goto 92}/ ${fs_size /data}${goto 130}(${fs_used_perc /data}%)${goto 162}${fs_bar /data}
+${font0}${color0}MEMORY${hr 2}$color$font
+${font1}RAM:$font${goto 60}${mem}${goto 92}/ ${memmax}${goto 130}(${memperc}%)${goto 162}${membar}
+${font1}SWAP:$font${goto 60}${swap}${goto 92}/ ${swapmax}${goto 130}(${swapperc}%)${goto 162}${swapbar}
+${font1}ROOT:$font ${goto 60}${fs_used /} ${goto 92}/ ${fs_size /}${goto 130}(${fs_used_perc /}%)${goto 162}${fs_bar /}
 # NETWORK
-${font Open Sans:Bold:size=10}${color0}NETWORK${hr 2}$color$font
-${font Open Sans:Bold:size=8}WAN$font${goto 80}${texeci 1800 /home/fabian/git/linux-scripts/conky/get-wan}
-${font Open Sans:Bold:size=8}raspi$font${goto 80}${texeci 1800 cat $HOME/Dropbox/Apps/Raspi314/raspi-ip}
-${font Open Sans:Bold:size=8}enp0s25$font${goto 80}${addr enp0s25}$alignr${downspeedf enp0s25} kbps (${totaldown enp0s25})
-${font Open Sans:Bold:size=8}wlp3s0$font${goto 80}${addr wlp3s0} (${wireless_link_qual wlp3s0}%)$alignr${downspeedf wlp3s0} kbps (${totaldown wlp3s0})
-${downspeedgraph enp0s25 20, 316 000000 ffffff -t}
-${voffset -33}${downspeedgraph wlp3s0 20, 320 000000 ffffff -t}
-# WEATHER
-#${font Open Sans:Bold:size=10}${color0}WEATHER${font Open Sans:size=6} (Baar, ${execi 120 stat -c %y $HOME/1b2_accuweather_conkyweather_font/curr_cond | cut -d' ' -f2 | cut -d: -f1-2})${hr 2}$font$color
-#${font conkyweather:size=60}${execi 120  sed -n '27p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}${font} ${voffset -76}
-#$alignr${execi 120 sed -n '28p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}, ${execi 120 sed -n '29p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}\
-#°C (feels like ${execi 120 sed -n '30p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}°C)
-#$alignr Sun: ${execi 120 sed -n '37p' $HOME/1b2_accuweather_conkyweather_font/curr_cond} - ${execi 120 sed -n '38p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}
-#$alignr Clouds: ${execi 120 sed -n '34p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}, UV: ${execi 120 sed -n '33p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}
-#$alignr Humidity: ${execi 120 sed -n '31p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}, Visibility: ${execi 120 sed -n '35p' $HOME/1b2_accuweather_conkyweather_font/curr_cond}
-#$alignr Wind: ${execi 120 sed -n '33p' $HOME/1b2_accuweather_conkyweather_font/curr_cond} (${execi 120 sed -n '36p' $HOME/1b2_accuweather_conkyweather_font/curr_cond})
-#${hr 1}
-#${font conkyweather:size=20}${execi 120 sed -n '25p' $HOME/1b2_accuweather_conkyweather_font/first_days}${font}
-#${voffset -26} ${goto 50} ${font Open Sans:size=10:Bold}Today$font $alignr${execi 120 sed -n '26p' $HOME/1b2_accuweather_conkyweather_font/first_days}\
-#°C (feels like ${execi 120 sed -n '27p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C), Percip: ${execi 120 sed -n '28p' $HOME/1b2_accuweather_conkyweather_font/first_days}
-#${font Open Sans:size=7} $alignr ${execi 120 sed -n '29p' $HOME/1b2_accuweather_conkyweather_font/first_days}${font}
-#${hr 1}
-#${font conkyweather:size=20}${execi 120 sed -n '30p' $HOME/1b2_accuweather_conkyweather_font/first_days}${font}
-#${voffset -26} ${goto 50} ${font Open Sans:size=10:Bold}Tonight$font $alignr${execi 120 sed -n '31p' $HOME/1b2_accuweather_conkyweather_font/first_days}\
-#°C (feels like ${execi 120 sed -n '32p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C), Percip: ${execi 120 sed -n '33p' $HOME/1b2_accuweather_conkyweather_font/first_days}
-#${font Open Sans:size=7}$alignr${execi 120 sed -n '34p' $HOME/1b2_accuweather_conkyweather_font/first_days}${font}
-#${hr 1}
-#${font conkyweather:size=20}${goto 25}${execi 120 sed -n '6p' $HOME/1b2_accuweather_conkyweather_font/first_days}${goto 105}${execi 120 sed -n '11p' $HOME/1b2_accuweather_conkyweather_font/first_days}${goto 195}\
-#${execi 120 sed -n '16p' $HOME/1b2_accuweather_conkyweather_font/first_days}${goto 280}\
-#${execi 120 sed -n '21p' $HOME/1b2_accuweather_conkyweather_font/first_days}${font}
-#${font Open Sans:Bold:size=8}${execi 120 sed -n '5p' $HOME/1b2_accuweather_conkyweather_font/first_days | cut -c1-3}$font   \
-#${execi 120 sed -n '9p' $HOME/1b2_accuweather_conkyweather_font/first_days}-${execi 120 sed -n '8p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C \
-#${goto 90}${font Open Sans:Bold:size=8}${execi 120 sed -n '10p' $HOME/1b2_accuweather_conkyweather_font/first_days | cut -c1-3}$font   \
-#${execi 120 sed -n '14p' $HOME/1b2_accuweather_conkyweather_font/first_days}-${execi 120 sed -n '13p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C \
-#${goto 180}${font Open Sans:Bold:size=8}${execi 120 sed -n '15p' $HOME/1b2_accuweather_conkyweather_font/first_days | cut -c1-3}$font   \
-#${execi 120 sed -n '19p' $HOME/1b2_accuweather_conkyweather_font/first_days}-${execi 120 sed -n '18p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C \
-#$alignr${font Open Sans:Bold:size=8}${execi 120 sed -n '20p' $HOME/1b2_accuweather_conkyweather_font/first_days | cut -c1-3}$font   \
-#${execi 120 sed -n '24p' $HOME/1b2_accuweather_conkyweather_font/first_days}-${execi 120 sed -n '23p' $HOME/1b2_accuweather_conkyweather_font/first_days}°C \
+${font0}${color0}NETWORK${hr 2}$color$font
+${font1}WAN$font${goto 80}${texeci 1800 /home/fabian/git/linux-scripts/conky/get-wan}
+#${font1}raspi$font${goto 80}${texeci 1800 cat $HOME/Dropbox/Apps/Raspi314/raspi-ip}
+${font1}enp0s31f6$font${goto 80}${addr enp0s31f6}$alignr${downspeedf enp0s31f6} kbps (${totaldown enp0s31f6})
+${font1}wlp2s0$font${goto 80}${addr wlp2s0} ${if_match "${addr wlp2s0}" != "No Address"}(${wireless_link_qual wlp2s0}%)${endif}$alignr${downspeedf wlp2s0} kbps (${totaldown wlp2s0})
+${downspeedgraph enp0s31f6 20, 316 000000 ffffff -t}
+${voffset -33}${downspeedgraph wlp2s0 20, 320 000000 ffffff -t}
 ## APPOINTMENTS
-#${font Open Sans:Bold:size=10}${color0}APPOINTMENTS${hr 2}$font$color
-#${execpi 3600 $HOME/git/linux-scripts/conky/gcalcli.lua}
+#${font0}${color0}APPOINTMENTS${hr 2}$font$color
+#${texecpi 3600 $HOME/git/linux-scripts/conky/gcalcli.lua}
 # MUSIC
-${execpi 5 $HOME/git/linux-scripts/conky/clementine-dbus $HOME/git/linux-scripts/conky/rp.png}
+${texecpi 5 $HOME/git/linux-scripts/conky/clementine-dbus $HOME/git/linux-scripts/conky/rp.png}
+# UPDATES
+${font0}${color0}UPDATES${hr 2}$font$color
+${texecpi 3600 $HOME/git/linux-scripts/conky/check-for-updates}
+
 # TODO
-${font Open Sans:Bold:size=10}${color0}TODO${hr 2}$font$color
-${texeci 600 cat -n $HOME/Dropbox/misc/misc/todo.txt}
+#${font0}${color0}TODO${hr 2}$font$color
+#${texeci 600 cat -n $HOME/notes/elitebook.txt}
+
+
+
+
 
 
 

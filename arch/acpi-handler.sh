@@ -4,74 +4,46 @@
 
 case "$1" in
   ac_adapter)
-    DISPLAY=:0 su -c - fabian /home/fabian/git/linux-scripts/backlight
+    DISPLAY=:0 /home/fabian/git/linux-scripts/backlight on
     ;;
   button/lid)
-    case "$3" in
-      close)
-        DISPLAY=:0 su -c - fabian slock &
-        ;;
-      *)
-        logger "ACPI action undefined: $3"
-        ;;
-    esac
     ;;
   button/wlan)
-    rfkill list wlan | grep 'Soft blocked: yes'
-    if [ "$?" -eq 0 ]; then
-      rfkill block wlan
-    else
-      rfkill unblock wlan
-    fi
     ;;
-
-  # other NOPs
+  jack/lineout)
+    ;;
+  jack/videoout)
+    ;;
   jack/headphone)
+    ;;
+  jack/microphone)
     ;;
   cd/play)
     ;;
-
-  # actions that are handled elsewhere:
   button/mute)
-    # handled by awesome
-    #amixer sset Master toggle
     ;;
   button/f20)
-    # handled by awesome
-    #amixer set Master toggle <- doesn't do what it should
-    #amixer -D pulse set Master Playback Switch toggle <- does what it should but doesn't work fro here
     ;;
   button/volumeup)
-    # handled by awesome
-    #amixer sset Master unmute
-    #amixer set Master 3%+
     ;;
   button/volumedown)
-    # handled by awesome
-    #amixer sset Master unmute
-    #amixer set Master 3%-
     ;;
   button/screenlock)
-    # handled by awesome
-    #DISPLAY=:0 su -c - fabian /usr/bin/slock &
-    #DISPLAY=:0 su -c - fabian /usr/bin/xset dpms force off
-    #DISPLAY=:0 su -c - fabian slock &> /tmp/foo &
     ;;
   button/sleep)
-    #DISPLAY=:0 su -c - fabian /usr/bin/slock &
     ;;
   video/brightnessup)
-    # handled by awesome
     ;;
   video/brightnessdown)
-    # handled by awesome
     ;;
-  ibm/hotkey)
-    # handled by awesome
+  battery)
     ;;
-  #    cd/play);;
-  #    cd/prev);;
-  #    cd/next);;
+  processor)
+    ;;
+  thermal_zone)
+    ;;
+  95F24279-4D7B-)
+    ;;
   *)
     logger "ACPI group/action not handled: $1 / $2"
     ;;
