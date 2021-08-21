@@ -27,3 +27,13 @@ let g:syntastic_check_on_open = 0
 unmap <Leader>f
 nmap <Leader>f :echoerr "Don't format!!"<CR>
 
+let g:python_highlight_all = 1
+let g:python_highlight_file_headers_as_comments = 1
+let g:python_highlight_func_calls = 0
+
+let g:black_quiet = 1
+let g:black_linelength = 120
+let g:black_virtualenv = '~/.cache/black/virtualenv'
+
+autocmd BufWritePre ~/git/sedimentum/*.py execute ':Black'
+
