@@ -143,6 +143,7 @@
 [submodule "vim/bundle/python-syntax"]
   path = vim/bundle/python-syntax
   url = git@github.com:vim-python/python-syntax
+  ignore = untracked
 [submodule "vim/bundle/vim-bbye"]
   path = vim/bundle/vim-bbye
   url = git@github.com:moll/vim-bbye

@@ -149,8 +149,8 @@
   ###########################
   # recursively initialize submodules (after cloning a repo)
   sub-init = !git submodule update --init --recursive
-  # pull all submodules
-  sub-update = !git submodule foreach git pull origin master
+  # pull all submodules - also handles default branches not named "master"
+  sub-update = !git submodule foreach 'git pull origin "$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"'
 [push]
   default = matching
 [http]
