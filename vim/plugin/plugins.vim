@@ -33,7 +33,7 @@ let g:ctrlp_custom_ignore = {
   \ }
 let g:ctrlp_switch_buffer = 0 " always open files in new buffers
 " define map for opening CtrlP for tags instead of files (probably quite slow!)
-nnoremap <Leader>p :CtrlPTag<CR>
+nnoremap <Leader>pt :CtrlPTag<CR>
 "}}}
 
 " UltiSnips "{{{
@@ -186,9 +186,7 @@ nnoremap <Leader>si :SyntasticInfo<CR>
 " by default, use parent directory
 " but also use subdirectories (and their index notes)
 let g:notes_directories = [
-      \ '~/Dropbox/notes',
-      \ '~/Dropbox/notes/programming',
-      \ '~/Dropbox/notes/mse'
+      \ '~/SynologyDrive/fabian/Misc/Notes'
       \ ]
 
 " append .txt for windows
@@ -233,11 +231,11 @@ nnoremap <LocalLeader>kh :KeyHelper<CR>
 inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>
 "}}}
 
-" gundo.vim "{{{
-if has('python3')
-  let g:gundo_prefer_python3 = 1
-endif
-noremap <Leader>u :GundoToggle<CR>
+" vim-mundo "{{{
+" if has('python3')
+"   let g:gundo_prefer_python3 = 1
+" endif
+noremap <Leader>u :MundoToggle<CR>
 "}}}
 
 " vim-easymotion "{{{
@@ -254,5 +252,7 @@ let g:EasyMotion_space_jump_first = 1
 " Don't open preview when completing
 let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
+let g:ycm_auto_hover = ''
+nmap <leader>D <plug>(YCMHover)
 "}}}
 

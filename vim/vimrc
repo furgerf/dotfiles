@@ -153,3 +153,9 @@ let g:tex_flavor = "latex"
 " macro to close fold and go to the next line
 let @q = 'zc<CR>'
 
+" redefine `gx` as a workaround until it's fixed...
+nmap gx yiW:!xdg-open <cWORD><CR> <C-r>" & <CR><CR>
+
+" helps e.g. with gitgutter
+set updatetime=200
+

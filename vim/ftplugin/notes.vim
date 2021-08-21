@@ -20,5 +20,5 @@ hi! OverLength none
 nnoremap <Localleader>nh :NoteToHtml<CR>
 nnoremap <Localleader>nm :NoteToMarkdown<CR>
 
-:call functions#TurnOnMathematicMode()
+" :call functions#TurnOnMathematicMode()
 

@@ -30,7 +30,7 @@ nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gl :Glog<CR>
 nnoremap <Leader>ge :Gedit<CR>
-nnoremap <Leader>gc :Gcommit<CR>
+nnoremap <Leader>gc :Git commit<CR>
 " nnoremap <Leader>gm :Gmove<CR>
 " nnoremap <Leader>grm :Gremove<CR>
 "}}}

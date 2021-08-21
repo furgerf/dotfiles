@@ -32,6 +32,9 @@ nnoremap <Leader>rn :call functions#RenameFile()<CR>
 " yank entire file
 nnoremap <Leader>y ggVGy
 
+" " paste from system clipboard
+" nnoremap <Leader>p :read! xclip -o<CR>
+
 " remove trailing whitelines
 nnoremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 " convert tabs to whitespace
@@ -56,7 +59,7 @@ nnoremap <silent> <Leader>q :nohlsearch<CR>
 " close preview, quickfix, location list
 " NOTE: Since the location list is local to the window, only the one in the current window is closed
 " The function `functions#ToggleErrors` could be adapted to close all location lists
-nnoremap <silent> <Leader><Localleader> :pclose<CR>:cclose<CR>:lclose<CR>
+nnoremap <silent> <Leader><Localleader> :call functions#CloseExtraBuffers()<CR>
 
 " start opening help (manual)
 nnoremap <Leader>h<Space> :help 

@@ -13,7 +13,8 @@ nnoremap <C-c> :q<CR>
 nnoremap <C-q> :qa<CR>
 
 " Backspace deletes buffer.
-nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>:bd<CR>
+nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>
+nnoremap <silent> <Leader><BS> :Bwipeout<CR>
 
 noremap <silent> <F5> :e<CR>
 noremap <silent> <Leader><F5> :windo :e<CR>

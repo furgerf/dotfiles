@@ -42,15 +42,19 @@ function! functions#HelpInNewTab()
   endif
 endfunction
 
+function! functions#CloseExtraBuffers()
+  pclose
+  cclose
+  lclose
+endfunction
+
 " closes the current buffer or exits vim if the current buffer is empty
 function! functions#DeleteBufferOrExit()
   if line('$') == 1 && getline(1) == ''
-    q
+    qa
   else
-    " close location list
-    lclose
-    " just doing `bd` seems to close two buffers (?)
-    exec "normal! :bd<CR>"
+    call functions#CloseExtraBuffers()
+    bwipeout
   endif
 endfunction
 
