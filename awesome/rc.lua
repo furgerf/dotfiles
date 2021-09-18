@@ -128,12 +128,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- {{{ Tags
+-- TODO apply tags to new screens
 tyrannical.tags = {
   {
     name        = "~",
     layout      = awful.layout.suit.fair,
     position = 1,
-    screen = {1, 2},
+    screen = { 1, 2, 3 }, -- TODO on *all* screens
     fallback = true,
     selected = true
   },
@@ -141,9 +142,9 @@ tyrannical.tags = {
     name        = "➋ ·web·🌏",
     layout      = awful.layout.suit.fair,
     position = 2,
-    force_screen = true,
+    -- force_screen = true,
     init = false,
-    no_focus_stealing_in = true,
+    -- no_focus_stealing_in = true,
     class = { "firefox" },
   },
   {
@@ -152,7 +153,7 @@ tyrannical.tags = {
     position = 3,
     init = false,
     volatile = true,
-    class = {"Okular", "libreoffice.*"},
+    class = { "libreoffice-writer", "Jamulus", "okular", "cloud-drive-ui" },
   },
   {
     name        = "➍ ·code·💡",
@@ -180,11 +181,14 @@ tyrannical.tags = {
   },
   {
     name        = "➐ ·foo",
-    layout      = awful.layout.suit.tile.bottom,
+    layout      = awful.layout.suit.fair,
     position    = 7,
+    -- exclusive = true,
     init = false,
     volatile = true,
-    master_width_factor      = 0.7,
+    master_width_factor = 0.66,
+    force_screen = 1,
+    class = { "Signal", "Spotify", "Slack", "Franz" },
   },
   {
     name        = "➑ ·bar",
@@ -201,7 +205,7 @@ tyrannical.tags = {
     init = false,
     volatile = true,
     exclusive = true,
-    class = { "Gimp" }
+    class = { "Gimp-2.10" }
   },
 }
 -- }}}
@@ -275,14 +279,14 @@ local function update_wallpaper(callback)
   end)
 end
 local function set_wallpaper(s)
-    -- Wallpaper
-    if current_wallpaper then
-        -- If wallpaper is a function, call it with the screen
-        if type(current_wallpaper) == "function" then
-            current_wallpaper = current_wallpaper(s)
-        end
-        gears.wallpaper.maximized(current_wallpaper, s, true)
+  -- Wallpaper
+  if current_wallpaper then
+    -- If wallpaper is a function, call it with the screen
+    if type(current_wallpaper) == "function" then
+      current_wallpaper = current_wallpaper(s)
     end
+    gears.wallpaper.maximized(current_wallpaper, s, true)
+  end
 end
 
 function wallpaper_timer_callback()
@@ -304,48 +308,48 @@ wallpaper_timer = gears.timer({
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
+  -- Wallpaper
+  set_wallpaper(s)
 
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-      awful.button({ }, 1, function () awful.layout.inc( 1) end),
-      awful.button({ }, 3, function () awful.layout.inc(-1) end),
-      awful.button({ }, 4, function () awful.layout.inc( 1) end),
-      awful.button({ }, 5, function () awful.layout.inc(-1) end))
-    )
-    -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-      screen  = s,
-      filter  = awful.widget.taglist.filter.all,
-      buttons = taglist_buttons
-    }
-
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-      screen  = s,
-      filter  = awful.widget.tasklist.filter.currenttags,
-      buttons = tasklist_buttons
-    }
-
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
-
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-      layout = wibox.layout.align.horizontal,
-      { -- Left widgets
-      layout = wibox.layout.fixed.horizontal,
-      s.mytaglist,
-      s.mypromptbox,
-    },
-    s.mytasklist, -- Middle widget
-    gears.table.join(shared_widgets, { s.mylayoutbox })
+  -- Create a promptbox for each screen
+  s.mypromptbox = awful.widget.prompt()
+  -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+  -- We need one layoutbox per screen.
+  s.mylayoutbox = awful.widget.layoutbox(s)
+  s.mylayoutbox:buttons(gears.table.join(
+  awful.button({ }, 1, function () awful.layout.inc( 1) end),
+  awful.button({ }, 3, function () awful.layout.inc(-1) end),
+  awful.button({ }, 4, function () awful.layout.inc( 1) end),
+  awful.button({ }, 5, function () awful.layout.inc(-1) end))
+  )
+  -- Create a taglist widget
+  s.mytaglist = awful.widget.taglist {
+    screen  = s,
+    filter  = awful.widget.taglist.filter.all,
+    buttons = taglist_buttons
   }
+
+  -- Create a tasklist widget
+  s.mytasklist = awful.widget.tasklist {
+    screen  = s,
+    filter  = awful.widget.tasklist.filter.currenttags,
+    buttons = tasklist_buttons
+  }
+
+  -- Create the wibox
+  s.mywibox = awful.wibar({ position = "top", screen = s })
+
+  -- Add widgets to the wibox
+  s.mywibox:setup {
+    layout = wibox.layout.align.horizontal,
+    { -- Left widgets
+    layout = wibox.layout.fixed.horizontal,
+    s.mytaglist,
+    s.mypromptbox,
+  },
+  s.mytasklist, -- Middle widget
+  gears.table.join(shared_widgets, { s.mylayoutbox })
+}
 end)
 -- }}}
 
@@ -397,7 +401,9 @@ globalkeys = gears.table.join(
         client.focus:raise()
       end
     end, {description = "go back", group = "client"}),
-  awful.key({ modkey,           }, "o", function () awful.screen.focus_relative(3) end,
+  awful.key({ modkey,           }, "o", function () awful.screen.focus_relative(1) end,
+    {description = "cycle focus through screens", group = "client"}),
+  awful.key({ modkey, ctrlkey   }, "o", function () awful.screen.focus_relative(-1) end,
     {description = "cycle focus through screens", group = "client"}),
 
   -- layout manipulation
@@ -443,9 +449,9 @@ globalkeys = gears.table.join(
     {description = "reload awesome", group = "awesome"}),
   --awful.key({ modkey, shiftkey  }, "q", awesome.quit,
     --{description = "quit awesome", group = "awesome"}),
-  awful.key({ modkey,           }, "s", hotkeys_popup.show_help,
+  awful.key({ modkey,           }, "a", hotkeys_popup.show_help,
     {description="show help", group="awesome"}),
-  awful.key({ modkey            }, "a", hints.focus,
+  awful.key({ modkey            }, "s", hints.focus,
     {description = "display client selection hints", group = "awesome"}),
   awful.key({ modkey, ctrlkey   }, "n", naughty.destroy_all_notifications,
     {description = "remove all notifications", group = "awesome"}),
@@ -462,10 +468,10 @@ globalkeys = gears.table.join(
       naughty.notify({ text = "Clearing swap before suspending", timeout = 90 })
       awful.spawn("sudo bash -c 'swapoff -a; swapon -a; s2disk'")
     end, {description = "clear swap and hibernate system", group = "special keys"}),
-  awful.key({                   }, "XF86ScreenSaver", function ()
-      awful.spawn("slock")
-      awful.spawn("xset dpms force standby")
+  awful.key({ modkey            }, "BackSpace", function ()
+      awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/fancy-lock")
     end, {description = "lock system", group = "special keys"}),
+
   awful.key({                   }, "XF86AudioRaiseVolume", function ()
       awful.spawn("pulseaudio-ctl mute no")
       awful.spawn("pulseaudio-ctl up")
@@ -498,26 +504,26 @@ globalkeys = gears.table.join(
       awful.spawn("pulseaudio-ctl mute no")
       awful.spawn("pulseaudio-ctl down 100")
     end, {description = "decrease volume by 100", group = "special keys"}),
-  awful.key({                   }, "XF86AudioMicMute", function () awful.spawn("pulseaudio-ctl mute") end, -- use mic mute because normal mute doesn't work
+  awful.key({                   }, "XF86AudioMute", function () awful.spawn("pulseaudio-ctl mute") end,
     {description = "toggle audio mute", group = "special keys"}),
 
-  awful.key({                   }, "XF86Display", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor-2") end,
+  awful.key({                   }, "XF86Display", function () awful.spawn(os.getenv("HOME") .. "/git/linux-scripts/monitor") end,
     {description = "toggle external display", group = "special keys"}),
   awful.key({ modkey            }, "F6", function () awful.spawn("sh -c 'killall picom || picom'") end,
     {description = "toggle picom", group = "special keys"}),
-  awful.key({                   }, "Print", function ()
-    awful.spawn("scrot -e 'mv $f /data/image/screenshots/archlinux'") end,
-    {description = "take screenshot", group = "special keys"}),
-  awful.key({ altkey            }, "Print", function ()
-    awful.spawn("scrot -u -e 'mv $f /data/image/screenshots/archlinux'") end,
-    {description = "take screenshot of current window", group = "special keys"}),
+  awful.key({ modkey            }, "v", function () awful.spawn("xfce4-popup-clipman") end,
+    {description = "popup clipboard manager", group = "special keys"}),
+  awful.key({                   }, "Print", function () awful.spawn("xfce4-screenshooter --region --clipboard") end,
+    {description = "take screenshot of region in clipboard", group = "special keys"}),
+  awful.key({ shiftkey          }, "Print", function () awful.spawn("xfce4-screenshooter --window --clipboard") end,
+    {description = "take screenshot of current window in clipboard", group = "special keys"}),
+  awful.key({ modkey            }, "Print", function () awful.spawn("xfce4-screenshooter") end,
+    {description = "take custom screenshot", group = "special keys"}),
   awful.key({ modkey            }, "F4", function () awful.spawn("xset dpms force standby")  end,
     {description = "(try to) turn off screen", group = "special keys"}),
-  -- awful.key({ modkey            }, "r",      function () awful.spawn("bashrun") end),
   awful.key({ modkey            }, "e",      function () awful.spawn("thunar -- " .. os.getenv("HOME") .. "/Desktop") end,
     {description = "open file explorer", group = "special keys"}),
-  awful.key({ modkey, shiftkey  }, "f",      function () awful.spawn_with_shell("notify-send -t 20000 \"$(fortune)\"") end, -- TODO: fix
-    {description = "show fortune", group = "special keys"}),
+
   -- awful.key({ modkey, ctrlkey   }, "t", function () -- TODO: fix translation script
   --   local clip = awful.util.pread("xclip -o")
   --   if clip then
@@ -537,18 +543,18 @@ globalkeys = gears.table.join(
     {description = "open a terminal", group = "launcher"}),
   awful.key({ modkey            }, "r", function () awful.screen.focused().mypromptbox:run() end,
     {description = "run prompt", group = "launcher"}),
-  awful.key({ modkey }, "p", function() menubar.show() end,
-    {description = "show the menubar", group = "launcher"}),
-  awful.key({ modkey            }, "x", function ()
-      awful.prompt.run({
-        prompt       = "Run Lua code: ",
-        textbox      = awful.screen.focused().mypromptbox.widget,
-        exe_callback = awful.util.eval,
-        history_path = awful.util.get_cache_dir() .. "/history_eval"
-      })
-    end, {description = "run lua execute prompt", group = "launcher"}),
-  awful.key({ altkey,           }, "q", menubar.show,
-    {description = "show the application launcher", group = "launcher"}),
+  -- awful.key({ modkey }, "p", function() menubar.show() end,
+  --   {description = "show the menubar", group = "launcher"}),
+  -- awful.key({ modkey            }, "x", function ()
+  --     awful.prompt.run({
+  --       prompt       = "Run Lua code: ",
+  --       textbox      = awful.screen.focused().mypromptbox.widget,
+  --       exe_callback = awful.util.eval,
+  --       history_path = awful.util.get_cache_dir() .. "/history_eval"
+  --     })
+  --   end, {description = "run lua execute prompt", group = "launcher"}),
+  -- awful.key({ altkey,           }, "q", menubar.show,
+  --   {description = "show the application launcher", group = "launcher"}),
   awful.key({ modkey,           }, "w", function () run_webprompt("Wiki: ", "https://en.wikipedia.org/wiki/", "wiki") end,
     {description = "run wiki prompt", group = "launcher"}),
   awful.key({ modkey, shiftkey  }, "w", function () run_webprompt("ArchWiki: ", "http://wiki.archlinux.org/index.php/", "archwiki") end,
@@ -675,12 +681,13 @@ for i = 1, 9 do
     awful.screen.focus(tag.screen)
   end, {description = "view tag #" .. i, group = "tag"}),
 
-  -- Toggle tag display.
-  awful.key({ modkey, controlkey }, "#" .. i + 9, function ()
-    local tag = retrieve_tag_by_position(i)
-    if tag == nil then return end
-    awful.tag.viewtoggle(tag)
-  end, {description = "toggle tag #" .. i, group = "tag"}),
+  -- TODO fix those
+  -- -- Toggle tag display.
+  -- awful.key({ modkey, controlkey }, "#" .. i + 9, function ()
+  --   local tag = retrieve_tag_by_position(i)
+  --   if tag == nil then return end
+  --   awful.tag.viewtoggle(tag)
+  -- end, {description = "toggle tag #" .. i, group = "tag"}),
 
   -- Move client to tag.
   awful.key({ modkey, shiftkey }, "#" .. i + 9, function ()
@@ -689,15 +696,15 @@ for i = 1, 9 do
     if tag == nil then return end
     client.focus:move_to_tag(tag)
     tag:view_only()
-  end, {description = "move focused client to tag #" .. i, group = "tag"}),
+  end, {description = "move focused client to tag #" .. i, group = "tag"})
 
-  -- Toggle tag on focused client.
-  awful.key({ modkey, controlkey, shiftkey }, "#" .. i + 9, function ()
-    if not client.focus then return end
-    local tag = retrieve_tag_by_position(i)
-    if tag == nil then return end
-    client.focus:toggle_tag(tag)
-  end, {description = "toggle focused client on tag #" .. i, group = "tag"})
+  -- -- Toggle tag on focused client.
+  -- awful.key({ modkey, controlkey, shiftkey }, "#" .. i + 9, function ()
+  --   if not client.focus then return end
+  --   local tag = retrieve_tag_by_position(i)
+  --   if tag == nil then return end
+  --   client.focus:toggle_tag(tag)
+  -- end, {description = "toggle focused client on tag #" .. i, group = "tag"})
   )
 end
 
@@ -781,12 +788,14 @@ awful.rules.rules =
       class = {
         "Arandr",
         "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+        "tridactyl_editor",
       },
       -- Note that the name property shown in xprop might be set slightly after creation of the client
       -- and the name shown there might not match defined rules here.
       name = {
         "Event Tester",  -- xev.
         "File Operation Progress",
+        "Tridactyl Editor",
       },
       role = {
         "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
@@ -794,16 +803,29 @@ awful.rules.rules =
     },
     properties = { floating = true }
   },
+  {
+    -- workaroud
+    rule_any = { class = { "Signal", "Spotify", "Slack", "Franz" } },
+    properties = { screen = 1, maximized = true }
+  },
+  {
+    rule_any = { class = { "Ulauncher" } },
+    properties = { floating = true, border_width = 0 }
+  },
   -- {
-  --   -- Add titlebars to normal clients and dialogs
-  --   rule_any = {type = { "normal", "dialog" } },
-  --   properties = { titlebars_enabled = true }
+  --   rule_any = { class = { "Xfce4-terminal" } },
+  --   properties = { intrusive = true, floating = true }
   -- },
-  -- {
-  --   -- Set Firefox to always map on the tag named "2" on screen 1.
-  --   rule = { class = "Firefox" },
-  --   properties = { screen = 1, tag = "2" }
-  -- },
+  {
+    rule_any = { class = { "Jamulus", "cloud-drive-ui" } },
+    properties = { floating = false }
+  },
+}
+-- tyrannical.properties.floating = {
+--   "Ulauncher",
+-- }
+tyrannical.properties.minimized = {
+  "Signal", "Spotify", "Franz"
 }
 -- }}}
 
@@ -874,7 +896,9 @@ local function is_class_opaque(class_name)
     "plugin-container",
     "firefox",
     "geeqie",
-    "gimp",
+    "gimp*",
+    "zoom",
+    "slack",
     "chromium"
   }
 
@@ -891,7 +915,7 @@ client.connect_signal("focus", function(c)
   if is_class_opaque(c.class) then
     c.opacity = 1
   else
-    c.opacity = beautiful.active_opacity or 0.95
+    c.opacity = beautiful.active_opacity
   end
 end)
 client.connect_signal("unfocus", function(c)
@@ -899,8 +923,11 @@ client.connect_signal("unfocus", function(c)
   if is_class_opaque(c.class) then
     c.opacity = 1
   else
-    c.opacity = beautiful.inactive_opacity or 0.93
+    c.opacity = beautiful.inactive_opacity
   end
 end)
+
+-- work around unsorted tags on main screen: open a new tag (triggers sorting) and then remove it again
+awful.spawn.easy_async("sleep 0.1",function() retrieve_tag_by_position(8):delete() end)
 -- }}}
 

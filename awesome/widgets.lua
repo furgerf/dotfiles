@@ -9,39 +9,41 @@ local gears = require("gears")
 
 local mywidgets = {}
 
--- TODO: Suspend widgets when they're not needed
 -- TODO: Add "powersave" mode for widgets
+-- TODO: Check out new widgets https://vicious.readthedocs.io/en/latest/widgets.html
 -- }}}
 
 -- {{{ Utils
-local function get_layout_widget(icon, widget, bg_color)
-  -- local background = bg_color ~= nil and bg_color or beautiful.widget_bg
-  local background = beautiful.widget_bg
+local function get_layout_widget(icon, widget)
   return wibox.layout({
     {
       icon,
-      bg = background,
+      bg = beautiful.widget_bg,
       widget = wibox.container.background
     },
     {
       widget,
-      bg = background,
+      bg = beautiful.widget_bg,
       widget = wibox.container.background
     },
     layout = wibox.layout.fixed.horizontal
   })
 end
+
+local function get_graph_widget(max_value)
+  return wibox.widget {
+    width = beautiful.widget_width,
+    border_color = beautiful.widget_border,
+    background_color = gears.color.transparent,
+    widget = wibox.widget.graph,
+    max_value = max_value
+  }
+end
 -- }}}
 
 -- {{{ Separators
 function mywidgets.separator ()
-  return wibox.widget.textbox("<span color='"..beautiful.colors.arch.."'> ⚫ </span>")
-  -- return wibox.layout(
-  -- {
-  --   layout = wibox.layout.fixed.horizontal,
-  --   wibox.widget.imagebox(beautiful.widget_arr0),
-  --   -- wibox.widget.imagebox(beautiful.widget_arr2)
-  -- })
+  return wibox.widget.textbox(string.format("<span color='%s'> ⚫ </span>", beautiful.colors.arch))
 end
 -- }}}
 
@@ -49,10 +51,10 @@ end
 function mywidgets.volume()
   local icon = wibox.widget.imagebox()
   local widget = wibox.widget.textbox()
-  local layout = get_layout_widget(icon, widget, beautiful.colors.dark)
+  local layout = get_layout_widget(icon, widget)
   vicious.register(widget, vicious.widgets.volume, function(widget, args)
-    local label = { ["♫"] = "O", ["♩"] = "M" }
-    local max_volume = 200
+    local label = { ["♫"] = "O", ["♩"] = "M", ["🔉"] = "0", ["🔈"] = "M" }
+    local max_volume = 100
     if label[args[2]] == "M" or args[1] <= 0 then
       icon.image = beautiful.widget_sound_mute
     elseif args[1] <= max_volume / 4 then
@@ -67,7 +69,7 @@ function mywidgets.volume()
     return " ".. args[1] .. " "
   end, 1, "Master")
   layout:connect_signal("button::press", function()
-    awful.util.spawn("amixer sset Master toggle")
+    awful.util.spawn(os.getenv("HOME") .. "/git/linux-scripts/toggle-sink")
   end)
   return layout
 end
@@ -102,8 +104,16 @@ function mywidgets.battery()
     else
       icon.image = beautiful.widget_battery11
     end
-    local charging = args[3] == "N/A" and "" or " (" .. args[3] .. ")"
-    return args[2] .. "% " .. args[1] .. charging
+    local time_left = args[3]
+    if args[3] == "N/A" then
+      local handle = io.popen(os.getenv("HOME") .. "/git/linux-scripts/discharge")
+      time_left = handle:read("*a"):gsub("\n", "")
+      handle:close()
+    end
+    if time_left ~= "" then
+      time_left = " (" .. time_left .. ")"
+    end
+    return args[2] .. "% " .. args[1] .. time_left
   end, 31, "BAT0")
   return layout
 end
@@ -158,7 +168,7 @@ function mywidgets.cpu()
     widget = wibox.widget.graph
   }
   local mirror = wibox.container.mirror(widget, { horizontal = true })
-  local layout = get_layout_widget(icon, mirror, beautiful.colors.dark)
+  local layout = get_layout_widget(icon, mirror)
   widget.color = {
     type = "linear",
     from = {0, widget.height},
@@ -172,6 +182,7 @@ function mywidgets.cpu()
   end)
 
   local cpu_naughty = nil
+  local cpus = {}
   local cpu_data = {}
   local cpu_naughty_title = "CPU usage"
 
@@ -183,14 +194,18 @@ function mywidgets.cpu()
       frequency = type(data[2]) == "int" and string.format("%.2f", data[2]) or data[2]
     }
   end
-  for i,v in pairs({"cpu0", "cpu1", "cpu2", "cpu3"}) do
-    vicious.register({}, vicious.widgets.cpufreq, function (widget, args)
-      cpu_data[v] = extract_cpu_data(args)
-      if cpu_naughty ~= nil then
-        naughty.replace_text(cpu_naughty, cpu_naughty_title, get_cpu_naughty_text())
-      end
-    end, 3, v)
-  end
+  awful.spawn.easy_async_with_shell("cat /proc/cpuinfo | grep processor | wc -l", function(count)
+    for i = 0, count-1 do
+      cpu = "cpu" .. i
+      cpus[#cpus+1] = cpu
+      vicious.register({}, vicious.widgets.cpufreq, function (widget, args)
+        cpu_data[cpu] = extract_cpu_data(args)
+        if cpu_naughty ~= nil then
+          naughty.replace_text(cpu_naughty, cpu_naughty_title, get_cpu_naughty_text())
+        end
+      end, 3, cpu)
+    end
+  end)
 
   layout:connect_signal("mouse::enter", function ()
     cpu_naughty = naughty.notify({
@@ -205,24 +220,16 @@ function mywidgets.cpu()
     cpu_naughty = nil
   end)
   function get_cpu_naughty_text()
-    return string.format(
-      "\nCPU0:\n" ..
-      "    Speed:\t\t%s GHz\n" ..
-      "    Govenor:\t%s\n" ..
-      "\nCPU1:\n" ..
-      "    Speed:\t\t%s GHz\n" ..
-      "    Govenor:\t%s\n" ..
-      "\nCPU2:\n" ..
-      "    Speed:\t\t%s GHz\n" ..
-      "    Govenor:\t%s\n" ..
-      "\nCPU3:\n" ..
-      "    Speed:\t\t%s GHz\n" ..
-      "    Govenor:\t%s\t\n",
-      cpu_data.cpu0.frequency, cpu_data.cpu0.govenor,
-      cpu_data.cpu1.frequency, cpu_data.cpu1.govenor,
-      cpu_data.cpu2.frequency, cpu_data.cpu2.govenor,
-      cpu_data.cpu3.frequency, cpu_data.cpu3.govenor
-      )
+    local result = ""
+    for _, cpu in pairs(cpus) do
+      local data = cpu_data[cpu]
+      result = result .. string.format(
+        "\n%s:\t\t\t\t\t\n" ..
+        "    Speed:\t\t%.2f GHz\n" ..
+        "    Govenor:\t%s\n",
+      cpu, data.frequency, data.govenor)
+    end
+    return result
   end
   return layout
 end
@@ -231,12 +238,7 @@ end
 -- {{{ Memory
 function mywidgets.memory()
   local icon = wibox.widget.imagebox(beautiful.widget_mem)
-  local widget = wibox.widget {
-    width = beautiful.widget_width,
-    border_color = beautiful.widget_border,
-    background_color = gears.color.transparent,
-    widget = wibox.widget.graph
-  }
+  local widget = get_graph_widget()
   local mirror = wibox.container.mirror(widget, { horizontal = true })
   local layout = get_layout_widget(icon, mirror)
   widget.color = {
@@ -280,17 +282,26 @@ function mywidgets.memory()
     memory_naughty = nil
   end)
   function get_memory_naughty_text()
-    return string.format(
+    local text = string.format(
       "\nRAM:\t\t%d %%\n" ..
       "    Used:\t%.1f GB\n" ..
       "    Free:\t%.1f GB\n" ..
-      "    Total:\t%.1f GB\n" ..
+      "    Total:\t%.1f GB\t\n",
+      memory_data.percentage, memory_data.used, memory_data.free, memory_data.total)
+
+    if memory_data.swap_percentage == memory_data.swap_percentage then
+      -- swap_percentage isn't NaN
+      text = text .. string.format(
       "\nSwap:\t%d %%\n" ..
       "    Used:\t%.1f GB\n" ..
       "    Free:\t%.1f GB\n" ..
-      "    Total:\t%.1f GB\t\n",
-      memory_data.percentage, memory_data.used, memory_data.free, memory_data.total,
+      "    Total:\t%.1f GB\n",
       memory_data.swap_percentage, memory_data.swap_used, memory_data.swap_free, memory_data.swap_total)
+    else
+      -- swap_percentage is NaN, presumably there's no swap at all
+      text = text .. "\n(no swap)\n"
+    end
+    return text
   end
   return layout
 end
@@ -299,69 +310,43 @@ end
 -- {{{ HDD
 function mywidgets.hdd()
   local icon = wibox.widget.imagebox(beautiful.widget_hdd)
-  local widget1 = wibox.widget {
-    width = beautiful.widget_width,
-    height = beautiful.wibox_height / 2,
-    border_color = beautiful.widget_border,
-    background_color = gears.color.transparent,
-    widget = wibox.widget.graph
-  }
-  local widget2 = wibox.widget {
-    width = beautiful.widget_width,
-    height = beautiful.wibox_height / 2,
-    border_color = beautiful.widget_border,
-    background_color = gears.color.transparent,
-    widget = wibox.widget.graph
-  }
-  local widget = wibox.layout({
-    {
-      wibox.container.mirror(widget1, { horizontal = true }),
-      bg = background,
-      widget = wibox.container.background
-    },
-    {
-      wibox.container.mirror(widget2, { horizontal = true }),
-      bg = background,
-      widget = wibox.container.background
-    },
-    layout = wibox.layout.fixed.vertical
-  })
-  local layout = get_layout_widget(icon, widget, beautiful.colors.dark)
-  widget1.color = {
+  local widget = get_graph_widget()
+  local mirror = wibox.container.mirror(widget, { horizontal = true })
+  local layout = get_layout_widget(icon, mirror)
+  widget.color = {
     type = "linear",
-    from = {0, widget1.height},
-    to = {0, 0},
-    stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
-  }
-  widget2.color = {
-    type = "linear",
-    from = {0, widget2.height},
+    from = {0, widget.height},
     to = {0, 0},
     stops = {{0, beautiful.widget_graph_low}, {0.33, beautiful.widget_graph_low}, {1, beautiful.widget_graph_high}}
   }
 
   local disk_naughty = nil
+  local disks = {}
   local disk_data = {}
   local disk_naughty_title = "Disk usage"
-  vicious.register(widget1, vicious.widgets.dio, function (widget, args)
-    local sda = args["{sda total_mb}"]
-    local sdb = args["{sdb total_mb}"]
-    widget2:add_value(tonumber(sdb))
+  awful.spawn.easy_async_with_shell("lsblk -o NAME,TYPE | grep disk | cut -d' ' -f1", function(output)
+    for disk in string.gmatch(output, "([^\n]+)") do
+      disks[#disks+1] = disk
+    end
+  end)
+  vicious.register(widget, vicious.widgets.dio, function (widget, args)
+    local first_disk_total_mb = nil
+    for _, disk in pairs(disks) do
+      if first_disk_total_mb == nil then
+        first_disk_total_mb = args[string.format("{%s total_mb}", disk)]
+      end
 
-    disk_data = {
-      sda_read = args["{sda read_mb}"],
-      sda_write = args["{sda write_mb}"],
-      sda_total = args["{sda total_mb}"],
-      sda_iotime = args["{sda iotime_ms}"],
-      sdb_read = args["{sdb read_mb}"],
-      sdb_write = args["{sdb write_mb}"],
-      sdb_total = args["{sdb total_mb}"],
-      sdb_iotime = args["{sdb iotime_ms}"],
-    }
+      disk_data[disk] = {
+        read = args[string.format("{%s read_mb}", disk)],
+        write = args[string.format("{%s write_mb}", disk)],
+        total = args[string.format("{%s total_mb}", disk)],
+        iotime = args[string.format("{%s iotime_ms}", disk)]
+      }
+    end
     if disk_naughty ~= nil then
       naughty.replace_text(disk_naughty, disk_naughty_title, get_disk_naughty_text())
     end
-    return sda
+    return first_disk_total_mb
   end, 3)
 
   layout:connect_signal("mouse::enter", function ()
@@ -377,19 +362,22 @@ function mywidgets.hdd()
     disk_naughty = nil
   end)
   function get_disk_naughty_text()
-    return string.format(
-      "\n/dev/sda:\n" ..
-      "    Read:\t%.2f MB\n" ..
-      "    Write:\t%.2f MB\n" ..
-      "    Total:\t%.2f MB\n" ..
-      "    IO wait:\t%.2f ms\n" ..
-      "\n/dev/sdb:\n" ..
-      "    Read:\t%.2f MB\n" ..
-      "    Write:\t%.2f MB\n" ..
-      "    Total:\t%.2f MB\n" ..
-      "    IO wait:\t%.2f ms\t\n",
-      disk_data.sda_read, disk_data.sda_write, disk_data.sda_total, disk_data.sda_iotime,
-      disk_data.sdb_read, disk_data.sdb_write, disk_data.sdb_total, disk_data.sdb_iotime)
+    local result = ""
+    for _, disk in pairs(disks) do
+      local data = disk_data[disk]
+      if data == nil then
+        naughty.notify({text = "No data for disk '" .. disk .. "' available"})
+      else
+        result = result .. string.format(
+          "\n/dev/%s:\n" ..
+          "    Read:\t%.2f MB\n" ..
+          "    Write:\t%.2f MB\n" ..
+          "    Total:\t%.2f MB\n" ..
+          "    IO wait:\t%.2f ms\t\n",
+        disk, data.read, data.write, data.total, data.iotime)
+      end
+    end
+    return result
   end
   return layout
 end
@@ -398,13 +386,7 @@ end
 -- {{{ Net
 function mywidgets.net()
   local icon = wibox.widget.imagebox(beautiful.widget_net)
-  local widget = wibox.widget {
-    width = beautiful.widget_width,
-    border_color = beautiful.widget_border,
-    background_color = gears.color.transparent,
-    max_value = 10, -- 1 MBps
-    widget = wibox.widget.graph
-  }
+  local widget = get_graph_widget(10) -- max 1 Mbps
   local mirror = wibox.container.mirror(widget, { horizontal = true })
   local layout = get_layout_widget(icon, mirror)
   widget.color = {
@@ -415,23 +397,42 @@ function mywidgets.net()
   }
 
   local net_naughty = nil
+  local net_interfaces = {}
   local net_data = {}
   local net_naughty_title = "Network usage"
+  -- grep for qlen to (try and) skip docker interfaces
+  awful.spawn.easy_async_with_shell("ip link show | grep UP | grep qlen | grep -v LOOPBACK | cut -d: -f2 | tr -d ' '", function(output)
+    for net_interface in string.gmatch(output, "([^\n]+)") do
+      net_interfaces[#net_interfaces+1] = net_interface
+    end
+  end)
   vicious.register(widget, vicious.widgets.net, function (widget, args)
-    net_data = {
-      wifi_rx = args["{wlp3s0 rx_mb}"],
-      wifi_tx = args["{wlp3s0 tx_mb}"],
-      wifi_down = args["{wlp3s0 down_kb}"],
-      wifi_up = args["{wlp3s0 up_kb}"],
-      ethernet_rx = args["{enp0s25 rx_mb}"],
-      ethernet_tx = args["{enp0s25 tx_mb}"],
-      ethernet_down = args["{enp0s25 down_kb}"],
-      ethernet_up = args["{enp0s25 up_kb}"],
+    net_data.total = {
+      rx_mb = 0,
+      tx_mb = 0,
+      down_kb = 0,
+      up_kb = 0
     }
+    for _, net_interface in pairs(net_interfaces) do
+      if args[string.format("{%s rx_mb}", net_interface)] ~= nil then
+        net_data[net_interface] = {
+          rx_mb = args[string.format("{%s rx_mb}", net_interface)],
+          tx_mb = args[string.format("{%s tx_mb}", net_interface)],
+          down_kb = args[string.format("{%s down_kb}", net_interface)],
+          up_kb = args[string.format("{%s up_kb}", net_interface)]
+        }
+        net_data.total.rx_mb = net_data.total.rx_mb + net_data[net_interface].rx_mb
+        net_data.total.tx_mb = net_data.total.tx_mb + net_data[net_interface].tx_mb
+        net_data.total.down_kb = net_data.total.down_kb + net_data[net_interface].down_kb
+        net_data.total.up_kb = net_data.total.up_kb + net_data[net_interface].up_kb
+      end
+    end
+
     if net_naughty ~= nil then
       naughty.replace_text(net_naughty, net_naughty_title, get_net_naughty_text())
     end
-    return args["{wlp3s0 down_kb}"]
+
+    return net_data.total.down_kb
   end, 3)
 
   layout:connect_signal("mouse::enter", function ()
@@ -447,20 +448,21 @@ function mywidgets.net()
     net_naughty = nil
   end)
   function get_net_naughty_text()
-    return string.format(
-      "\nWiFi:\n" ..
-      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
-      "    Down:\t%.1f KB\t(%.1f MB)\n" ..
-      "\nEthernet:\n" ..
-      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
-      "    Down:\t%.1f KB\t(%.1f MB)\n" ..
-      "\nTotal:\n" ..
-      "    Up:\t%.1f KB\t(%.1f MB)\n" ..
-      "    Down:\t%.1f KB\t(%.1f MB)\t\n",
-      net_data.wifi_up, net_data.wifi_tx, net_data.wifi_down, net_data.wifi_rx,
-      net_data.ethernet_up, net_data.ethernet_tx, net_data.ethernet_down, net_data.ethernet_rx,
-      net_data.wifi_up + net_data.ethernet_up, net_data.wifi_tx + net_data.ethernet_tx,
-      net_data.wifi_down + net_data.ethernet_down, net_data.wifi_rx + net_data.ethernet_rx)
+    local result = ""
+    local function add_device_info(device, device_data)
+      result = result .. string.format(
+        "\n%s:\n" ..
+        "    Up:\t%.1f KB\t(%.1f GB)\n" ..
+        "    Down:\t%.1f KB\t(%.1f GB)\t\n",
+        device, device_data.up_kb, device_data.tx_mb / 1024, device_data.down_kb, device_data.rx_mb / 1024)
+    end
+    for device, device_data in pairs(net_data) do
+      if device ~= "total" then
+        add_device_info(device, device_data)
+      end
+    end
+    add_device_info("total", net_data.total)
+    return result
   end
   return layout
 end
