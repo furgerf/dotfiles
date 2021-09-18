@@ -1,14 +1,13 @@
-#
-# ~/.bashrc
-#
+#!/usr/bin/env bash
 
 # if not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# auto-start each session in tmux
-#[[ -z "$TMUX" ]] && exec tmux
-
 export TERM="screen-256color"
+
+###############################################################################
+# PS1
+###############################################################################
 
 # prompt
 COLOR_BLACK="\[$(tput setaf 0)\]"
@@ -41,10 +40,6 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM="auto" # verbose
 
-# load autojump if available
-AUTOJUMP_FILE=/usr/share/autojump/autojump.bash
-[[ -f "$AUTOJUMP_FILE" ]] && source "$AUTOJUMP_FILE"
-
 PS1="${COLOR_DGRAY}["
 PS1+="${COLOR_WHITE}\$?"
 PS1+="\$(if [[ \$? == 0 ]]; then echo \"  ${COLOR_LGREEN}\342\234\223\";"
@@ -55,8 +50,12 @@ PS1+="[${COLOR_WHITE}\w"
 PS1+="\$([[ \$(__git_ps1) ]]&&echo -n "$COLOR_DGRAY➤"&&__git_ps1|tr -d ' =')"
 PS1+="${COLOR_DGRAY}]${COLOR_RESET}${COLOR_LBLUE}\$ ${COLOR_RESET}"
 
+
+###############################################################################
+# basic terminal config
+###############################################################################
+
 # exports
-export PATH=$PATH:~/git/linux-scripts:~/git/linux-scripts/conky
 export EDITOR="vim"
 export VISUAL="vim"
 export PAGER="/bin/less"
@@ -86,35 +85,32 @@ shopt -s cdspell
 # fixes line shenanigans(?)
 shopt -s checkwinsize
 # add some paths for easier navigation
-CDPATH=".:~/git:/data"
-# cd+ls
-cl() {
-  if [[ -d "$1" ]]; then
-    cd "$1" || exit 1
-    ls -Alh
-  else
-    echo "bash: cl: '$1': Directory not found"
-  fi
-}
-# mkdir+cd
-mkcd() { mkdir -p "$1" && cd "$1"; }
+CDPATH=".:~/git:~/git/sedimentum"
+
+eval "$(dircolors -b)" # highlight broken symlinks
+stty -ixon # disable flow control (to use ctrl+s in vim)
+# stty erase '^?' # backspace is the erase character
+
+
+###############################################################################
+# aliases - modifications
+###############################################################################
 
 # privileged access
 if [ $UID -ne 0 ]; then
   alias scat='sudo cat'
   alias svim='sudo vim'
-  alias smount='sudo mount'
-  alias sumount='sudo umount'
-  alias ssystemctl='sudo systemctl'
 fi
 
 # modified commands
-alias diff='colordiff -s'              # requires colordiff package
+alias diff='colordiff -s' # requires colordiff package
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
+alias ip='ip -color=auto'
 alias df='df -h'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
+
 alias cd='cd -P'
 alias cd..='cd ..'
 alias ..='cd ..'
@@ -123,19 +119,20 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
-# ls
+
 alias l='ls'
 alias ls='ls -lhF --color=auto'
-#alias lr='ls -R'                    # recursive ls
+alias lr='ls -R'                    # recursive ls
 alias la='ls -a'
 alias lx='la -BX'                   # sort by extension
 alias lz='la -rS'                   # sort by size
 alias lt='la -rt'                   # sort by date
 alias ll='la'
+
 # safety features
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm -I'                    # 'rm -i' prompts for every file
+alias rm='rm -I'                    # -i prompts for every file, -I once when removing more than 3 files
 alias ln='ln -i'
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
@@ -146,14 +143,48 @@ alias rmr='rm -r'
 alias fucking='sudo'
 alias xclip='xclip -selection c'
 alias xpaste='xclip -o'
-alias da='date "+%A, %B %d, %Y [%T]"'
 alias du1='du --max-depth=1'
 alias du1s='du1 | sort -h'
-alias hist='history | grep'      # requires an argument
-alias :q='exit'
-alias :Q='exit'
+alias hist='history | grep'
 
-# new diagnostic commands
+
+###############################################################################
+# git
+###############################################################################
+
+# `g` -> `git status`, `g foobar` -> `git foobar`
+function g {
+   if [[ $# -gt 0 ]]; then
+     git "$@"
+   else
+     git status  || ls
+   fi
+}
+# load git completion
+GIT_COMPLETION_FILE="/usr/share/bash-completion/completions/git"
+[[ -f "$GIT_COMPLETION_FILE" ]] && source "$GIT_COMPLETION_FILE"
+# add `git` completion for `g`
+eval "$(complete -p git | rev | cut -b 3- | rev)"
+alias ga='git add'
+alias gaa='git add -A'
+alias gap='git add -p'
+alias gc='git commit -v'
+alias gs='git status || ls'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gda='git diff HEAD'
+alias gf='git fetch'
+alias gaa='git add -A'
+OM='origin/master'
+
+
+###############################################################################
+# new commands
+###############################################################################
+
+# diagnostics
+alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)'
+alias files='file $(/usr/bin/ls -aH)'
 alias openports='ss --all --numeric --processes --ipv4 --ipv6'
 recent() {
   if [ "$1" -eq "$1" ] 2>/dev/null; then
@@ -177,73 +208,41 @@ p8 () {
     fi
   done
 }
-alias files='file $(/usr/bin/ls -aH)'
-alias find-broken-symlinks='find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)'
 
-# git
-# `g` -> `git status`, `g foobar` -> `git foobar`
-function g {
-   if [[ $# -gt 0 ]]; then
-     git "$@"
-   else
-     git status  || ls
-   fi
+# interactive rename if no destination is specified
+function mv() {
+  if [ "$#" -ne 1 ] || [ ! -e "$1" ]; then
+    command mv -i "$@"
+    return
+  fi
+  read -ei "$1" newfilename
+  command mv -i -v -- "$1" "$newfilename"
 }
-# load git completion
-GIT_COMPLETION_FILE="/usr/share/bash-completion/completions/git"
-[[ -f "$GIT_COMPLETION_FILE" ]] && source "$GIT_COMPLETION_FILE"
-# add `git` completion for `g`
-complete -F _git g
-alias ga='git add'
-alias gaa='git add -A'
-alias gap='git add -p'
-alias gc='git commit -v'
-alias gs='git status || ls'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gda='git diff HEAD'
-alias gf='git fetch'
-alias gaa='git add -A'
-OM='origin/master'
 
-# pip
-pip-activate() {
-  pattern="*venv"
-  venvs=($pattern)
-  venv=${venvs[0]}
-  echo "Activating $venv..."
-  source "$venv/bin/activate"
-}
-alias pip-rstore='pip freeze > requirements.txt'
-alias pip-rload='pip install -r requirements.txt'
-
-# misc
+# utilities and convenience
 alias ='exit'
 alias ='fg' # hit  to resume background paused process (fg)
-#alias tmux='TERM=screen-256color tmux'
 alias ta='tmux a'
 alias tclip='tmux show-buffer | xclip' # put current tmux buffer in clipboard
-alias watch='\watch '   # allow alias expansion for watch argument
-alias v='/usr/bin/vim'
+# alias watch='\watch '   # allow alias expansion for watch argument
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
-alias lr='less -R'
 alias activate-venv='. venv/bin/activate'
 alias clearswap='sudo swapoff -a; sudo swapon -a'
-touniq(){ sort | uniq -c | sort "${@:--rn}"; }
+alias docker-stopall='docker stop $(docker ps -q)'
+alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
+alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
+alias weather='curl wttr.in'
+
+sus(){ sort | uniq -c | sort "$@"; }
 historygram(){
+  # histogram of command usage
   history|awk '{print $4}'|sort|uniq -c|sort -rn|head -30|awk '!max{max=$1;}{r="";i=s=100*$1/max;while(i-->0)r=r"#";printf "%50s %5d %s %s",$2,$1,r,"\n";}'
 }
-sus(){ sort | uniq -c | sort "$@"; }
-eval "$(dircolors -b)" # highlight broken symlinks
-stty -ixon # disable flow control (to use ctrl+s in vim)
-# stty erase '^?' # backspace is the erase character
-shrug(){
-  echo -n "¯\_(ツ)_/¯" | (xclip||xsel||pbcopy);echo "¯\_(ツ)_/¯ copied"
-}
-imgprint(){ convert label:@- "$1"; }
+shrug(){ echo -n "¯\_(ツ)_/¯" | (xclip||xsel||pbcopy);echo "¯\_(ツ)_/¯ copied"; }
 x(){
+  # extract different kinds of archives
   if [ -f "$1" ] ; then
     case "$1" in
       *.tar.bz2)   tar xvjf "$1"    ;;
@@ -263,18 +262,13 @@ x(){
     echo "'$1' is not a valid file"
   fi
 }
-alias weather='curl wttr.in'
-alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
-alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
 function box() {
+  # draw a boux around the text passed as $1
   t="$1xxxx"
   c=${2:-#}
   echo "${t//?/$c}"
   echo "$c $1 $c"
   echo "${t//?/$c}"
-}
-function thirdline () {
-  awk '{if (NR%3==0){print "\033[32m" $0 "\033[0m"} else{print}}';
 }
 function save-as-image() {
   # pipe text to save to this function and add filename
@@ -282,11 +276,23 @@ function save-as-image() {
   convert label:@- "$1"
 }
 function mp4tomp3() {
+  # extract audio from video
   ffmpeg -i "$1" -q:a 0 -map a "$(basename "$1" .mp4).mp3"
 }
 
-alias swapclear='sudo swapoff -a; sudo swapon -a'
-alias swapexit='swapclear; exit'
+
+###############################################################################
+# miscellaneous
+###############################################################################
+
+source /usr/share/doc/pkgfile/command-not-found.bash
+
+if pgrep ssh-agent > /dev/null; then
+  source ~/git/ssh-find-agent/ssh-find-agent.sh
+  set_ssh_agent_socket
+else
+  eval "$(ssh-agent)" > /dev/null
+fi
 
 # source other files
 { [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true
