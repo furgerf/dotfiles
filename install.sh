@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PATTERN=$1
+
 prompt-file() {
   SRC=$1
   DEST=$2
@@ -7,6 +9,11 @@ prompt-file() {
 
   if [ "$SUDO" != "sudo" ]; then
     SUDO=""
+  fi
+
+  if [[ -n "$PATTERN" ]] && [[ "${SRC#$PWD}" != *"$PATTERN"* ]]; then
+    echo "Skipping $SRC"
+    return
   fi
 
   while true; do
