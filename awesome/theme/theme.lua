@@ -8,13 +8,16 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local theme_path = gfs.get_themes_dir() .. "mysty"
 local theme = {}
+local naughty = require("naughty")
 
 theme.wibox_height = dpi(16)
 theme.widget_width = dpi(48)
 theme.font = "DejaVu Sans 8"
 theme.wallpaper_path = theme_path .. "/wallpapers"
+theme.wallpaper_sedimentum_path = theme_path .. "/wallpapers-sedimentum"
 theme.active_opacity = 0.95
 theme.inactive_opacity = 0.85
+theme.notification_icon_size = 128
 
 -- TODO: Figure out what warning "beautiful: can't get colorscheme from xrdb (using fallback)." means
 
@@ -26,8 +29,13 @@ theme.icon_theme = nil
 -- {{{ Random wallpaper
 theme.wallpaper = function(callback)
   -- invokes the callback with the path to a randomly-selected wallpaper
-  awful.spawn.easy_async_with_shell("find " .. theme.wallpaper_path .. " -type f | shuf | head -1",
-  function(wallpaper_path) callback(wallpaper_path:match("^%s*(.-)%s*$")) end)
+  awful.spawn.easy_async_with_shell("nmcli -t -f active,ssid dev wifi | egrep ^yes | cut -d: -f2- | xargs echo -n",
+  function(ssid)
+    local ssid_name = ssid:match("^%s*(.-)%s*$")
+    local wallpaper_path = (ssid_name == "Atlantis" or ssid_name == "Atlantis_EXT") and theme.wallpaper_sedimentum_path or theme.wallpaper_path
+    awful.spawn.easy_async_with_shell("find " .. wallpaper_path .. " -type f | shuf | head -1",
+    function(wallpaper_path) callback(wallpaper_path:match("^%s*(.-)%s*$")) end)
+  end)
 end
 -- }}}
 
