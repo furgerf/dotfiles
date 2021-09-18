@@ -3,7 +3,7 @@
     "name": "Lock",
     "description": "Lock desktop",
     "icon": null,
-    "script": "/home/fabian/git/linux-scripts/fancy-lock",
+    "script": "sleep 0.1 && /home/fabian/git/linux-scripts/fancy-lock",
     "default_arguments": []
   },
   {
@@ -40,6 +40,13 @@
     "icon": null,
     "script": "/home/fabian/git/linux-scripts/nasctl",
     "default_arguments": []
+  },
+  {
+    "name": "Keyboard rrate",
+    "description": "Set sane keyboard repeat rate",
+    "icon": null,
+    "script": "/usr/bin/xset",
+    "default_arguments": ["r", "rate", "250", "53"]
   },
   {
     "name": "pgAdmin",

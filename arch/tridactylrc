@@ -46,9 +46,22 @@ bind ,x urlincrement -1
 bind J scrollpage +1
 bind K scrollpage -1
 bind ,d tabdetach
+bind ,p pin
+bind ,m mute toggle
+bind ,b tabduplicate
+" bind ,p autocontain -s .* Personal
+" bind ,w autocontain -s .* Work
+
+" use vim to edit text fields - doesn't work properly
+" set editorcmd xfce4-terminal --title "Tridactyl Editor" -x "vim %f '+normal!%lGzv%c|'"
 
 " URL shortcuts
-bind gw tabopen https://www.whoscored.com/LiveScores
+bind gw tabopen https://www.youtube.com/user/WanderingWinder/videos
 bind gd tabopen https://dominion.games/
+bind gh tabopen https://github.com/
+bind gs tabopen https://github.com/Sedimentum/
+bind gp tabopen https://github.com/pulls/
+bind gn tabopen http://cofa-nas.quickconnect.to/
+bind ga tabopen https://archlinux.org/
 
 " vim: set filetype=vim:

@@ -24,7 +24,7 @@
 [push]
   default = simple
 [merge]
-  ff = only
+  # ff = only
   tool = diffconflicts
 [mergetool]
   keepBackup = false
@@ -98,6 +98,8 @@
   fa = !git fetchall && git sba
   # fetch all remotes
   fetchall = fetch --all
+  # interactive rebase
+  ri = rebase -i
   # rebase on origin/master
   rom = rebase origin/master --autostash
   # interactive rebase on origin/master
@@ -166,3 +168,4 @@
 [url "git@github.com:"]
   insteadOf = gh:
 
+# vim: ft=conf
