@@ -10,10 +10,6 @@
 [submodule "vim/bundle/vim-gitgutter"]
   path = vim/bundle/vim-gitgutter
   url = git@github.com:airblade/vim-gitgutter.git
-[submodule "vim/bundle/YouCompleteMe"]
-  path = vim/bundle/YouCompleteMe
-  url = git@github.com:Valloric/YouCompleteMe.git
-  ignore = untracked
 [submodule "vim/bundle/ctrlp.vim"]
   path = vim/bundle/ctrlp.vim
   url = git@github.com:ctrlpvim/ctrlp.vim.git
@@ -153,3 +149,31 @@
 [submodule "vim/bundle/vim-matchup"]
   path = vim/bundle/vim-matchup
   url = git@github.com:andymass/vim-matchup
+[submodule "vim/bundle/vim-asterisk"]
+  path = vim/bundle/vim-asterisk
+  url = git@github.com:haya14busa/vim-asterisk
+  ignore = untracked
+[submodule "vim/bundle/coc.nvim"]
+  path = vim/bundle/coc.nvim
+  url = git@github.com:neoclide/coc.nvim
+[submodule "vim/bundle/coc-pyright"]
+  path = vim/bundle/coc-pyright
+  url = git@github.com:fannheyward/coc-pyright
+[submodule "vim/bundle/coc-json"]
+  path = vim/bundle/coc-json
+  url = git@github.com:neoclide/coc-json
+[submodule "vim/bundle/coc-spell-checker"]
+  path = vim/bundle/coc-spell-checker
+  url = git@github.com:iamcco/coc-spell-checker
+[submodule "vim/bundle/coc-snippets"]
+  path = vim/bundle/coc-snippets
+  url = git@github.com:neoclide/coc-snippets
+[submodule "vim/bundle/coc-sh"]
+  path = vim/bundle/coc-sh
+  url = git@github.com:josa42/coc-sh
+[submodule "vim/bundle/coc-tabnine"]
+  path = vim/bundle/coc-tabnine
+  url = git@github.com:neoclide/coc-tabnine
+[submodule "vim/bundle/vim-abolish"]
+  path = vim/bundle/vim-abolish
+  url = git@github.com:tpope/vim-abolish
