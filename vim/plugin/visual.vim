@@ -40,17 +40,18 @@ set listchars=trail:~,tab:»·,eol:⏎
 set showbreak=↪
 " use this to denote indentation
 let g:indentLine_char = '┆'
+" merge signs with numbers
+set signcolumn=number
 "}}}
 
 " Highlighting "{{{
 " CurrentBuffer: draw darker background (more contrast)
 augroup BgHighlight
   autocmd!
-
   " update colorcolumn depending on whether the buffer is active
-  autocmd BufWinEnter,WinEnter,BufUnload * if functions#IsNonspecialBuffer() |
+  autocmd WinEnter * if functions#IsNonspecialBuffer() |
         \ execute "set colorcolumn=" . join(range(101, 335), ',') | endif
-  autocmd BufWinLeave,WinLeave * if functions#IsNonspecialBuffer() |
+  autocmd WinLeave * if functions#IsNonspecialBuffer() |
         \ execute "set colorcolumn=" . join(range(1, 355), ',') | endif
   autocmd FileType * if functions#IsSpecialBuffer() |
         \ execute "set colorcolumn=" | endif

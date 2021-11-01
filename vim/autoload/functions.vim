@@ -35,12 +35,12 @@ function! functions#SetLastCursorPosition()
   endif
 endfunction
 
-" moves the current buffer to a new tab if it's a helpfile
-function! functions#HelpInNewTab()
-  if &buftype == 'help'
-    exec "normal \<C-W>T"
-  endif
-endfunction
+" " moves the current buffer to a new tab if it's a helpfile
+" function! functions#HelpInNewTab()
+"   if &buftype == 'help'
+"     exec "normal \<C-W>T"
+"   endif
+" endfunction
 
 function! functions#CloseExtraBuffers()
   pclose
@@ -88,14 +88,14 @@ function! functions#HighlightColumns(delimiter, colors)
 endfunction
 
 " returns true if the current buffer is a special buffer
-" eg quickfix, preview, location list
+" eg quickfix, preview, location list, popup
 function! functions#IsSpecialBuffer()
-  return (&filetype =~ 'qf')
+  return ! functions#IsNonspecialBuffer()
 endfunction
 
 " returns true if the current buffer is NOT a special buffer
 function! functions#IsNonspecialBuffer()
-  return ! functions#IsSpecialBuffer()
+  return (&buftype == '')
 endfunction
 
 " close all quickfix, preview, location list OR open location list (syntastic)

@@ -122,7 +122,8 @@ execute pathogen#infect()
 call pathogen#helptags()
 
 " open help files in new tabs
-autocmd! FileType help call functions#HelpInNewTab()
+" autocmd! FileType help call functions#HelpInNewTab()
+cnoreabbrev help tab help
 " jump to last cursor position when opening a file
 autocmd! BufReadPost * call functions#SetLastCursorPosition()
 " turn paste mode off when leaving insert mode
