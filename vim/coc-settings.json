@@ -13,6 +13,11 @@
 
   "coc.preferences.formatOnSaveFiletypes": ["python"],
 
+  "snippets.enableStatusItem": true,
+  "snippets.snipmate.enable": false,
+  "snippets.ultisnips.enable": true,
+  "snippets.userSnippetsDirectory": "~/.vim/custom-snippets",
+
   "python.venvPath": "venv", // don't think that works
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "/usr/bin/black",

@@ -1,0 +1,53 @@
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+# general convenience
+snippet . "expand '.' at any word boundary" w
+self.
+endsnippet
+snippet sa "self.attribute = attribute"
+	self.${1:attribute} = $1
+endsnippet
+
+# writing tests
+snippet sk "skip unittests" b
+@pytest.skip(${1:skip_reason})
+endsnippet
+snippet test "add test method"
+def test_${1:description}(${2:`!v indent('.') ? 'self' : ''`}):
+	${0}
+endsnippet
+
+# logging
+snippet glog "import and createlogger"
+from sedimentum.logging.logging import get_logger
+logger = get_logger(__name__)
+
+endsnippet
+snippet li "log info"
+logger.info(${0:msg})
+endsnippet
+snippet lw "log waring"
+logger.warning(${0:msg})
+endsnippet
+snippet le "log error"
+logger.error(${0:msg})
+endsnippet
+
+# special imports
+snippet np "numpy"
+import numpy as np
+endsnippet
+snippet plt "matplotlib"
+import matplotlib.pyplot as plt
+endsnippet
+
+# comprehensions
+snippet lcp "list comprehension"
+[${1:item} for ${2:element} in ${3:collection}]${0}
+endsnippet
+snippet dcp "dict comprehension"
+{${1:key}: ${2:value} for ${3:element} in ${4:collection}}${0}
+endsnippet
+snippet scp "set comprehension"
+{${1:item} for ${2:element} in ${3:collection}${0}
+endsnippet
