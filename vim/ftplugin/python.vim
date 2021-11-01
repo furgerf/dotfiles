@@ -3,8 +3,15 @@
 """"""""""""""""""""""""
 
 " configure the test runner (assuming I'm using nose2 for all python projects...)
-let test#python#runner = 'Nose2'
-let test#python#nose2#options = '-F'
+let test#python#runner = 'pytest'
+let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first'
+function! DockerTransform(cmd) abort
+  return ' docker-compose -f docker-compose.test.yml run --rm tests ' . a:cmd
+endfunction
+
+let g:test#custom_transformations = {'docker': function('DockerTransform')}
+let g:test#transformation = 'docker'
+
 
 " execute current file with F2
 " NOTE: Might want to change that mapping at some point...

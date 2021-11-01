@@ -1,62 +1,46 @@
-#!/bin/sh
-#
-# ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
+#!/usr/bin/env bash
 
-if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/*; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
-
-# # backlight - turn down first to ensure it's set according to charging status
-# xbacklight -set 0 -time 0
-# "$HOME/git/linux-scripts/backlight"
+# backlight - turn down first to ensure it's set according to charging status
+"$HOME/git/linux-scripts/backlight" on
 
 # monitor
 "$HOME/git/linux-scripts/monitor" enable
 
-# NM UI
-nm-applet &
-
-# TP battery tresholds
-# "$HOME/git/linux-scripts/set-tpacpi"
-
-# dropbox
-dropbox &
-
 # set dbus address for cron stuff
-"$HOME/git/linux-scripts/set-dbus-address"
-
-# composite manager
-picom &
-
-# start thunar in daemon mode
-thunar --daemon &
+# "$HOME/git/linux-scripts/set-dbus-address"
 
 # adjust keyboard repeat rate
 xset r rate 250 35
 
-# (sleep 60 && qbittorrent &)
+# background apps
+udiskie & # NOTE: also has a --tray
+thunar --daemon &
+picom &
+nm-applet &
+ulauncher --no-window-shadow &
+xfce4-clipman &
+synology-drive &
+dropbox &
+pasystray &
+caffeine &
+blueman-applet &
+# NOTE: seems to suspend 5 mins later for some reason...
+xautolock -time 5 -locker "$HOME/git/linux-scripts/fancy-lock" \
+  -corners 00+- -cornerdelay 3 -cornerredelay 30 \
+  -detectsleep -killtime 10 -killer 'sudo systemctl suspend' &
+conky -c "$HOME/git/dotfiles/arch/conkyrc" -d
 
-# connect to samba shares on raspi
-# (sleep 60 && "$HOME/git/linux-scripts/samba-connect") &
-
-# conky
-(sleep 10 && conky -c "$HOME/git/dotfiles/arch/conkyrc" -d) &
-
-# # start thunderbird and gpodder
-# # (sleep 10 && thunderbird) &
-# (sleep 60 && gpodder) &
+signal-desktop &
+ferdi &
+# slack &
+spotify &
 
 # store boot log
 (sleep 60 && journalctl -p 5 -b -o short-precise --no-pager > /tmp/boot-log) &
 
 session=${1:-awesome}
 case $session in
-    awesome           ) exec awesome >> ~/.cache/awesome/stdout 2>> ~/.cache/awesome/stderr;;
+    awesome           ) exec awesome >> /var/log/awesome/stdout 2>> /var/log/awesome/stderr;;
     bspwm             ) exec bspwm;;
     catwm             ) exec catwm;;
     cinnamon          ) exec cinnamon-session;;

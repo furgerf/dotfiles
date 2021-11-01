@@ -29,7 +29,7 @@
 [mergetool]
   keepBackup = false
 [mergetool.diffconflicts]
-  cmd = 'vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
+  cmd = vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
   trustExitCode = true
 [commit]
   verbose = true

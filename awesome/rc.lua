@@ -159,6 +159,7 @@ tyrannical.tags = {
     name        = "➍ ·code·💡",
     layout      = awful.layout.suit.max.fullscreen,
     position    = 4,
+    screen      = screen.count(),
     init = false,
     volatile = true,
   },
@@ -188,7 +189,7 @@ tyrannical.tags = {
     volatile = true,
     master_width_factor = 0.66,
     force_screen = 1,
-    class = { "Signal", "Spotify", "Slack", "Franz" },
+    class = { "Signal", "Spotify", "Slack", "Ferdi" },
   },
   {
     name        = "➑ ·bar",
@@ -645,9 +646,9 @@ end
 
 -- ensures that the tag with the requested position exists
 -- if it already exists, it is returned, otherwise it's created
-function retrieve_tag_by_position(i)
+function retrieve_tag_by_position(i, s)
   -- try and retrieve tag on current screen
-  local screen = awful.screen.focused()
+  local screen = s and screen[s] or awful.screen.focused()
   local tag = find_tag_by_position(screen.tags, i)
   if tag then return tag end
 
@@ -661,7 +662,7 @@ function retrieve_tag_by_position(i)
   -- we found a tag we need to create
   -- but, the tag may be "recycled" and already be assigned to some screen
   -- -> clear the screen to have it created on the current screen
-  tag.screen = nil
+  tag.screen = screen
   -- lastly, we must make sure that all tags on the screen are in the correct order
   tag = awful.tag.add(tag.name, tag)
   arrange_tags(screen.tags)
@@ -675,7 +676,7 @@ for i = 1, 9 do
   globalkeys = gears.table.join(globalkeys,
   -- View tag only.
   awful.key({ modkey }, "#" .. i + 9, function ()
-    local tag = retrieve_tag_by_position(i)
+    local tag = retrieve_tag_by_position(i, nil)
     if tag == nil then return end
     tag:view_only()
     awful.screen.focus(tag.screen)
@@ -684,7 +685,7 @@ for i = 1, 9 do
   -- TODO fix those
   -- -- Toggle tag display.
   -- awful.key({ modkey, controlkey }, "#" .. i + 9, function ()
-  --   local tag = retrieve_tag_by_position(i)
+  --   local tag = retrieve_tag_by_position(i, nil)
   --   if tag == nil then return end
   --   awful.tag.viewtoggle(tag)
   -- end, {description = "toggle tag #" .. i, group = "tag"}),
@@ -692,7 +693,7 @@ for i = 1, 9 do
   -- Move client to tag.
   awful.key({ modkey, shiftkey }, "#" .. i + 9, function ()
     if not client.focus then return end
-    local tag = retrieve_tag_by_position(i)
+    local tag = retrieve_tag_by_position(i, nil)
     if tag == nil then return end
     client.focus:move_to_tag(tag)
     tag:view_only()
@@ -701,7 +702,7 @@ for i = 1, 9 do
   -- -- Toggle tag on focused client.
   -- awful.key({ modkey, controlkey, shiftkey }, "#" .. i + 9, function ()
   --   if not client.focus then return end
-  --   local tag = retrieve_tag_by_position(i)
+  --   local tag = retrieve_tag_by_position(i, nil)
   --   if tag == nil then return end
   --   client.focus:toggle_tag(tag)
   -- end, {description = "toggle focused client on tag #" .. i, group = "tag"})
@@ -805,7 +806,7 @@ awful.rules.rules =
   },
   {
     -- workaroud
-    rule_any = { class = { "Signal", "Spotify", "Slack", "Franz" } },
+    rule_any = { class = { "Signal", "Spotify", "Slack", "Ferdi" } },
     properties = { screen = 1, maximized = true }
   },
   {
@@ -820,12 +821,16 @@ awful.rules.rules =
     rule_any = { class = { "Jamulus", "cloud-drive-ui" } },
     properties = { floating = false }
   },
+  {
+    rule_any = { name = { ".*tmux.*" } },
+    properties = { tag =  retrieve_tag_by_position(4, screen.count()) }
+  },
 }
 -- tyrannical.properties.floating = {
 --   "Ulauncher",
 -- }
 tyrannical.properties.minimized = {
-  "Signal", "Spotify", "Franz"
+  -- "Signal", "Spotify", --"Ferdi"
 }
 -- }}}
 
@@ -928,6 +933,6 @@ client.connect_signal("unfocus", function(c)
 end)
 
 -- work around unsorted tags on main screen: open a new tag (triggers sorting) and then remove it again
-awful.spawn.easy_async("sleep 0.1",function() retrieve_tag_by_position(8):delete() end)
+awful.spawn.easy_async("sleep 0.1",function() retrieve_tag_by_position(8, nil):delete() end)
 -- }}}
 

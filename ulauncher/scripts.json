@@ -46,7 +46,7 @@
     "description": "Set sane keyboard repeat rate",
     "icon": null,
     "script": "/usr/bin/xset",
-    "default_arguments": ["r", "rate", "250", "53"]
+    "default_arguments": ["r", "rate", "250", "35"]
   },
   {
     "name": "pgAdmin",

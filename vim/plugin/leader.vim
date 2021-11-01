@@ -27,7 +27,7 @@ nnoremap <Leader>shl :split #<CR>
 nnoremap <Leader>svl :vnew #<CR>
 
 " rename file (prompts for new filename)
-nnoremap <Leader>rn :call functions#RenameFile()<CR>
+nnoremap <Leader>frn :call functions#RenameFile()<CR>
 
 " yank entire file
 nnoremap <Leader>y ggVGy

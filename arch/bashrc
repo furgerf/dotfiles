@@ -85,7 +85,9 @@ shopt -s cdspell
 # fixes line shenanigans(?)
 shopt -s checkwinsize
 # add some paths for easier navigation
-CDPATH=".:~/git:~/git/sedimentum"
+CDPATH=".:~/git:~/git/sedimentum:/mnt/nas"
+# extend PATH
+export PATH="$PATH:$HOME/git/linux-scripts:$HOME/git/linux-scripts/*"
 
 eval "$(dircolors -b)" # highlight broken symlinks
 stty -ixon # disable flow control (to use ctrl+s in vim)
@@ -228,9 +230,22 @@ alias tclip='tmux show-buffer | xclip' # put current tmux buffer in clipboard
 alias .='source'
 alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
-alias activate-venv='. venv/bin/activate'
+venv-install(){
+  [ ! -d venv ] && virtualenv venv
+  venv-update
+}
+venv-update(){
+  sed -i "s%/app%$(pwd)%g" requirements/*.txt
+  venv/bin/pip install $(for file in requirements/*.txt; do echo "-r $file"; done)
+  sed -i "s%$(pwd)%/app%g" requirements/*.txt
+}
+venv-activate(){
+  [ -d venv ] || venv-install
+  source venv/bin/activate
+}
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 alias docker-stopall='docker stop $(docker ps -q)'
+alias load-env='export $(cat .env | xargs)'
 alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
 alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
 alias weather='curl wttr.in'
@@ -293,6 +308,9 @@ if pgrep ssh-agent > /dev/null; then
 else
   eval "$(ssh-agent)" > /dev/null
 fi
+
+# decode RabbitMQ messages
+alias un-rabbit='cat <(printf "\x1f\x8b\x08\x00\x00\x00\x00\x00") <(xclip -o | base64 -d) | gzip -dc | jq'
 
 # source other files
 { [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true
