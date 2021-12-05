@@ -174,3 +174,6 @@
 [submodule "vim/bundle/vim-abolish"]
   path = vim/bundle/vim-abolish
   url = git@github.com:tpope/vim-abolish
+[submodule "vim/bundle/coc-pydocstring"]
+  path = vim/bundle/coc-pydocstring
+  url = git@github.com:yaegassy/coc-pydocstring
