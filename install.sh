@@ -75,7 +75,6 @@ prompt-file "$PWD/ulauncher/theme" "$HOME/.config/ulauncher/user-themes/mysty"
 echo -e "\n*** LINUX (root)"
 prompt-file "$PWD/awesome/theme" "/usr/share/awesome/themes/mysty" sudo
 prompt-file "$PWD/arch/slim.conf" "/etc/slim.conf" sudo
-prompt-file "$PWD/arch/acpi-handler.sh" "/etc/acpi/handler.sh" sudo
 prompt-file "$PWD/arch/locale.conf" "/etc/locale.conf" sudo
 prompt-file "$PWD/arch/locale.gen" "/etc/locale.gen" sudo
 prompt-file "$PWD/arch/00-keyboard.conf" "/etc/X11/xorg.conf.d/00-keyboard.conf" sudo
