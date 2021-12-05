@@ -135,25 +135,6 @@ let g:rcsv_map_keys=0
 let g:colorizer_maxlines=200
 "}}}
 
-" vim-grepper "{{{
-" don't automatically switch to quickfix window
-let g:grepper = {}
-let g:grepper.switch = 0
-
-" bind K to search word under cursor
-nnoremap K :Grepper -tool git -cword<CR>
-
-" grep with...
-" ... gs+motion
-nmap gs <Plug>(GrepperOperator)
-" ... visual selection+gs
-xmap gs <Plug>(GrepperOperator)
-
-" add map for 'find'
-nnoremap <Leader>gf :Grepper -tool grep<CR>
-nnoremap <Leader>gg :Grepper -tool git<CR>
-"}}}
-
 " syntastic "{{{
 " keep updating the location list
 let g:syntastic_always_populate_loc_list = 1
@@ -211,12 +192,6 @@ nnoremap <Leader>ns :SearchNotes
 nnoremap <Leader>nr :RelatedNotes<CR>
 nnoremap <Leader>nm :RecentNotes<CR>
 nnoremap <Leader>ni :ShowTaggedNotes<CR> " 'notes index'
-"}}}
-
-" vim-isort "{{{
-" disable default visual-mode mapping
-let g:vim_isort_map = ''
-" (custom mappings are added in ftplugin/python.vim)
 "}}}
 
 " mathematic.vim "{{{
