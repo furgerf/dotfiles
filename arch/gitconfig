@@ -37,6 +37,7 @@
   showUntrackedFiles = all
 [advice]
   statusHints = false
+  skippedCherryPicks = false
 [transfer]
   fsckobjects = false
 [pager]

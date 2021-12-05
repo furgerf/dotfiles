@@ -54,5 +54,12 @@
     "icon": null,
     "script": "/opt/pgadmin/pgadmin",
     "default_arguments": []
+  },
+  {
+    "name": "conky",
+    "description": "Refresh conky",
+    "icon": null,
+    "script": "/usr/bin/killall",
+    "default_arguments": ["-SIGUSR1", "conky"]
   }
 ]

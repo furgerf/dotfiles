@@ -237,6 +237,8 @@ venv-install(){
 venv-update(){
   sed -i "s%/app%$(pwd)%g" requirements/*.txt
   venv/bin/pip install $(for file in requirements/*.txt; do echo "-r $file"; done)
+  venv/bin/pip install -e deps/*
+  [ -f setup.cfg ] && venv/bin/pip install -e .
   sed -i "s%$(pwd)%/app%g" requirements/*.txt
 }
 venv-activate(){
@@ -245,7 +247,7 @@ venv-activate(){
 }
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 alias docker-stopall='docker stop $(docker ps -q)'
-alias load-env='export $(cat .env | xargs)'
+alias load-env='[ -f .env ] && export $(cat .env | xargs)'
 alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
 alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
 alias weather='curl wttr.in'

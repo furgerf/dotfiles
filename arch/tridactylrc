@@ -13,7 +13,7 @@ set hintnames numeric
 " set hintchars 1234567890
 
 " make Tridactyl work on more sites at the expense of some security
-set csp clobber
+" set csp clobber
 fixamo_quiet
 
 set searchurls.wiki https://en.wikipedia.org/wiki/Special:Search/
