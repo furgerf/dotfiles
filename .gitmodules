@@ -57,9 +57,6 @@
 [submodule "vim/bundle/vim-unimpaired"]
   path = vim/bundle/vim-unimpaired
   url = git@github.com:tpope/vim-unimpaired
-[submodule "vim/bundle/vim-json"]
-  path = vim/bundle/vim-json
-  url = git@github.com:elzr/vim-json
 [submodule "vim/bundle/indentLine"]
   path = vim/bundle/indentLine
   url = git@github.com:Yggdroot/indentLine
@@ -130,9 +127,6 @@
 [submodule "vim/bundle/vim-conjoin.git"]
   path = vim/bundle/vim-conjoin.git
   url = git@github.com:flwyd/vim-conjoin.git
-[submodule "vim/bundle/black"]
-  path = vim/bundle/black
-  url = git@github.com:psf/black.git
 [submodule "vim/bundle/python-syntax"]
   path = vim/bundle/python-syntax
   url = git@github.com:vim-python/python-syntax

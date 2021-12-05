@@ -47,9 +47,6 @@ vnoremap <Leader>rt :retab<CR>
 " indent file
 nnoremap <Leader>ri mzgg=G`z
 
-" format file
-nmap <Leader>f <Leader>ri<Leader>rw<Leader>rt
-
 " unhighlight search results
 nnoremap <silent> <Leader>q :nohlsearch<CR>
 

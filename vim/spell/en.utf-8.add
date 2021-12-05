@@ -147,3 +147,8 @@ isort
 pylint
 datastore
 Jira
+numpy
+AMQP
+protobuf
+proto
+deque

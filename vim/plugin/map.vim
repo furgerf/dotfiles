@@ -91,10 +91,6 @@ nnoremap Y y$
 "}}}
 
 " Abbreviations "{{{
-" quitall often ends up capitalized for me
-abbrev Qa qa
-" I like typing `man` when looking up documentation
-cabbrev man help
 "}}}
 
 " Split undo sequence "{{{

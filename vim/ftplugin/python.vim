@@ -5,6 +5,7 @@
 " configure the test runner (assuming I'm using nose2 for all python projects...)
 let test#python#runner = 'pytest'
 let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first'
+let test#python#pytest#file_pattern = '\v(test_[^/]+|[^/]+_tests)\.py$'
 function! DockerTransform(cmd) abort
   return ' docker-compose -f docker-compose.test.yml run --rm tests ' . a:cmd
 endfunction
@@ -25,22 +26,12 @@ setlocal foldlevel=999
 AnyFoldActivate
 
 " add mappings to sort imports
-nnoremap <LocalLeader>i :Isort<CR>
+nnoremap <LocalLeader>i :CocCommand python.sortImports<CR>
 
 " let g:syntastic_python_checkers = [ 'pylint' ]
 let g:syntastic_check_on_open = 0
 
-" don't indent python files...
-unmap <Leader>f
-nmap <Leader>f :echoerr "Don't format!!"<CR>
-
 let g:python_highlight_all = 1
 let g:python_highlight_file_headers_as_comments = 1
 let g:python_highlight_func_calls = 0
-
-let g:black_quiet = 1
-let g:black_linelength = 120
-let g:black_virtualenv = '~/.cache/black/virtualenv'
-
-autocmd BufWritePre ~/git/sedimentum/*.py execute ':Black'
 
