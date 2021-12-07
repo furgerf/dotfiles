@@ -171,3 +171,6 @@
 [submodule "vim/bundle/coc-pydocstring"]
   path = vim/bundle/coc-pydocstring
   url = git@github.com:yaegassy/coc-pydocstring
+[submodule "vim/bundle/vim-scrollstatus"]
+  path = vim/bundle/vim-scrollstatus
+  url = git@github.com:ojroques/vim-scrollstatus
