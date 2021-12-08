@@ -35,20 +35,21 @@ let g:fzf_action = {
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 " mappings - for more see https://github.com/junegunn/fzf.vim#commands
-nnoremap <silent> <Leader>ob :Buffers<CR>
-nnoremap <silent> <Leader>ow :Window<CR>
+nnoremap <silent> <Leader>fb :Buffers<CR>
+nnoremap <silent> <Leader>fw :Window<CR>
 
-nnoremap <silent> <Leader>of :GFiles<CR>
-nnoremap <silent> <Leader>oa :Files<CR>
+nnoremap <silent> <Leader>fo :GFiles<CR>
+nnoremap <silent> <Leader>fa :Files<CR>
 
-nnoremap <silent> <Leader>or :Rg<CR>
-nnoremap <silent> <Leader>ot :Tags<CR>
-nnoremap <silent> <Leader>obt :BTags<CR>
+nnoremap <silent> <Leader>fr :Rg<CR>
+nnoremap <silent> <Leader>fta :Tags<CR>
+nnoremap <silent> <Leader>ftb :BTags<CR>
+nnoremap <silent> <Leader>fl :BLines<CR>
 
-nnoremap <silent> <Leader>oh :Commits<CR>
-nnoremap <silent> <Leader>obh :BCommits<CR>
+nnoremap <silent> <Leader>fha :Commits<CR>
+nnoremap <silent> <Leader>fhb :BCommits<CR>
 
-nnoremap <silent> <Leader>om :Maps<CR>
+nnoremap <silent> <Leader>fm :Maps<CR>
 "}}}
 
 " vim-test "{{{
@@ -310,8 +311,8 @@ endfunction
 nmap <leader>rn <Plug>(coc-rename)
 
 " format selected code
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format)
+xmap <leader>ff  <Plug>(coc-format-selected)
+nmap <leader>ff  <Plug>(coc-format)
 
 " apply codeAction to the selected region
 " Example: `<leader>aap` for current paragraph

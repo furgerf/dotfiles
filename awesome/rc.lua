@@ -764,6 +764,7 @@ clientbuttons = gears.table.join(
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
+local tag_7_screens = { 1, 1, 3 }
 awful.rules.rules =
 {
   {
@@ -807,7 +808,7 @@ awful.rules.rules =
   {
     -- workaroud
     rule_any = { class = { "Signal", "Spotify", "Slack", "Ferdi" } },
-    properties = { screen = 1, maximized = true }
+    properties = { tag = retrieve_tag_by_position(7, tag_7_screens[screen.count()]), maximized = true }
   },
   {
     rule_any = { class = { "Ulauncher" } },
@@ -823,7 +824,7 @@ awful.rules.rules =
   },
   {
     rule_any = { name = { ".*tmux.*" } },
-    properties = { tag =  retrieve_tag_by_position(4, screen.count()) }
+    properties = { tag = retrieve_tag_by_position(4, screen.count()) }
   },
 }
 -- tyrannical.properties.floating = {

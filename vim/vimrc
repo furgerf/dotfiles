@@ -82,6 +82,7 @@ set encoding=utf-8
 
 " use a shorter time when waiting for keypress (eg after leader)
 set timeoutlen=500
+set ttimeoutlen=100
 
 " in insert mode with spell-checking, use dictionary for word completion
 " NOTE: Currently only completes manually (<C-n>)
@@ -91,10 +92,6 @@ set complete+=kspell
 set history=1000
 set undolevels=1000
 
-" modify grep command
-" NOTE: this should possibly be changed
-set grepprg=grep\ -nH\ $*
-
 " open new split panes to right and bottom
 set splitbelow
 set splitright
@@ -102,6 +99,9 @@ set splitright
 " assign leaders - do that before defining any leader-mappings!
 let mapleader = "\<Space>"
 let localmapleader = "\\"
+
+" improve command line completion menu
+set wildmenu
 
 " command wildchar expansion: show all matches, then start completing
 set wildmode=list:longest,full
