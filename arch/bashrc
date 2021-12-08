@@ -40,15 +40,15 @@ export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWUPSTREAM="auto" # verbose
 
-PS1="${COLOR_DGRAY}["
+PS1="${COLOR_BLACK}["
 PS1+="${COLOR_WHITE}\$?"
 PS1+="\$(if [[ \$? == 0 ]]; then echo \"  ${COLOR_LGREEN}\342\234\223\";"
-PS1+="else printf '%-3s' ${COLOR_LRED}\342\234\227; fi)${COLOR_DGRAY}]"
-PS1+="[${COLOR_WHITE}\A${COLOR_DGRAY}]"
-PS1+="[${COLOR_WHITE}\u${COLOR_DGRAY}@${COLOR_WHITE}\h${COLOR_DGRAY}]"
+PS1+="else printf '%-3s' ${COLOR_LRED}\342\234\227; fi)${COLOR_BLACK}]"
+PS1+="[${COLOR_WHITE}\A${COLOR_BLACK}]"
+PS1+="[${COLOR_WHITE}\u${COLOR_BLACK}@${COLOR_WHITE}\h${COLOR_BLACK}]"
 PS1+="[${COLOR_WHITE}\w"
-PS1+="\$([[ \$(__git_ps1) ]]&&echo -n "$COLOR_DGRAY➤"&&__git_ps1|tr -d ' =')"
-PS1+="${COLOR_DGRAY}]${COLOR_RESET}${COLOR_LBLUE}\$ ${COLOR_RESET}"
+PS1+="\$([[ \$(__git_ps1) ]]&&echo -n "$COLOR_BLACK➤"&&__git_ps1|tr -d ' =')"
+PS1+="${COLOR_BLACK}]${COLOR_RESET}${COLOR_LBLUE}\$ ${COLOR_RESET}"
 
 
 ###############################################################################
