@@ -10,30 +10,45 @@ let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$',
       \ '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
 "}}}
 
-" CtrlP "{{{
-" don't use normal file listing, use git instead
-" NOTE: this may ignore files that shouldn't be ignored - maybe switch to
-" using silver search or something else instead
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
+" fzf "{{{
+" layout of the popup
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-  let g:ctrlp_user_command = ['.git',
-        \ 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-    \ }
-endif
-" ... that means there's no need for caching
-let g:ctrlp_use_caching = 0
-" ignore  some stuff
-let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v\/?gen|node_modules|vendor|.*-venv\/?'
-  \ }
-let g:ctrlp_switch_buffer = 0 " always open files in new buffers
-" define map for opening CtrlP for tags instead of files (probably quite slow!)
-nnoremap <Leader>pt :CtrlPTag<CR>
+" [Buffers] jup to existing window if possible
+let g:fzf_buffers_jump = 1
+
+" load marked items in quickfix list
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+" change `split` to ctrl+s and load marks to quickfix with ctrl+q
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-q':function('s:build_quickfix_list'),
+  \ 'ctrl-v': 'vsplit' }
+
+" improved path completion
+imap <c-x><c-f> <plug>(fzf-complete-path)
+
+" mappings - for more see https://github.com/junegunn/fzf.vim#commands
+nnoremap <silent> <Leader>ob :Buffers<CR>
+nnoremap <silent> <Leader>ow :Window<CR>
+
+nnoremap <silent> <Leader>of :GFiles<CR>
+nnoremap <silent> <Leader>oa :Files<CR>
+
+nnoremap <silent> <Leader>or :Rg<CR>
+nnoremap <silent> <Leader>ot :Tags<CR>
+nnoremap <silent> <Leader>obt :BTags<CR>
+
+nnoremap <silent> <Leader>oh :Commits<CR>
+nnoremap <silent> <Leader>obh :BCommits<CR>
+
+nnoremap <silent> <Leader>om :Maps<CR>
 "}}}
 
 " vim-test "{{{
@@ -98,8 +113,8 @@ nmap <leader>K <Plug>(InterestingWordsClear)
 
 " vim-obsession "{{{
 " start tracking session
-nnoremap <Leader>o :Obsess<CR>
-" stop tracking session and delete session file
+" nnoremap <Leader>o :Obsess<CR>
+" start/stop tracking session (and delete session file)
 nnoremap <Leader>O :Obsess!<CR>
 "}}}
 
@@ -188,11 +203,11 @@ nnoremap <Leader>ni :ShowTaggedNotes<CR> " 'notes index'
 
 " mathematic.vim "{{{
 " turn on mathematic keymap and increase timeoutlen
-noremap <silent> <Leader>mm :call functions#TurnOnMathematicMode()<CR>
+noremap <silent> <LocalLeader>mm :call functions#TurnOnMathematicMode()<CR>
 " turn off mathematic keymap and decrease timeoutlen
-noremap <silent> <Leader>mn :call functions#TurnOffMathematicMode()<CR>
+noremap <silent> <LocalLeader>mn :call functions#TurnOffMathematicMode()<CR>
 " show keymaps
-noremap <Leader>ms :sp ~/git/dotfiles/vim/bundle/mathematic.vim/keymap/mathematic.vim<CR>
+noremap <LocalLeader>ms :sp ~/git/dotfiles/vim/bundle/mathematic.vim/keymap/mathematic.vim<CR>
 " run key helper (to insert single special key)
 nnoremap <LocalLeader>kh :KeyHelper<CR>
 inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>

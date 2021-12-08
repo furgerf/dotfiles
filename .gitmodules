@@ -10,9 +10,6 @@
 [submodule "vim/bundle/vim-gitgutter"]
   path = vim/bundle/vim-gitgutter
   url = git@github.com:airblade/vim-gitgutter.git
-[submodule "vim/bundle/ctrlp.vim"]
-  path = vim/bundle/ctrlp.vim
-  url = git@github.com:ctrlpvim/ctrlp.vim.git
 [submodule "vim/bundle/DidYouMean.vim"]
   path = vim/bundle/DidYouMean.vim
   url = git@github.com:EinfachToll/DidYouMean.git
@@ -174,3 +171,6 @@
 [submodule "vim/bundle/vim-scrollstatus"]
   path = vim/bundle/vim-scrollstatus
   url = git@github.com:ojroques/vim-scrollstatus
+[submodule "vim/bundle/fzf.vim"]
+  path = vim/bundle/fzf.vim
+  url = git@github.com:junegunn/fzf.vim

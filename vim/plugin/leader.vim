@@ -9,9 +9,6 @@
 nnoremap <Leader>vim :e $MYVIMRC<CR>
 nnoremap <Leader>ss :so $MYVIMRC<CR>
 
-" " edit bashrc
-nnoremap <Leader>b :buffers<CR>
-
 " save (and/or) close
 nnoremap <Leader>qq :qa<CR>
 nnoremap <Leader>x :x<CR>
