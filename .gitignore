@@ -10,3 +10,5 @@ vim/spell/*.spl
 vim/view
 # temporary font file
 arch/fonts/.uuid
+# autorandr profiles
+arch/autorandr/*/

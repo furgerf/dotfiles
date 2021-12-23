@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# wait until the session isn't locked
+while pgrep i3lock; do
+  sleep 0.5
+done
+
