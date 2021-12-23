@@ -13,7 +13,7 @@ set nofoldenable
 " set default foldlevel when opening new file
 set foldlevelstart=1
 " number of columns to use for displaying folds (lefthand-side)
-set foldcolumn=1
+" set foldcolumn=1
 " don't create folds for less than 4 lines
 set foldminlines=0
 

@@ -87,7 +87,7 @@ shopt -s checkwinsize
 # add some paths for easier navigation
 CDPATH=".:~/git:~/git/sedimentum:/mnt/nas"
 # extend PATH
-export PATH="$PATH:$HOME/git/linux-scripts:$HOME/git/linux-scripts/*"
+export PATH="$PATH:$HOME/git/linux-scripts:$HOME/git/linux-scripts/*:$HOME/.local/bin"
 
 eval "$(dircolors -b)" # highlight broken symlinks
 stty -ixon # disable flow control (to use ctrl+s in vim)

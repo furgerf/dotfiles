@@ -27,8 +27,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 " also count words in 'notes' files - list appending doesn't seem to work anymore
 let g:airline#extensions#wordcount#filetypes =
     \ ['help', 'markdown', 'rst', 'org', 'text', 'asciidoc', 'tex', 'mail', 'notes']
-let g:airline_section_y = '%{ScrollStatus()}'
-let g:scrollstatus_symbol_track = ' '
 "}}}
 
 " General "{{{
