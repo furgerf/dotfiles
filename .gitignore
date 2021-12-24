@@ -12,3 +12,6 @@ vim/view
 arch/fonts/.uuid
 # autorandr profiles
 arch/autorandr/*/
+# vim plugins
+vim/autoload/plug.vim
+vim/plugged

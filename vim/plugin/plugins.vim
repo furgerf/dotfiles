@@ -2,14 +2,6 @@
 " Various plugins configuration "
 """""""""""""""""""""""""""""""""
 
-" NERDTree "{{{
-" define map for opening NERDTree
-nnoremap <Leader>ne :NERDTreeToggle<CR>
-" ignore certain file types - should be way more, though...
-let NERDTreeIgnore = [ '\.bbl$', '\.blg$', '\.aux$', '\.bcf$', '\.dvi$',
-      \ '\.lof$', '\.lot$', '\.out$', '\.pdf$', '\.toc$', '\.swp$' ]
-"}}}
-
 " fzf "{{{
 " layout of the popup
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
@@ -219,16 +211,6 @@ inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>
 "   let g:gundo_prefer_python3 = 1
 " endif
 noremap <Leader>u :MundoToggle<CR>
-"}}}
-
-" vim-easymotion "{{{
-" keep cursor in same column when jumping across lines
-let g:EasyMotion_startofline = 0
-" use uppercase characters for targets but find them with lowercase keys
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_keys = 'ASDGHKLQWERTYUIOPZXCVBNMFJ;'
-" select first target with space
-let g:EasyMotion_space_jump_first = 1
 "}}}
 
 " vim-asterisk "{{{
