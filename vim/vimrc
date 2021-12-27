@@ -108,6 +108,9 @@ set wildmode=list:longest,full
 " ignore some file types when completing
 set wildignore+=*.class,*.swp,*.pyc,__init__.py,*.pkl,*.png,*.jpg
 
+" tell vim to also check for tags in .git
+set tags+=.git/tags
+
 " reduce the things to store in session file...
 set sessionoptions=blank,buffers,curdir,help,tabpages,winsize
 " ... store even less in views
@@ -161,49 +164,68 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
+" Plugins {{{
 call plug#begin()
-Plug 'AndrewRadev/deleft.vim'
-Plug 'andymass/vim-matchup'
-Plug 'bkad/CamelCaseMotion'
-Plug 'EinfachToll/DidYouMean'
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-Plug 'flwyd/vim-conjoin'
-Plug 'furgerf/gruvbox'
-Plug 'gu-fan/mathematic.vim'
-Plug 'haya14busa/vim-asterisk'
-Plug 'honza/vim-snippets'
-Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
-Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}
-Plug 'junegunn/fzf.vim'
-Plug 'lfv89/vim-interestingwords'
-Plug 'lilydjwg/colorizer'
-Plug 'mechatroner/rainbow_csv'
-Plug 'mhinz/vim-startify'
-Plug 'moll/vim-bbye'
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
+
+" COC and main extensions
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'preservim/tagbar'
-Plug 'pseewald/vim-anyfold'
-Plug 'RRethy/vim-illuminate'
-Plug 'simnalamburt/vim-mundo'
-Plug 'terryma/vim-expand-region'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
+Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" python
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+Plug 'yaegassy/coc-pydocstring', {'do': 'yarn install --frozen-lockfile'}
+" other language-specific things
+Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+
+" navigation
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-unimpaired'
+Plug 'bkad/CamelCaseMotion'
+Plug 'haya14busa/vim-asterisk'
+
+" editing
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline' | Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-abolish'
+Plug 'honza/vim-snippets'
+Plug 'flwyd/vim-conjoin'
+Plug 'andymass/vim-matchup'
+Plug 'AndrewRadev/deleft.vim'
+Plug 'simnalamburt/vim-mundo'
+
+" filetype specific
 Plug 'vim-python/python-syntax'
-Plug 'vim-syntastic/syntastic'
-Plug 'vim-test/vim-test'
-Plug 'wesQ3/vim-windowswap'
+Plug 'mechatroner/rainbow_csv'
+Plug 'gu-fan/mathematic.vim'
 Plug 'whiteinge/diffconflicts'
 Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc', {'as': 'vim-notes-misc'}
-Plug 'yaegassy/coc-pydocstring', {'do': 'yarn install --frozen-lockfile'}
+
+" visual
+Plug 'furgerf/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
 Plug 'Yggdroot/indentLine'
+Plug 'lfv89/vim-interestingwords'
+Plug 'RRethy/vim-illuminate'
+Plug 'lilydjwg/colorizer'
+
+" general/miscellaneous
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'vim-syntastic/syntastic'
+Plug 'EinfachToll/DidYouMean'
+Plug 'mhinz/vim-startify'
+Plug 'preservim/tagbar'
+Plug 'moll/vim-bbye'
+Plug 'pseewald/vim-anyfold'
+Plug 'terryma/vim-expand-region'
+Plug 'wesQ3/vim-windowswap'
+Plug 'vim-test/vim-test'
+
 call plug#end()
+" }}}
 

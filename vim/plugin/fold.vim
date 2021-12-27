@@ -1,12 +1,4 @@
-""""""""""""""""""""""
-" Fold configuration "
-""""""""""""""""""""""
-" Contains configuration for:
-" - general folding options
-" - vim-anyfold
-" - custom fold text
-
-" General "{{{
+" Folding {{{
 " disable folding by default - I prefer having filetypes enabling it
 " regardless, this is where I configure the folding that is used, if used
 set nofoldenable
@@ -41,14 +33,7 @@ nnoremap <silent> zk :let max = &fdn<bar>let &fdn = 1<CR>zk:let &fdn=max<CR>
 " nnoremap <silent> zO :call functions#RecursivelyOpenFold()<CR>
 "}}}
 
-" vim-anyfold "{{{
-" Note: must be enabled specifically (let anyfold_activate=1) if desired
-let anyfold_identify_comments=0
-let anyfold_fold_comments=1
-let anyfold_fold_toplevel=1
-"}}}
-
-" Fold text "{{{
+" Fold text {{{
 " Note that anyfold already uses a custom fold text (that gets overwritten)
 function! CustomFoldText()
   "get first non-blank line
@@ -71,5 +56,12 @@ function! CustomFoldText()
   return substitute(line, " ", "•", "g") . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
 autocmd! User anyfoldLoaded set foldtext=CustomFoldText()
+"}}}
+
+" <Plug> vim-anyfold {{{
+" Note: must be enabled specifically (let anyfold_activate=1) if desired
+let anyfold_identify_comments=0
+let anyfold_fold_comments=1
+let anyfold_fold_toplevel=1
 "}}}
 
