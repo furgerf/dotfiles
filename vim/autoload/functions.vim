@@ -48,9 +48,9 @@ function! functions#CloseExtraBuffers()
   lclose
 endfunction
 
-" closes the current buffer or exits vim if the current buffer is empty
+" closes the current buffer or exits vim if the current buffer is empty and there are no more buffers
 function! functions#DeleteBufferOrExit()
-  if line('$') == 1 && getline(1) == ''
+  if line('$') == 1 && getline(1) == '' && len(getbufinfo({'buflisted':1})) == 1
     qa
   else
     call functions#CloseExtraBuffers()

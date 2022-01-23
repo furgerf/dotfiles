@@ -7,19 +7,15 @@ if !has('nvim')
   nnoremap Y y$
 endif
 
-" paste from system clipboard
-nnoremap <silent> <Leader>pp :set paste<CR>:r! xclip -o<CR>:set nopaste<CR>
+" paste from system clipboard/selection
+nnoremap <silent> <Leader>pp :set paste<CR>:r! xclip -o -selection clipboard<CR>:set nopaste<CR>
+nnoremap <silent> <Leader>ps :set paste<CR>:r! xclip -o -selection primary<CR>:set nopaste<CR>
 
 " use F7 for pasting
 set pastetoggle=<F7>
-
 "}}}
 
 " Mappings {{{
-" shift-tab to reduce indent
-nnoremap <S-Tab> <<
-inoremap <S-Tab> <C-d>
-
 " Bubble single lines
 nnoremap <silent> <C-Up>   :move-2<CR>==
 nnoremap <silent> <C-Down> :move+<CR>==
@@ -37,7 +33,6 @@ xnoremap <C-A-up> y`<Pgv
 
 " delete paranthesis under cursor and matching
 nnoremap <Leader>X %x<C-o>x
-
 "}}}
 
 " Visual mode mappings {{{

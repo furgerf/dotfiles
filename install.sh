@@ -11,7 +11,7 @@ prompt-file() {
     SUDO=""
   fi
 
-  if [[ -n "$PATTERN" ]] && [[ "${SRC#$PWD}" != *"$PATTERN"* ]]; then
+  if [[ -n "$PATTERN" ]] && [[ "${SRC#$PWD}" != *"$PATTERN"* ]] && [[ "${DEST#$PWD}" != *"$PATTERN"* ]]; then
     echo "Skipping $SRC"
     return
   fi
@@ -70,6 +70,7 @@ prompt-file "$PWD/arch/gitignore" "$HOME/.gitignore"
 prompt-file "$PWD/arch/fonts" "$HOME/.fonts"
 prompt-file "$PWD/arch/gruvbox-dark.theme" "$HOME/.local/share/xfce4/terminal/colorschemes/gruvbox-dark.theme"
 prompt-file "$PWD/arch/autorandr" "$HOME/.config/autorandr"
+prompt-file "$PWD/arch/pylintrc" "$HOME/.config/pylintrc"
 prompt-file "$PWD/ipython/ipython_config.py" "$HOME/.ipython/profile_default/ipython_config.py"
 prompt-file "$PWD/ipython/10-imports.py" "$HOME/.ipython/profile_default/startup/10-imports.py"
 prompt-file "$PWD/ipython/20-defs.py" "$HOME/.ipython/profile_default/startup/20-defs.py"

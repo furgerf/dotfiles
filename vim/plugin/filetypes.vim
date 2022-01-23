@@ -19,7 +19,7 @@ inoremap <LocalLeader>kh <Esc>:KeyHelper<CR>
 " by default, use parent directory
 " but also use subdirectories (and their index notes)
 let g:notes_directories = [
-      \ '~/SynologyDrive/fabian/Misc/Notes'
+      \ '~/SynologyDrive/home/Drive/Notes'
       \ ]
 
 " append .txt for windows

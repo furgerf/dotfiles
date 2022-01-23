@@ -20,7 +20,7 @@ nm-applet &
 ulauncher --no-window-shadow &
 xfce4-clipman &
 synology-drive &
-dropbox &
+# dropbox &
 pasystray &
 caffeine &
 blueman-applet &

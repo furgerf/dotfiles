@@ -57,9 +57,9 @@ vnoremap <Leader>dg :diffget<CR>
 nnoremap <Leader>dp dp
 vnoremap <Leader>dp :diffput<CR>
 
-" zoom/unzoom current window
-nnoremap <Leader>z <C-w>\|<C-w>_
+" restore equal layout
 nnoremap <Leader>Z <C-w>=
+
 " remove trailing whitelines
 nnoremap <Leader>rw :%s/\s\+$//<cr>:nohlsearch<cr>
 " convert tabs to whitespace
@@ -172,5 +172,12 @@ nnoremap <silent> <localleader>tn :TestNearest<CR>
 nnoremap <silent> <localleader>tf :TestFile<CR>
 nnoremap <silent> <localleader>tt :TestSuite<CR>
 nnoremap <silent> <localleader>tl :TestLast<CR>
+"}}}
+
+" <Plug> vim-maximizer {{{
+" set custom mappings to avoid mapping <Space> in insert-mode
+let g:maximizer_set_default_mapping = 0
+nnoremap <silent><Leader>z :MaximizerToggle<CR>
+vnoremap <silent><Leader>z :MaximizerToggle<CR>gv
 "}}}
 

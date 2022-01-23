@@ -167,7 +167,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " Plugins {{{
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
 
 " COC and main extensions
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -227,6 +227,7 @@ Plug 'pseewald/vim-anyfold'
 Plug 'terryma/vim-expand-region'
 Plug 'wesQ3/vim-windowswap'
 Plug 'vim-test/vim-test'
+Plug 'szw/vim-maximizer'
 
 call plug#end()
 " }}}
