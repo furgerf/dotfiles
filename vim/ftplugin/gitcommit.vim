@@ -12,6 +12,13 @@ setlocal textwidth=72
 setlocal nonumber
 setlocal norelativenumber
 
+" disable shared data for git commits
+if has('nvim')
+  setlocal shada="NONE"
+else
+  setlocal viminfo="NONE"
+endif
+
 " no longer highlight past column 80
 hi! OverLength none
 

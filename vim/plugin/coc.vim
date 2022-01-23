@@ -125,7 +125,11 @@ nnoremap <silent><nowait> <leader>cp  :<C-u>CocListResume<CR>
 
 " coc-snippets {{{
 " trigger snippet expand
-imap <C-@> <Plug>(coc-snippets-expand)
+if has('nvim')
+  imap <C-Space> <Plug>(coc-snippets-expand)
+else
+  imap <C-@> <Plug>(coc-snippets-expand)
+endif
 
 " use selected text as visual placeholder of snippet
 " vmap <C-j> <Plug>(coc-snippets-select)

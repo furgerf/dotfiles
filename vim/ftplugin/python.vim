@@ -20,7 +20,7 @@ nnoremap <F2> :!python "%:p"<CR>
 
 " enable folding - the default foldlevelstart of 1 is ok as it collapses
 " functions (assuming they're inside a class)
-setlocal foldenable
+" setlocal foldenable
 setlocal foldlevel=999
 " also enable anyfold
 AnyFoldActivate
@@ -36,4 +36,5 @@ setlocal spell
 let g:python_highlight_all = 1
 let g:python_highlight_file_headers_as_comments = 1
 let g:python_highlight_func_calls = 0
+let g:python_highlight_space_errors = 0
 

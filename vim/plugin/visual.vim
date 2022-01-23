@@ -58,6 +58,9 @@ let g:gruvbox_number_column='bg1'
 let g:gruvbox_improved_warnings='1'
 set background=dark
 colorscheme gruvbox
+
+" call s:HL('GruvboxWhitespace', s:bg0, s:fg4)
+" hi! link Whitespace GruvboxWhitespace
 "}}}
 
 " <Plug> vim-airline {{{

@@ -73,7 +73,6 @@ set formatoptions=c,q,r,t,j
 " NOTE: also checkout `ttymouse` option
 set mouse=a
 " share the plus register with the system clipboard
-" TODO: check out h x11-selection to maybe understand and configure better
 set clipboard=unnamedplus
 
 " MISC
@@ -118,6 +117,9 @@ set viewoptions=cursor,folds
 
 " remember vim home directory
 let $VIMHOME=expand('<sfile>:p:h')
+
+" don't hide unsaved buffers
+set nohidden
 
 " open help files in new tabs
 " autocmd! FileType help call functions#HelpInNewTab()

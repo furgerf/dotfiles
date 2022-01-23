@@ -3,7 +3,9 @@
 nnoremap <Leader>y ggVGy
 
 " make Y behave like D, C, ...
-nnoremap Y y$
+if !has('nvim')
+  nnoremap Y y$
+endif
 
 " paste from system clipboard
 nnoremap <silent> <Leader>pp :set paste<CR>:r! xclip -o<CR>:set nopaste<CR>

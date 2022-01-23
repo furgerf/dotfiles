@@ -56,8 +56,8 @@ PS1+="${COLOR_BLACK}]${COLOR_RESET}${COLOR_LBLUE}\$ ${COLOR_RESET}"
 ###############################################################################
 
 # exports
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 export PAGER="/bin/less"
 
 # history configuration
@@ -101,8 +101,9 @@ stty -ixon # disable flow control (to use ctrl+s in vim)
 # privileged access
 if [ $UID -ne 0 ]; then
   alias scat='sudo cat'
-  alias svim='sudo vim'
+  alias svim='sudo nvim'
 fi
+vim () { echo There\'s no vim! | lolcat; }
 
 # modified commands
 alias diff='colordiff -s' # requires colordiff package
@@ -236,6 +237,7 @@ venv-install(){
 }
 venv-update(){
   sed -i "s%/app%$(pwd)%g" requirements/*.txt
+  venv/bin/pip install neovim
   venv/bin/pip install $(for file in requirements/*.txt; do echo "-r $file"; done)
   venv/bin/pip install -e deps/*
   [ -f setup.cfg ] && venv/bin/pip install -e .
@@ -346,7 +348,7 @@ fo() {
   key=$(head -1 <<< "$out")
   file=$(head -2 <<< "$out" | tail -1)
   if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && xdg-open "$file" || ${EDITOR:-vim} "$file"
+    [ "$key" = ctrl-o ] && xdg-open "$file" || ${EDITOR} "$file"
   fi
 }
 

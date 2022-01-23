@@ -68,6 +68,12 @@ nnoremap <silent> <Leader>fha :Commits<CR>
 nnoremap <silent> <Leader>fhb :BCommits<CR>
 
 nnoremap <silent> <Leader>fm :Maps<CR>
+
+" disable <Esc> to exit terminal in fzf buffers - not nice, but at least it works...
+" in fzf buffers, don't remap <Esc> (technically, we're in terminal mode)
+autocmd FileType fzf tunmap <Esc>
+" when exiting fzf buffers, restore the <Esc> mapping (so that we can unmap it again next time)
+autocmd BufLeave * if &filetype == 'fzf'| tnoremap <Esc> <C-\><C-n>
 "}}}
 
 " <Plug> CamelCaseMotion {{{
