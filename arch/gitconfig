@@ -150,10 +150,12 @@
   ###########################
   # working with submodules #
   ###########################
+  # update ctags after adding submodule
+  sub-add = !echo $@ && git ctags
   # recursively initialize submodules (after cloning a repo)
-  sub-init = !git submodule update --init --recursive
+  sub-init = !git submodule update --init --recursive && git ctags
   # pull all submodules - also handles default branches not named "master"
-  sub-update = !git submodule foreach 'git pull origin "$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"'
+  sub-update = !git submodule foreach 'git pull origin "$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"' && git ctags
 [push]
   default = matching
 [http]

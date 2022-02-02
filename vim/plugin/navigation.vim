@@ -12,6 +12,9 @@ nnoremap <Leader><Tab> <C-^>
 nnoremap j gj
 nnoremap k gk
 
+nnoremap <silent> <F8> :tabn<CR>
+tnoremap <silent> <F8> <C-\><C-n>:tabn<CR>
+
 " use <C-\> to return after tag jump with <C-]>
 " (<C-[> is something with alt/esc...)
 nnoremap <C-\> :pop<CR>
@@ -60,6 +63,9 @@ nnoremap <silent> <Leader>fo :GFiles<CR>
 nnoremap <silent> <Leader>fa :Files<CR>
 
 nnoremap <silent> <Leader>fr :Rg<CR>
+nnoremap <silent> <Leader>fs :call fzf#vim#grep(
+      \ 'rg --column --line-number --no-heading --color=always --smart-case -- '
+      \ . expand('<cword>'), 1)<Enter>
 nnoremap <silent> <Leader>fta :Tags<CR>
 nnoremap <silent> <Leader>ftb :BTags<CR>
 nnoremap <silent> <Leader>fl :BLines<CR>
@@ -68,6 +74,8 @@ nnoremap <silent> <Leader>fha :Commits<CR>
 nnoremap <silent> <Leader>fhb :BCommits<CR>
 
 nnoremap <silent> <Leader>fm :Maps<CR>
+
+nnoremap <silent> <Leader>fn :call fzf#vim#files(g:notes_directories[0])<Enter>
 
 " disable <Esc> to exit terminal in fzf buffers - not nice, but at least it works...
 " in fzf buffers, don't remap <Esc> (technically, we're in terminal mode)

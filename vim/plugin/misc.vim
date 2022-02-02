@@ -103,7 +103,7 @@ nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>gr :Gread<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gs :Git<CR>
-nnoremap <Leader>gl :Glog<CR>
+nnoremap <Leader>gl :Gclog<CR>
 nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gc :Git commit<CR>
 " nnoremap <Leader>gm :Gmove<CR>

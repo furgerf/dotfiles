@@ -124,8 +124,8 @@ nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
 " use the plugin command in visual mode
 " NOTE: If there's no map for the plugin command at all, the plugin adds its
 "       own mappings, overwriting `n` and `N` too in the process...
-vmap <leader>k <Plug>(InterestingWords)
-nmap <leader>K <Plug>(InterestingWordsClear)
+vnoremap <leader>k :call InterestingWords('v')<CR>
+nnoremap <leader>K :call UncolorAllWords()<CR>
 " could also map these to cycle through interesting words but that is tricky
 " to get right with the match highlighting and it doesn't work reliably anyway
 " nmap n <Plug>(InterestingWordsForeward)

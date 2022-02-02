@@ -31,7 +31,7 @@ nnoremap <LocalLeader>i :CocCommand python.sortImports<CR>
 " let g:syntastic_python_checkers = [ 'pylint' ]
 let g:syntastic_check_on_open = 0
 
-setlocal spell
+" setlocal spell
 
 let g:python_highlight_all = 1
 let g:python_highlight_file_headers_as_comments = 1
