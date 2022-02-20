@@ -6,7 +6,7 @@
   "cSpell.dictionaryDefinitions": [
     {
       "name": "vim-dictionary",
-      "path": "/home/fabian/.vim/spell/en.utf-8.add"
+      "path": "/home/fabian/.config/nvim/spell/en.utf-8.add"
     }
   ],
   "cSpell.dictionaries": [ "vim-dictionary" ],
@@ -16,7 +16,7 @@
   "snippets.enableStatusItem": true,
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
-  "snippets.userSnippetsDirectory": "~/.vim/custom-snippets",
+  "snippets.userSnippetsDirectory": "~/.config/nvim/custom-snippets",
 
   "python.venvPath": "venv", // don't think that works
   "python.formatting.provider": "black",
