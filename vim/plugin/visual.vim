@@ -8,7 +8,7 @@ set listchars=trail:~,tab:»·,eol:⏎
 " display symbol for wrapped lines on new line
 set showbreak=↪
 " merge signs with numbers
-set signcolumn=number
+set signcolumn=yes
 "}}}
 
 " Mappings {{{

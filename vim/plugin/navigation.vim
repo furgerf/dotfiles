@@ -49,8 +49,10 @@ endfunction
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
-  \ 'ctrl-q':function('s:build_quickfix_list'),
-  \ 'ctrl-v': 'vsplit' }
+  \ 'ctrl-d': 'leftabove split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-w': 'leftabove vsplit',
+  \ 'ctrl-q':function('s:build_quickfix_list') }
 
 " improved path completion
 imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -75,7 +77,7 @@ nnoremap <silent> <Leader>fhb :BCommits<CR>
 
 nnoremap <silent> <Leader>fm :Maps<CR>
 
-nnoremap <silent> <Leader>fn :call fzf#vim#files(g:notes_directories[0])<Enter>
+nnoremap <silent> <Leader>fn :call fzf#vim#files(g:notes_directories[0], {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']})<Enter>
 
 " disable <Esc> to exit terminal in fzf buffers - not nice, but at least it works...
 " in fzf buffers, don't remap <Esc> (technically, we're in terminal mode)

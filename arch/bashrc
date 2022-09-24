@@ -103,7 +103,10 @@ if [ $UID -ne 0 ]; then
   alias scat='sudo cat'
   alias svim='sudo nvim'
 fi
-vim () { echo There\'s no vim! | lolcat; }
+
+# replaced commands
+alias cat=bat
+alias vim=nvim
 
 # modified commands
 alias diff='colordiff -s' # requires colordiff package
@@ -143,7 +146,6 @@ alias chgrp='chgrp --preserve-root'
 
 # new basic commands
 alias rmr='rm -r'
-alias fucking='sudo'
 alias xclip='xclip -selection c'
 alias xpaste='xclip -o'
 alias du1='du --max-depth=1'
@@ -248,7 +250,7 @@ venv-activate(){
   source venv/bin/activate
 }
 alias clearswap='sudo swapoff -a; sudo swapon -a'
-alias docker-stopall='docker stop $(docker ps -q)'
+alias docker-stopall='if docker ps -q | grep -q ".*"; then docker stop $(docker ps -q); else true; fi'
 alias load-env='[ -f .env ] && export $(cat .env | xargs)'
 alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
 alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
@@ -305,11 +307,11 @@ function mp4tomp3() {
 ###############################################################################
 
 # add bindings for CTRL+T (file name completion), CTRL+R (command history search), ALT+C (cd)
-source /usr/share/fzf/completion.bash
-source /usr/share/fzf/key-bindings.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
 --bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"
+--bind alt-b:preview-up,alt-f:preview-down
 --bind "alt-y:execute(echo {+} | tr -d \\\\n | tmux load-buffer -),alt-c:execute(echo {+} | tr -d \\\\n | xclip -i -sel c)"
 --bind "alt-e:execute(bat {})"
 --color fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
@@ -429,19 +431,13 @@ function yari() {
 # miscellaneous
 ###############################################################################
 
-source /usr/share/doc/pkgfile/command-not-found.bash
-
-if pgrep ssh-agent > /dev/null; then
-  source ~/git/ssh-find-agent/ssh-find-agent.sh
-  set_ssh_agent_socket
-else
-  eval "$(ssh-agent)" > /dev/null
-fi
-
 export BAT_THEME="gruvbox-dark"
 
-# decode RabbitMQ messages
-alias un-rabbit='cat <(printf "\x1f\x8b\x08\x00\x00\x00\x00\x00") <(xclip -o | base64 -d) | gzip -dc | jq'
+function cheat() {
+  # TODO check out shell client https://github.com/chubin/cheat.sh#client-usage
+  ARGS="$*"
+  curl "cht.sh/${ARGS// /+}"
+}
 
 # source other files
 { [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true

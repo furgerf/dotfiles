@@ -1,6 +1,7 @@
 [user]
   name = Fabian Furger
   email = furgerfabian@hotmail.com
+  useConfigOnly = true
 [includeIf "gitdir:~/git/sedimentum/"]
   path = ~/git/sedimentum/.gitconfig
 [color]
@@ -16,20 +17,22 @@
   excludesFile = ~/.gitignore
   # use diff-so-fancy when paging and use a default pattern for easier diff navigation
   # Note: using the pattern invalidates -F (quit less if it fits on the screen)
-  pager = "type diff-so-fancy &> /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
+  pager = "type diff-so-fancy > /dev/null && diff-so-fancy | less -RFX --pattern='^(Author|added|deleted|modified|renamed): ' || less -RFX"
 [fetch]
   prune = true
 [pull]
   rebase = true
 [push]
   default = simple
+[rebase]
+  autoStash = true
 [merge]
   # ff = only
   tool = diffconflicts
 [mergetool]
   keepBackup = false
 [mergetool.diffconflicts]
-  cmd = vim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+  cmd = nvim -c DiffConflicts "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
   trustExitCode = true
 [commit]
   verbose = true
@@ -98,11 +101,11 @@
   ########################
   fa = !git fetchall && git sba
   # fetch all remotes
-  fetchall = fetch --all
+  fetchall = fetch --all --recurse-submodules=on-demand
   # interactive rebase
   ri = rebase -i
   # rebase on origin/master
-  rom = rebase origin/master --autostash
+  rom = rebase origin/master
   # interactive rebase on origin/master
   riom = rom -i
   # `push --force` that fails if someone else pushed in the meantime
@@ -151,11 +154,11 @@
   # working with submodules #
   ###########################
   # update ctags after adding submodule
-  sub-add = !echo $@ && git ctags
+  sub-add = !git submodule add $@ && git ctags
   # recursively initialize submodules (after cloning a repo)
   sub-init = !git submodule update --init --recursive && git ctags
   # pull all submodules - also handles default branches not named "master"
-  sub-update = !git submodule foreach 'git pull origin "$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"' && git ctags
+  sub-update = !git submodule update --recursive --remote && git ctags
 [push]
   default = matching
 [http]

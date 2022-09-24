@@ -20,14 +20,20 @@
 
 " navigate completion
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
+inoremap <expr> <S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <C-y> coc#pum#visible() ? coc#pum#confirm() : "\<C-y>"
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+" use <C-j>/<C-k> to navigate popup if shown, otherwise use other maps (navigate windows)
+imap <expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+imap <expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
 
 " trigger completion - NOTE: conflicts with expand-snippet
 " inoremap <silent><expr> <C-@> pumvisible() ? coc#_select_confirm() : coc#refresh()
@@ -35,7 +41,7 @@ endfunction
 " auto-select the first completion item and notify coc.nvim to format on enter
 " inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 "                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-inoremap <silent><expr> <C-y> pumvisible() ? coc#_select_confirm() : "\<C-y>"
+" inoremap <silent><expr> <C-y> pumvisible() ? coc#_select_confirm() : "\<C-y>"
 
 " navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -43,19 +49,17 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " code navigation
 nmap <silent> gd <Plug>(coc-definition)
-" nmap <silent> gy <Plug>(coc-type-definition) " TODO get working
+nmap <silent> gy <Plug>(coc-type-definition)
 " nmap <silent> gi <Plug>(coc-implementation) " TODO get working
 nmap <silent> gr <Plug>(coc-references)
 
 " show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
+nnoremap <silent> K :call ShowDocumentation()<CR>
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
-    execute '!' . &keywordprg . " " . expand('<cword>')
+    call feedkeys('K', 'in')
   endif
 endfunction
 

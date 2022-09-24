@@ -159,3 +159,16 @@ ok
 backend
 repos
 nvim
+raspi
+backend
+GPIO
+SSID
+dbus
+WIFI
+sedi
+snapd
+Curena
+pytest
+grafana
+ansible
+entrypoint

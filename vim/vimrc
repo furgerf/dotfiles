@@ -176,13 +176,14 @@ Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 " python
 Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-Plug 'yaegassy/coc-pydocstring', {'do': 'yarn install --frozen-lockfile'}
 " other language-specific things
 Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 
 " navigation
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'bkad/CamelCaseMotion'
@@ -198,6 +199,7 @@ Plug 'flwyd/vim-conjoin'
 Plug 'andymass/vim-matchup'
 Plug 'AndrewRadev/deleft.vim'
 Plug 'simnalamburt/vim-mundo'
+Plug 'machakann/vim-swap'
 
 " filetype specific
 Plug 'vim-python/python-syntax'

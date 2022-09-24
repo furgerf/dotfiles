@@ -23,11 +23,15 @@ snippet kwa "assign kwarg to kwarg"
 ${1:foo}=$1,
 endsnippet
 
-snippet defi "initializer with docstrings" b
-def __init__(self, ${1:arg1}):
-	`!p snip.rv = triple_quotes(snip)`${4:TODO: Docstring for $1.}`!p
-	write_function_docstring(t, snip) `
-	${5:${VISUAL:pass}}
+snippet defi "initializer" b
+def __init__(self, ${1:arg1}) -> None:
+	${2:${VISUAL:pass}}
+endsnippet
+
+snippet roprop "Read Only Property" b
+@property
+def ${1:name}(self) -> $0:
+	${2:return self._$2}$1
 endsnippet
 
 # writing tests
@@ -45,10 +49,13 @@ from sedimentum_utils.logging.logging import get_logger
 logger = get_logger(__name__)
 
 endsnippet
+snippet ld "log debug"
+logger.debug("${0:msg}")
+endsnippet
 snippet li "log info"
 logger.info("${0:msg}")
 endsnippet
-snippet lw "log waring"
+snippet lw "log warning"
 logger.warning("${0:msg}")
 endsnippet
 snippet le "log error"

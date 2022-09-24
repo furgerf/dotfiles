@@ -1,5 +1,6 @@
 .*.swp
 *venv/
 Session.vim
+Session.vim.*.obsession~
 __pycache__/
 *.pyc

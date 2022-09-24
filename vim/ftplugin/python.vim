@@ -4,7 +4,7 @@
 
 " configure the test runner (assuming I'm using nose2 for all python projects...)
 let test#python#runner = 'pytest'
-let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first --capture=no -vv'
+let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first --capture=no -v'
 let test#python#pytest#file_pattern = '\v(test_[^/]+|[^/]+_tests)\.py$'
 function! DockerTransform(cmd) abort
   return ' docker-compose -f docker-compose.test.yml run --rm tests ' . a:cmd
@@ -26,7 +26,10 @@ setlocal foldlevel=999
 AnyFoldActivate
 
 " add mappings to sort imports
-nnoremap <LocalLeader>i :CocCommand python.sortImports<CR>
+nnoremap <silent> <LocalLeader>i :CocCommand python.sortImports<CR>
+
+" remove print
+nnoremap <silent> <LocalLeader>rp :g/^\s\+print/d<CR>:g/^\s\+# print/d<CR>
 
 " let g:syntastic_python_checkers = [ 'pylint' ]
 let g:syntastic_check_on_open = 0

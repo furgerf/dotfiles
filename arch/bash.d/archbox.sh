@@ -64,6 +64,7 @@ raspi-restore(){
 }
 
 # misc
+source /usr/share/doc/pkgfile/command-not-found.bash
 alias mirror='mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2'
 alias speak='echo \""$@"\" | espeak' # FIX ME :(
 say(){ curl -A RG 'translate.google.com/translate_tts' -d 'tl=en&q=$@' | mpg123 -; }
