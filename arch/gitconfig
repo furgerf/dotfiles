@@ -1,6 +1,7 @@
 [user]
   name = Fabian Furger
   email = furgerfabian@hotmail.com
+  signkey = C01D738F74BCD478
   useConfigOnly = true
 [includeIf "gitdir:~/git/sedimentum/"]
   path = ~/git/sedimentum/.gitconfig
@@ -36,6 +37,7 @@
   trustExitCode = true
 [commit]
   verbose = true
+  gpgsign = true
 [status]
   showUntrackedFiles = all
 [advice]
