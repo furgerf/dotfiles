@@ -176,4 +176,4 @@
 [url "git@github.com:"]
   insteadOf = gh:
 
-# vim: ft=conf
+# vim: ft=gitconfig

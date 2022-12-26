@@ -172,3 +172,5 @@ pytest
 grafana
 ansible
 entrypoint
+configurator
+augenblicke

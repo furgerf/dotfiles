@@ -235,13 +235,14 @@ alias reload-bashrc='source ~/.bashrc'
 alias tf='tail -F'
 venv-install(){
   [ ! -d venv ] && virtualenv venv
+  venv/bin/pip install --upgrade pip==21.2.*
   venv-update
 }
 venv-update(){
   sed -i "s%/app%$(pwd)%g" requirements/*.txt
   venv/bin/pip install neovim
   venv/bin/pip install $(for file in requirements/*.txt; do echo "-r $file"; done)
-  venv/bin/pip install -e deps/*
+  [ -d deps ] && venv/bin/pip install -e deps/*
   [ -f setup.cfg ] && venv/bin/pip install -e .
   sed -i "s%$(pwd)%/app%g" requirements/*.txt
 }
@@ -251,7 +252,15 @@ venv-activate(){
 }
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 alias docker-stopall='if docker ps -q | grep -q ".*"; then docker stop $(docker ps -q); else true; fi'
-alias load-env='[ -f .env ] && export $(cat .env | xargs)'
+load-env(){
+  FILE="${1:-.env}"
+  if [ -f "$FILE" ]; then
+    echo "Loading env from '$FILE'"
+    export $(cat "$FILE" | sed 's/#.*//' | xargs)
+  else
+    echo "File '$FILE' doesn't exist"
+  fi
+}
 alias repeat-last='cmd=$(fc -ln -1); while true; do $cmd; read; done'
 alias repeat-last-auto='cmd=$(fc -ln -1); while true; do $cmd; sleep 1; done'
 alias weather='curl wttr.in'
@@ -335,7 +344,7 @@ _fzf_comprun() {
   case "$command" in
     cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
     export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
-    ssh)          fzf "$@" --preview 'dig {}' ;;
+    # ssh)          fzf "$@" --preview 'dig {} | sed 1d' ;;
     *)            fzf "$@" ;;
   esac
 }

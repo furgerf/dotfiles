@@ -9,9 +9,10 @@
 
   "coc.preferences.formatOnSaveFiletypes": ["python"],
   "suggest.noselect": true,
+  "suggest.enablePreselect": false,
   "suggest.selection": "first",
 
-  "tabnine.priority": 20,
+  "tabnine.priority": 10,
   "suggest.languageSourcePriority": 85,
 
   "snippets.enableStatusItem": true,
@@ -24,13 +25,13 @@
   //"python.venvPath": "venv", // don't think that works
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.local/bin/black",
-  "python.formatting.blackArgs": ["--line-length", "120"],
   //"python.analysis.logLevel": "Trace",
   //"python.linting.lintOnSave": true,
   //"python.linting.mypyEnabled": true, // quite slow
   "python.linting.pylintEnabled": true,
   "python.sortImports.path": "~/.local/bin/isort",
-  "python.sortImports.args": ["--line-length", "120", "--profile", "black"],
   "pyright.organizeimports.provider": "isort",
+  "pyright.inlayHints.functionReturnTypes": false,
+  "pyright.inlayHints.variableTypes": false,
   "pydocstring.formatter": "google"
 }

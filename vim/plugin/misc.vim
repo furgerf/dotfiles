@@ -25,7 +25,7 @@ cnoremap w!! w !sudo tee % > /dev/null
 
 " Backspace deletes buffer.
 nnoremap <silent> <BS> :call functions#DeleteBufferOrExit()<CR>
-nnoremap <silent> <Leader><BS> :Bwipeout<CR>
+nnoremap <silent> <Leader><BS> :call functions#DeleteInactiveBuffers()<CR>
 nnoremap <silent> <Localleader><BS> :%bd \| e#<CR>
 
 noremap <silent> <F5> :e<CR>
@@ -109,6 +109,7 @@ nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gc :Git commit<CR>
 " nnoremap <Leader>gm :Gmove<CR>
 " nnoremap <Leader>grm :Gremove<CR>
+nnoremap <Leader>gg :G 
 "}}}
 
 " <Plug> vim-obsession {{{
@@ -117,7 +118,7 @@ nnoremap <Leader>gc :Git commit<CR>
 " start/stop tracking session (and delete session file)
 nnoremap <Leader>O :Obsess!<CR>
 " store less often for better performance
-let g:obsession_no_bufenter = 1
+" let g:obsession_no_bufenter = 1
 "}}}
 
 " <Plug> syntastic {{{

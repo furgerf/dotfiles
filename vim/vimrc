@@ -73,7 +73,7 @@ set formatoptions=c,q,r,t,j
 " NOTE: also checkout `ttymouse` option
 set mouse=a
 " share the plus register with the system clipboard
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " MISC
 " use default linux encoding in vim
@@ -150,9 +150,6 @@ let g:tex_flavor = "latex"
 "   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/camelcasemotion/autoload/camelcasemotion.vim
 "   autocmd BufWritePost $MYVIMRC source $VIMHOME/bundle/ctrlp.vim/autoload/ctrlp.vim
 " augroup END
-
-" macro to close fold and go to the next line
-let @q = 'zc<CR>'
 
 " redefine `gx` as a workaround until it's fixed...
 nmap gx yiW:!xdg-open <cWORD><CR> <C-r>" & <CR><CR>

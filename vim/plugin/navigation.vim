@@ -52,7 +52,8 @@ let g:fzf_action = {
   \ 'ctrl-d': 'leftabove split',
   \ 'ctrl-v': 'vsplit',
   \ 'ctrl-w': 'leftabove vsplit',
-  \ 'ctrl-q':function('s:build_quickfix_list') }
+  \ 'ctrl-q': function('s:build_quickfix_list')
+  \}
 
 " improved path completion
 imap <c-x><c-f> <plug>(fzf-complete-path)
