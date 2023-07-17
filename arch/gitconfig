@@ -27,6 +27,7 @@
   default = simple
 [rebase]
   autoStash = true
+  autosquash = true
 [merge]
   # ff = only
   tool = diffconflicts
@@ -105,9 +106,15 @@
   # fetch all remotes
   fetchall = fetch --all --recurse-submodules=on-demand
   # interactive rebase
-  ri = rebase -i
+  ri = rebase --interactive
+  # continue rebase
+  rc = rebase --continue
+  # abort rebase
+  ra = rebase --abort
   # rebase on origin/master
   rom = rebase origin/master
+  # update and rebase on origin/master
+  up = !git fetchall && git rom && git sba
   # interactive rebase on origin/master
   riom = rom -i
   # `push --force` that fails if someone else pushed in the meantime
@@ -124,6 +131,10 @@
   co = checkout
   cob = checkout -b
   cp = cherry-pick
+  # continue cherry-pick
+  cpc = cherry-pick --continue
+  # abort cherry-pick
+  cpa = cherry-pick --abort
 
   ######################
   # working with stash #

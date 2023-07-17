@@ -22,3 +22,5 @@ endif
 " no longer highlight past column 80
 hi! OverLength none
 
+let @q = '/+++ b/changelog.md/^+- f lYggP'
+
