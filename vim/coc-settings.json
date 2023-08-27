@@ -25,6 +25,7 @@
   //"python.venvPath": "venv", // don't think that works
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "~/.local/bin/black",
+  "python.formatting.blackArgs": ["--line-length", "120"],
   //"python.analysis.logLevel": "Trace",
   //"python.linting.lintOnSave": true,
   //"python.linting.mypyEnabled": true, // quite slow

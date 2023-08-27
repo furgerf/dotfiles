@@ -253,6 +253,7 @@ venv-activate(){
 }
 alias clearswap='sudo swapoff -a; sudo swapon -a'
 alias docker-stopall='if docker ps -q | grep -q ".*"; then docker stop $(docker ps -q); else true; fi'
+alias docker-networkrm='if docker network ls -q | grep -q ".*"; then docker network rm $(docker network ls -q); else true; fi'
 load-env(){
   FILE="${1:-.env}"
   if [ -f "$FILE" ]; then
@@ -452,3 +453,5 @@ function cheat() {
 # source other files
 { [[ -f "$HOME/.bash-sourcer.sh" ]] && source "$HOME/.bash-sourcer.sh"; } || true
 
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

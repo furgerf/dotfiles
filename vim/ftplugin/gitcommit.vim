@@ -22,5 +22,6 @@ endif
 " no longer highlight past column 80
 hi! OverLength none
 
-let @q = '/+++ b/changelog.md/^+- f lYggP'
+" with nonprintable characters: let @q = '/+++ b/changelog.md^M/^+- ^Mf lYggO^R0'
+let @q = '/+++ b/changelog.md/^+- f lYggO0'
 

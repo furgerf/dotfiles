@@ -138,6 +138,7 @@ untargeted
 segmentor
 CycleGAN
 Sedimentum
+sedimentum
 unix
 FFT
 ndarray
@@ -174,3 +175,11 @@ ansible
 entrypoint
 configurator
 augenblicke
+multiprocess
+multiprocessing
+deserialize
+pydantic
+bexio
+infobip
+skyresponse
+glassfy
