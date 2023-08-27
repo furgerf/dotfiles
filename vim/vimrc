@@ -174,7 +174,7 @@ Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 " python
 Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 " other language-specific things
-Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}
+Plug 'josa42/coc-sh', {'branch': 'main', 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
@@ -188,7 +188,7 @@ Plug 'haya14busa/vim-asterisk'
 
 " editing
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+Plug 'kylechui/nvim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-abolish'
 Plug 'honza/vim-snippets'
@@ -208,11 +208,12 @@ Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc', {'as': 'vim-notes-misc'}
 " visual
 Plug 'furgerf/gruvbox'
 Plug 'vim-airline/vim-airline'
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', {'branch': 'main'}
 Plug 'Yggdroot/indentLine'
 Plug 'lfv89/vim-interestingwords'
 Plug 'RRethy/vim-illuminate'
 Plug 'lilydjwg/colorizer'
+Plug 'rareitems/hl_match_area.nvim'
 
 " general/miscellaneous
 Plug 'tpope/vim-fugitive'
@@ -227,7 +228,11 @@ Plug 'terryma/vim-expand-region'
 Plug 'wesQ3/vim-windowswap'
 Plug 'vim-test/vim-test'
 Plug 'szw/vim-maximizer'
+Plug 'github/copilot.vim'
 
 call plug#end()
 " }}}
+
+lua require("nvim-surround").setup()
+lua require("hl_match_area").setup({highlight_in_insert_mode = true, delay = 100})
 

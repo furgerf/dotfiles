@@ -127,13 +127,12 @@ nnoremap <silent><nowait> <leader>ck  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <leader>cp  :<C-u>CocListResume<CR>
 " }}}
 
+imap <silent><script><expr> <C-h> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
 " coc-snippets {{{
 " trigger snippet expand
-if has('nvim')
-  imap <C-Space> <Plug>(coc-snippets-expand)
-else
-  imap <C-@> <Plug>(coc-snippets-expand)
-endif
+imap <C-n> <Plug>(coc-snippets-expand)
 
 " use selected text as visual placeholder of snippet
 " vmap <C-j> <Plug>(coc-snippets-select)
