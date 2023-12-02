@@ -95,7 +95,7 @@ nmap ++ vip++
 "}}}
 
 " <Plug> vim-fugitive {{{
-" delete all fugitive buffers as soon as the're no longer displayed
+" delete all fugitive buffers as soon as they're no longer displayed
 autocmd! BufReadPost fugitive://* set bufhidden=delete
 " use vertical diff by default - note that this is a vim option
 set diffopt+=vertical
@@ -110,6 +110,11 @@ nnoremap <Leader>gc :Git commit<CR>
 " nnoremap <Leader>gm :Gmove<CR>
 " nnoremap <Leader>grm :Gremove<CR>
 nnoremap <Leader>gg :G 
+nnoremap <Leader>ga :G sba<CR>
+
+nnoremap <Leader>gu :G up<CR>
+nnoremap <Leader>gpp :G push -u origin @<CR>
+nnoremap <Leader>gpl :G please -u origin @<CR>
 "}}}
 
 " <Plug> vim-obsession {{{

@@ -111,6 +111,10 @@
   rc = rebase --continue
   # abort rebase
   ra = rebase --abort
+  # continue merge
+  mc = merge --continue
+  # abort merge
+  ma = merge --abort
   # rebase on origin/master
   rom = rebase origin/master
   # update and rebase on origin/master

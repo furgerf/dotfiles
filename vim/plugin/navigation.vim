@@ -63,6 +63,7 @@ nnoremap <silent> <Leader>fb :Buffers<CR>
 nnoremap <silent> <Leader>fw :Window<CR>
 
 nnoremap <silent> <Leader>fo :GFiles<CR>
+nnoremap <silent> <Leader>fh :GFiles?<CR>
 nnoremap <silent> <Leader>fa :Files<CR>
 
 nnoremap <silent> <Leader>fr :Rg<CR>
@@ -79,6 +80,12 @@ nnoremap <silent> <Leader>fhb :BCommits<CR>
 nnoremap <silent> <Leader>fm :Maps<CR>
 
 nnoremap <silent> <Leader>fn :call fzf#vim#files(g:notes_directories[0], {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']})<Enter>
+
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number -- '.fzf#shellescape(<q-args>),
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+nnoremap <silent> <Leader>fg :GGrep<CR>
 
 " disable <Esc> to exit terminal in fzf buffers - not nice, but at least it works...
 " in fzf buffers, don't remap <Esc> (technically, we're in terminal mode)
