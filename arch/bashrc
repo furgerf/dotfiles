@@ -365,6 +365,14 @@ fo() {
   fi
 }
 
+# copy password from lastpass
+lp() {
+  copy_password="lpass show --password {} | tr -d '\n'"
+  lpass ls --format '%aN' | fzf --preview 'lpass show {}' \
+    --bind "enter:execute($copy_password | tmux load-buffer -)+abort" \
+    --bind "ctrl-space:execute($copy_password | xclip -i -sel c)+abort"
+  }
+
 # browse git commits
 gbrowse() {
   _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | tr -d '\n'"
