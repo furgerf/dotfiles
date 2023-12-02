@@ -171,13 +171,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-tabnine', {'do': 'yarn install --frozen-lockfile'}
 Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-" python
+" language-specific things
 Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-" other language-specific things
 Plug 'josa42/coc-sh', {'branch': 'main', 'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 
 " navigation
 Plug 'junegunn/fzf'
@@ -230,6 +231,7 @@ Plug 'vim-test/vim-test'
 Plug 'szw/vim-maximizer'
 Plug 'github/copilot.vim'
 
+Plug 'tenfyzhong/autoflake.vim', {'do': 'pip install autoflake'}
 call plug#end()
 " }}}
 

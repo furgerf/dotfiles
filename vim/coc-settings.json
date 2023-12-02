@@ -7,7 +7,7 @@
   ],
   "cSpell.dictionaries": [ "vim-dictionary" ],
 
-  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "coc.preferences.formatOnSaveFiletypes": ["python", "javascript", "javascriptreact", "typescript", "typescriptreact"],
   "suggest.noselect": true,
   "suggest.enablePreselect": false,
   "suggest.selection": "first",
