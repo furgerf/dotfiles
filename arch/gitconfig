@@ -1,7 +1,7 @@
 [user]
   name = Fabian Furger
-  email = furgerfabian@hotmail.com
-  signkey = C01D738F74BCD478
+  email = furger.fabian@gmail.com
+  signkey = 75D40F86B4145E44
   useConfigOnly = true
 [includeIf "gitdir:~/git/sedimentum/"]
   path = ~/git/sedimentum/.gitconfig

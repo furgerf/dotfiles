@@ -37,7 +37,7 @@ on-reboot () {
   ipconfig.exe /all | grep -q sedimentum.internal && { grep -q search /etc/resolv.conf || echo search $(ipconfig.exe /all | sed -n 's/\r//;/Search/,/^$/{/^$/q;s/.*://;p}') | sudo tee -a /etc/resolv.conf > /dev/null; }
 
 
-  LPASS_AGENT_TIMEOUT=0 lpass login fabian.furger@sedimentum.com --trust
+  LPASS_AGENT_TIMEOUT=0 lpass login fabian.furger@safe-living.com --trust
 
   echo "Modifying ~/.docker/config.json"
   CONFIG=~/.docker/config.json

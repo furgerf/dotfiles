@@ -11,7 +11,7 @@
     "description": "Log in on LastPass",
     "icon": null,
     "script": "LPASS_AGENT_TIMEOUT=0 /usr/bin/lpass",
-    "default_arguments": [ "login", "fabian.furger@sedimentum.com" ]
+    "default_arguments": [ "login", "fabian.furger@safe-living.com" ]
   },
   {
     "name": "Caffeine",
