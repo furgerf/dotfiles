@@ -7,7 +7,9 @@
   ],
   "cSpell.dictionaries": [ "vim-dictionary" ],
 
-  "coc.preferences.formatOnSaveFiletypes": ["python", "javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "[python][javascript][javascriptreact][typescript][typescriptreact]": {
+    "coc.preferences.formatOnSave": true
+  },
   "suggest.noselect": true,
   "suggest.enablePreselect": false,
   "suggest.selection": "first",
@@ -15,10 +17,20 @@
   "tabnine.priority": 10,
   "suggest.languageSourcePriority": 85,
 
-  "snippets.enableStatusItem": true,
+  //"snippets.enableStatusItem": true,
   "snippets.snipmate.enable": false,
   "snippets.ultisnips.enable": true,
   "snippets.userSnippetsDirectory": "~/.config/nvim/custom-snippets",
+
+  "prettier.prettierPath": "/usr/local/bin",
+  //"prettier.trailingComma": "all",
+  "eslint.debug": true,
+  "eslint.packageManager": "yarn",
+  //"eslint.runtime":  "/usr/local/bin",
+  //"eslint.nodePath": "/usr/local/bin",
+  //"eslint.trace.server": "messages",
+  //"eslint.validate": ["js", "jsx", "ts", "tsx"],
+  //"eslint.workingDirectories": ["~/git/sedimentum/VigilanceCockpitFrontend"],
 
   "pyright.disableProgressNotifications": true,
 
@@ -30,9 +42,10 @@
   //"python.linting.lintOnSave": true,
   //"python.linting.mypyEnabled": true, // quite slow
   "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--django-settings-module="],
+  //"python.linting.pylintArgs": ["--django-settings-module=vigilance_cockpit.settings.test"],
   "python.sortImports.path": "~/.local/bin/isort",
   "pyright.organizeimports.provider": "isort",
   "pyright.inlayHints.functionReturnTypes": false,
   "pyright.inlayHints.variableTypes": false,
-  "pydocstring.formatter": "google"
 }

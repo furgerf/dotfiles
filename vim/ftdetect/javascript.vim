@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead *.jsm,*.ts set filetype=javascript
+" autocmd BufNewFile,BufRead *.jsm,*.ts set filetype=javascript
