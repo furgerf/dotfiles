@@ -121,6 +121,7 @@
   up = !git fetchall && git rom && git sba
   # interactive rebase on origin/master
   riom = rom -i
+  pu = push -u origin @
   # `push --force` that fails if someone else pushed in the meantime
   please = push --force-with-lease
 
@@ -128,10 +129,17 @@
   # working with branches #
   #########################
   # laziness...
-  b = branch -v
+  aa = add -A
+  ap = add -p
+  s = status
+  d = diff
+  ds = diff --staged
   bd = branch -d
   bdf = branch -D
   bmv = branch -m
+  bgl = "!f() { git bdf \"$@\" && git bmv \"$@\"; }; f"
+  bc = "!f() { git rom && git co - && git bd \"$(git rev-parse --symbolic-full-name --abbrev-ref=loose @{-1})\" ; }; f"
+  c = commit -v
   co = checkout
   cob = checkout -b
   cp = cherry-pick
@@ -176,8 +184,6 @@
   sub-init = !git submodule update --init --recursive && git ctags
   # pull all submodules - also handles default branches not named "master"
   sub-update = !git submodule update --recursive --remote && git ctags
-[push]
-  default = matching
 [http]
   sslVerify = false
 [credential]

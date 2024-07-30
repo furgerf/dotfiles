@@ -107,9 +107,7 @@ nnoremap <Leader>gs :Git<CR>
 nnoremap <Leader>gl :Gclog<CR>
 nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gc :Git commit<CR>
-" nnoremap <Leader>gm :Gmove<CR>
-" nnoremap <Leader>grm :Gremove<CR>
-nnoremap <Leader>gg :G 
+nnoremap <M-g> :G 
 nnoremap <Leader>ga :G sba<CR>
 
 nnoremap <Leader>gu :G up<CR>
