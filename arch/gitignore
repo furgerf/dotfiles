@@ -4,3 +4,4 @@ Session.vim
 Session.vim.*.obsession~
 __pycache__/
 *.pyc
+arch/bash.d/load-secrets.sh

@@ -37,7 +37,7 @@ on-reboot () {
   ipconfig.exe /all | grep -q sedimentum.internal && { grep -q search /etc/resolv.conf || echo search $(ipconfig.exe /all | sed -n 's/\r//;/Search/,/^$/{/^$/q;s/.*://;p}') | sudo tee -a /etc/resolv.conf > /dev/null; }
 
 
-  LPASS_AGENT_TIMEOUT=0 lpass login fabian.furger@safe-living.com --trust
+  LPASS_AGENT_TIMEOUT=0 lpass login fabian.furger@helpany.com --trust
 
   echo "Modifying ~/.docker/config.json"
   CONFIG=~/.docker/config.json
@@ -68,6 +68,9 @@ _fzf_complete_ssh()
   } | sort)
 }
 complete -F _fzf_complete_ssh -o bashdefault ssh
+
+SECRETS_FILE=$(dirname "${BASH_SOURCE[0]}")/load-secret.sh
+[ -f "$SECRETS_FILE" ] && source "$SECRETS_FILE"
 
 # always use tmux session
 [ -z "$TMUX" ] && { tmux a || tmux; }
