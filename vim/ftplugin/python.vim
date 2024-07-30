@@ -36,9 +36,6 @@ nnoremap <expr> <LocalLeader>, getline('.')[col('$')-2] == "," ? "mz$x'z" : ""
 nnoremap <silent> <LocalLeader>a :Autoflake! --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables<CR>
 nnoremap <silent> <LocalLeader>A :Autoflake --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables<CR>
 
-" let g:syntastic_python_checkers = [ 'pylint' ]
-let g:syntastic_check_on_open = 0
-
 " setlocal spell
 
 let g:python_highlight_all = 1

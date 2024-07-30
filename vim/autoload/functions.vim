@@ -118,7 +118,7 @@ function! functions#IsNonspecialBuffer()
   return (&buftype == '')
 endfunction
 
-" close all quickfix, preview, location list OR open location list (syntastic)
+" close all quickfix, preview, location list OR open location list
 " NOTE: Currently unused
 " http://stackoverflow.com/questions/17512794/toggle-error-location-panel-in-syntastic/17515778#17515778
 function! functions#ToggleErrors()

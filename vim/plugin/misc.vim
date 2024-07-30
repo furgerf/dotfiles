@@ -124,36 +124,6 @@ nnoremap <Leader>O :Obsess!<CR>
 " let g:obsession_no_bufenter = 1
 "}}}
 
-" <Plug> syntastic {{{
-" keep updating the location list
-let g:syntastic_always_populate_loc_list = 1
-
-" open location list when there are errors and close when there are none
-" let g:syntastic_auto_loc_list = 1
-
-" check for errors when opening file and don't check when writing AND closing
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" aggregate errors from different checkers
-let g:syntastic_aggregate_errors = 1
-
-" allow shellcheck to follow external source files
-let g:syntastic_sh_shellcheck_args = "-x"
-
-" configure python checking
-let g:syntastic_python_checkers = []
-
-" TODO statusline
-" TODO priority of messages greater than gitgutter?
-
-" syntastic mappings
-nnoremap <Leader>se :Errors<CR>
-nnoremap <Leader>sm :SyntasticToggleMode<CR>
-nnoremap <Leader>sc :SyntasticCheck<CR>
-nnoremap <Leader>si :SyntasticInfo<CR>
-"}}}
-
 " <Plug> startify {{{
 " don't CD when opening file
 let g:startify_change_to_dir=0

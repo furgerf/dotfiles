@@ -40,8 +40,6 @@ setlocal foldmethod=syntax
 
 setlocal textwidth=100
 
-let g:syntastic_tex_checkers = ['lacheck']
-
 " " insert TeX placeholder
 " nnoremap <Leader>g i<++><Esc>hi
 " inoremap <Leader>g <++><Esc>i

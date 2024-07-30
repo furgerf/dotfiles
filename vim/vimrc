@@ -220,7 +220,6 @@ Plug 'rareitems/hl_match_area.nvim'
 " general/miscellaneous
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
-Plug 'vim-syntastic/syntastic'
 Plug 'EinfachToll/DidYouMean'
 Plug 'mhinz/vim-startify'
 Plug 'preservim/tagbar'
