@@ -182,7 +182,7 @@ Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 
 " navigation
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-unimpaired'
 Plug 'bkad/CamelCaseMotion'
@@ -202,6 +202,7 @@ Plug 'machakann/vim-swap'
 
 " filetype specific
 Plug 'vim-python/python-syntax'
+Plug 'tenfyzhong/autoflake.vim', {'do': 'pip install autoflake'}
 Plug 'mechatroner/rainbow_csv'
 Plug 'gu-fan/mathematic.vim'
 Plug 'whiteinge/diffconflicts'
@@ -230,11 +231,11 @@ Plug 'wesQ3/vim-windowswap'
 Plug 'vim-test/vim-test'
 Plug 'szw/vim-maximizer'
 Plug 'github/copilot.vim'
-
-Plug 'tenfyzhong/autoflake.vim', {'do': 'pip install autoflake'}
+Plug 'briangwaltney/paren-hint.nvim'
 call plug#end()
 " }}}
 
 lua require("nvim-surround").setup()
 lua require("hl_match_area").setup({highlight_in_insert_mode = true, delay = 100})
 
+lua require("paren-hint").setup({highlight = "InlayHints"})

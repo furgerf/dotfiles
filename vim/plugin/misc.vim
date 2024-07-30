@@ -92,6 +92,16 @@ nnoremap Q @q
 " calculate stats on numbers like sum, avg, ...
 vnoremap <expr> ++ VMATH_YankAndAnalyse()
 nmap ++ vip++
+
+noremap <silent> <LocalLeader>m :tabnew \| term make
+noremap <silent> <LocalLeader>ma :tabnew \| term make all<CR>
+noremap <silent> <LocalLeader>mm :tabnew \| term make mypy<CR>
+noremap <silent> <LocalLeader>ml :tabnew \| term make lint<CR>
+noremap <silent> <LocalLeader>mt :tabnew \| term make test<CR>
+noremap <silent> <LocalLeader>mu :tabnew \| term make update<CR>
+noremap <silent> <LocalLeader>mb :tabnew \| term make build<CR>
+noremap <silent> <LocalLeader>mc :tabnew \| term make clean<CR>
+noremap <silent> <LocalLeader>mr :tabnew \| term make run<CR>
 "}}}
 
 " <Plug> vim-fugitive {{{

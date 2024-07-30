@@ -70,8 +70,7 @@ nnoremap <silent> <Leader>fr :Rg<CR>
 nnoremap <silent> <Leader>fs :call fzf#vim#grep(
       \ 'rg --column --line-number --no-heading --color=always --smart-case -- '
       \ . expand('<cword>'), 1, {'options': ['--query', '!deps !tests ']})<Enter>
-nnoremap <silent> <Leader>fta :Tags<CR>
-nnoremap <silent> <Leader>ftb :BTags<CR>
+nnoremap <silent> <Leader>ft :Tags<CR>
 nnoremap <silent> <Leader>fl :BLines<CR>
 
 nnoremap <silent> <Leader>fha :Commits<CR>

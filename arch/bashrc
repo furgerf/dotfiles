@@ -320,7 +320,7 @@ function mp4tomp3() {
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export FZF_DEFAULT_OPTS='--height 80% --layout=reverse --border --info=inline
---bind "?:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"
+--bind "ctrl-p:toggle-preview,ctrl-f:half-page-down,ctrl-b:half-page-up,ctrl-a:select-all+accept"
 --bind alt-b:preview-up,alt-f:preview-down
 --bind "alt-y:execute(echo {+} | tr -d \\\\n | tmux load-buffer -),alt-c:execute(echo {+} | tr -d \\\\n | xclip -i -sel c)"
 --bind "alt-e:execute(bat {})"

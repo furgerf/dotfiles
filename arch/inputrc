@@ -65,11 +65,17 @@ Control-l: clear-screen
 
 # use CTRL+G/CTRL+? to select git things with FZF
 # https://junegunn.kr/2016/07/fzf-git/
-"\er": redraw-current-line
-"\e\C-e": shell-expand-line
 "\C-g\C-f": "$(_gf)\e\C-e\er"
 "\C-g\C-b": "$(_gb)\e\C-e\er"
 "\C-g\C-t": "$(_gt)\e\C-e\er"
 "\C-g\C-h": "$(_gh)\e\C-e\er"
 "\C-g\C-r": "$(_gr)\e\C-e\er"
 "\C-g\C-s": "$(_gs)\e\C-e\er"
+
+"\er": redraw-current-line
+"\e\C-e": shell-expand-line
+
+"\eg": "git "
+"\ed": "docker "
+"\em": "make "
+"\es": "ssh "
