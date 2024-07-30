@@ -208,7 +208,7 @@ Plug 'whiteinge/diffconflicts'
 Plug 'xolox/vim-notes' | Plug 'xolox/vim-misc', {'as': 'vim-notes-misc'}
 
 " visual
-Plug 'furgerf/gruvbox'
+Plug 'sainnhe/gruvbox-material'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter', {'branch': 'main'}
 Plug 'Yggdroot/indentLine'

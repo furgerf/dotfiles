@@ -26,8 +26,6 @@ augroup BgHighlight
   " update colorcolumn depending on whether the buffer is active
   autocmd WinEnter * if functions#IsNonspecialBuffer() |
         \ execute "set colorcolumn=" . join(range(101, 335), ',') | endif
-  autocmd WinLeave * if functions#IsNonspecialBuffer() |
-        \ execute "set colorcolumn=" . join(range(1, 355), ',') | endif
   autocmd FileType * if functions#IsSpecialBuffer() |
         \ execute "set colorcolumn=" | endif
 
@@ -50,14 +48,52 @@ autocmd! FileType * if functions#IsNonspecialBuffer() |
       \ match OverLength /\%81v.\+/ | endif
 "}}}
 
-" <Plug> gruvbox {{{
-" set up and load colorscheme
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_invert_selection='0'
-let g:gruvbox_number_column='bg1'
-let g:gruvbox_improved_warnings='1'
-set background=dark
-colorscheme gruvbox
+" <Plug> gruvbox-material {{{
+let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_enable_bold = '1'
+let g:gruvbox_material_enable_italic = '1'
+let g:gruvbox_material_dim_inactive_windows = '1'
+let g:gruvbox_material_diagnostic_text_highlight = '1'
+let g:gruvbox_material_statusline_style = 'original'
+let g:gruvbox_material_better_performance = '1'
+let g:gruvbox_material_colors_override = {'bg_dim': ['#32302f', '236']} " reduce contrast for inactive panes
+
+function! s:gruvbox_material_custom() abort
+  " Link a highlight group to a predefined highlight group.
+  highlight! link CopilotSuggestion Purple
+
+  " Initialize the color palette.
+  " The first parameter is a valid value for `g:gruvbox_material_background`,
+  " the second parameter is a valid value for `g:gruvbox_material_foreground`,
+  " and the third parameter is a valid value for `g:gruvbox_material_colors_override`.
+  let l:palette = gruvbox_material#get_palette('medium', 'material', {})
+  " Define a highlight group.
+  " The first parameter is the name of a highlight group,
+  " the second parameter is the foreground color,
+  " the third parameter is the background color,
+  " the fourth parameter is for UI highlighting which is optional,
+  " and the last parameter is for `guisp` which is also optional.
+  " See `autoload/gruvbox_material.vim` for the format of `l:palette`.
+  " call gruvbox_material#highlight('', l:palette.red, l:palette.none, 'undercurl', l:palette.red)
+  " TODO:
+  " - make keywords not italic (Keyword?)
+endfunction
+
+augroup GruvboxMaterialCustom
+  autocmd!
+  autocmd ColorScheme gruvbox-material call s:gruvbox_material_custom()
+augroup END
+
+let g:airline_theme_patch_func = 'AirlineThemePatch'
+function! AirlineThemePatch(palette)
+  if g:airline_theme == 'gruvbox_material'
+    " yellow foreground for file name of modified buffers
+    let a:palette.normal_modified['airline_c'][2] = 214
+    let a:palette.inactive_modified['airline_c'][2] = 214
+  endif
+endfunction
+
+colorscheme gruvbox-material
 "}}}
 
 " <Plug> vim-airline {{{
