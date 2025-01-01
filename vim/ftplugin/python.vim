@@ -7,7 +7,7 @@ let test#python#runner = 'pytest'
 let test#python#pytest#options = '--ignore=deps --exitfirst --failed-first --new-first --capture=no -v'
 let test#python#pytest#file_pattern = '\v(test_[^/]+|[^/]+_tests)\.py$'
 function! DockerTransform(cmd) abort
-  return ' docker-compose -f docker-compose.test.yml run --rm tests ' . a:cmd
+  return ' docker compose -f docker-compose.test.yml run --rm tests ' . a:cmd
 endfunction
 
 let g:test#custom_transformations = {'docker': function('DockerTransform')}
@@ -16,7 +16,7 @@ let g:test#transformation = 'docker'
 
 " execute current file with F2
 " NOTE: Might want to change that mapping at some point...
-nnoremap <F2> :!python "%:p"<CR>
+nnoremap <silent> <F2> :tabnew \| term python "#:p"<CR>
 
 " enable folding - the default foldlevelstart of 1 is ok as it collapses
 " functions (assuming they're inside a class)

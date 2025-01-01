@@ -214,6 +214,15 @@ p8 () {
   done
 }
 
+ssh-retry () {
+  while true; do
+    if ssh -o ConnectTimeout=5 "$@"; then
+      break
+    fi
+    sleep 1
+  done
+}
+
 # interactive rename if no destination is specified
 function mv() {
   if [ "$#" -ne 1 ] || [ ! -e "$1" ]; then
@@ -466,3 +475,5 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+complete -C /usr/local/bin/terraform terraform

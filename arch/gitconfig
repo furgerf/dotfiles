@@ -137,8 +137,8 @@
   bd = branch -d
   bdf = branch -D
   bmv = branch -m
-  bgl = "!f() { git bdf \"$@\" && git bmv \"$@\"; }; f"
-  bc = "!f() { git rom && git co - && git bd \"$(git rev-parse --symbolic-full-name --abbrev-ref=loose @{-1})\" ; }; f"
+  bgl = "!f() { git bdf \"$@\" && git bmv \"$@\"; }; f" # delete branch and rename own branch to deleted branch
+  bc = "!f() { git co \"$@\" && git rom && git co - && git bd \"$@\" ; }; f" # cleanup branch that you're not on
   c = commit -v
   co = checkout
   cob = checkout -b
@@ -172,8 +172,6 @@
   undo = reset HEAD~1 --mixed
   # create and discard a "WIPE SAVEPOINT" commit
   wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-  # stash, rebase, unstash
-  srp = !git stash --include-untracked && git rom && git stash pop
 
   ###########################
   # working with submodules #

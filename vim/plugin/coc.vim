@@ -48,7 +48,7 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " code navigation
-nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gdd <Plug>(coc-definition)
 nmap <silent> gds :call CocAction('jumpDefinition', 'split')<CR>
 nmap <silent> gdv :call CocAction('jumpDefinition', 'vsplit')<CR>
@@ -81,8 +81,8 @@ nmap <leader>a  <Plug>(coc-codeaction-line)
 nmap <leader>A  <Plug>(coc-codeaction)
 
 " apply AutoFix to problem on the current line
-" TODO get this working
 nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <silent> <leader>qa :CocCommand eslint.executeAutofix<CR>
 
 " map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.

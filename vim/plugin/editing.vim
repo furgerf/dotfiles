@@ -28,9 +28,6 @@ xnoremap <C-A-down> y`>pgv
 inoremap <C-A-up> <esc>YPj
 nnoremap <C-A-up> YPj
 xnoremap <C-A-up> y`<Pgv
-
-" delete paranthesis under cursor and matching
-nnoremap <Leader>X %x<C-o>x
 "}}}
 
 " Visual mode mappings {{{

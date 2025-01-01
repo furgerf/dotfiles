@@ -68,17 +68,15 @@ nnoremap <silent> <Leader>fa :Files<CR>
 
 nnoremap <silent> <Leader>fr :Rg<CR>
 nnoremap <silent> <Leader>fs :call fzf#vim#grep(
-      \ 'rg --column --line-number --no-heading --color=always --smart-case -- '
-      \ . expand('<cword>'), 1, {'options': ['--query', '!deps !tests ']})<Enter>
+      \ 'rg --column --line-number --no-heading --color=always --smart-case -- ' . expand('<cword>'),
+      \ fzf#vim#with_preview({'options': ['--query', '!deps !tests '], 'dir': systemlist('git rev-parse --show-toplevel')[0]}))<Enter>
 nnoremap <silent> <Leader>ft :Tags<CR>
 nnoremap <silent> <Leader>fl :BLines<CR>
 
-nnoremap <silent> <Leader>fha :Commits<CR>
-nnoremap <silent> <Leader>fhb :BCommits<CR>
+nnoremap <silent> <Leader>fca :Commits<CR>
+nnoremap <silent> <Leader>fcb :BCommits<CR>
 
 nnoremap <silent> <Leader>fm :Maps<CR>
-
-nnoremap <silent> <Leader>fn :call fzf#vim#files(g:notes_directories[0], {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']})<Enter>
 
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep(

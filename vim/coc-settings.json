@@ -5,14 +5,25 @@
       "path": "/home/fabian/.config/nvim/spell/en.utf-8.add"
     }
   ],
-  "cSpell.dictionaries": [ "vim-dictionary" ],
+  "cSpell.dictionaries": ["vim-dictionary"],
 
-  "[python][javascript][javascriptreact][typescript][typescriptreact]": {
+  "[python][javascript][javascriptreact][typescript][typescriptreact][yaml][css][scss]": {
     "coc.preferences.formatOnSave": true
   },
   "suggest.noselect": true,
   "suggest.enablePreselect": false,
   "suggest.selection": "first",
+
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextPrefix": "  ▶",
+  "diagnostic.floatConfig": {
+    "border": true
+  },
+  "diagnostic.messageLevel": "warning",
+  "diagnostic.hintSign": "●",
+  "diagnostic.infoSign": "●",
+  "diagnostic.warningSign": "▶",
+  "diagnostic.errorSign": "▶",
 
   "tabnine.priority": 10,
   "suggest.languageSourcePriority": 85,
@@ -24,7 +35,7 @@
 
   "prettier.prettierPath": "/usr/local/bin",
   //"prettier.trailingComma": "all",
-  "eslint.debug": true,
+  //"eslint.debug": true,
   "eslint.packageManager": "yarn",
   //"eslint.runtime":  "/usr/local/bin",
   //"eslint.nodePath": "/usr/local/bin",
@@ -48,4 +59,5 @@
   "pyright.organizeimports.provider": "isort",
   "pyright.inlayHints.functionReturnTypes": false,
   "pyright.inlayHints.variableTypes": false,
+  "snippets.ultisnips.pythonPrompt": false
 }

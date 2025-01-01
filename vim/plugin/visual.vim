@@ -127,8 +127,6 @@ let g:indentLine_char = '┆'
 " }}}
 
 " <Plug> vim-interestingwords {{{
-" use random colors
-" let g:interestingWordsRandomiseColors = 1
 " use gruvbox color palette
 let g:interestingWordsTermColors = [
       \ 124,
@@ -152,17 +150,13 @@ let g:interestingWordsTermColors = [
       \ 172,
       \ 250,
       \ ]
-" call the actual function directly in normal mode to avoid a strange delay
+let g:interestingWordsDefaultMappings = 0
 nnoremap <silent> <leader>k :call InterestingWords('n')<CR>
-" use the plugin command in visual mode
-" NOTE: If there's no map for the plugin command at all, the plugin adds its
-"       own mappings, overwriting `n` and `N` too in the process...
-vnoremap <leader>k :call InterestingWords('v')<CR>
-nnoremap <leader>K :call UncolorAllWords()<CR>
+vnoremap <silent> <leader>k :call InterestingWords('v')<CR>
+nnoremap <silent> <leader>K :call UncolorAllWords()<CR>
 " could also map these to cycle through interesting words but that is tricky
 " to get right with the match highlighting and it doesn't work reliably anyway
-" nmap n <Plug>(InterestingWordsForeward)
-" nmap N <Plug>(InterestingWordsBackward)
+" for that, just use the default mappings
 "}}}
 
 " <Plug> colorizer {{{

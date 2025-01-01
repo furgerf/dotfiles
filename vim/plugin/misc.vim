@@ -7,7 +7,6 @@ nnoremap <C-c> :q<CR>
 nnoremap <C-q> :qa<CR>
 
 " save (and/or) close
-nnoremap <Leader>qq :qa<CR>
 nnoremap <Leader>x :x<CR>
 nnoremap <Leader>w :w<CR>
 

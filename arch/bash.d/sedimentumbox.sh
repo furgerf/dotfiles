@@ -69,7 +69,7 @@ _fzf_complete_ssh()
 }
 complete -F _fzf_complete_ssh -o bashdefault ssh
 
-SECRETS_FILE=$(dirname "${BASH_SOURCE[0]}")/load-secret.sh
+SECRETS_FILE=$(dirname "${BASH_SOURCE[0]}")/load-secrets.sh
 [ -f "$SECRETS_FILE" ] && source "$SECRETS_FILE"
 
 # always use tmux session
