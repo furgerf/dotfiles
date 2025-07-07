@@ -22,3 +22,4 @@ nnoremap <silent> <LocalLeader>i :CocCommand eslint.executeAutofix<CR>
 "   \ 'suite':   '--check-leaks --full-trace --inline-diffs --no-exit --recursive'
 " \}
 
+let @q = 'f;xds}'

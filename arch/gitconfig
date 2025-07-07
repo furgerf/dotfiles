@@ -130,6 +130,7 @@
   #########################
   # laziness...
   aa = add -A
+  aaa = !git aa && git amnd
   ap = add -p
   s = status
   d = diff

@@ -1,6 +1,7 @@
 " Yanking/pasting {{{
-" yank entire file
-nnoremap <Leader>y ggVGy
+" yank entire file (to system clipboard)
+nnoremap <Leader>y ggVGy<C-o>
+nnoremap <Leader>Y ggVG"+y<C-o>
 
 " make Y behave like D, C, ...
 nnoremap Y y$

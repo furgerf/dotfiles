@@ -79,3 +79,4 @@ Control-l: clear-screen
 "\ed": "docker "
 "\em": "make "
 "\es": "ssh "
+"\eo": "fo"

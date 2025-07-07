@@ -5,6 +5,7 @@ import os
 import pickle
 from collections import *
 from dataclasses import dataclass
+import zlib
 from datetime import date, datetime, timedelta, timezone
 from multiprocessing import Event, Process, Queue
 from threading import Thread

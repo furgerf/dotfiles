@@ -33,7 +33,8 @@
   "snippets.ultisnips.enable": true,
   "snippets.userSnippetsDirectory": "~/.config/nvim/custom-snippets",
 
-  "prettier.prettierPath": "/usr/local/bin",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  //"prettier.prettierPath": "/usr/local/bin",
   //"prettier.trailingComma": "all",
   //"eslint.debug": true,
   "eslint.packageManager": "yarn",
@@ -47,8 +48,8 @@
 
   //"python.venvPath": "venv", // don't think that works
   "python.formatting.provider": "black",
-  "python.formatting.blackPath": "~/.local/bin/black",
-  "python.formatting.blackArgs": ["--line-length", "120"],
+  //"python.formatting.blackPath": "~/.local/bin/black",
+  //"python.formatting.blackArgs": ["--line-length", "120"],
   //"python.analysis.logLevel": "Trace",
   //"python.linting.lintOnSave": true,
   //"python.linting.mypyEnabled": true, // quite slow

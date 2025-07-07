@@ -58,6 +58,8 @@ let g:fzf_action = {
 " improved path completion
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+
 " mappings - for more see https://github.com/junegunn/fzf.vim#commands
 nnoremap <silent> <Leader>fb :Buffers<CR>
 nnoremap <silent> <Leader>fw :Window<CR>
@@ -65,6 +67,9 @@ nnoremap <silent> <Leader>fw :Window<CR>
 nnoremap <silent> <Leader>fo :GFiles<CR>
 nnoremap <silent> <Leader>fh :GFiles?<CR>
 nnoremap <silent> <Leader>fa :Files<CR>
+
+nnoremap <silent> <Leader>fu :History<CR>
+nnoremap <silent> <Leader>f/ :History/<CR>
 
 nnoremap <silent> <Leader>fr :Rg<CR>
 nnoremap <silent> <Leader>fs :call fzf#vim#grep(
@@ -89,6 +94,26 @@ nnoremap <silent> <Leader>fg :GGrep<CR>
 autocmd FileType fzf tunmap <Esc>
 " when exiting fzf buffers, restore the <Esc> mapping (so that we can unmap it again next time)
 autocmd BufLeave * if &filetype == 'fzf'| tnoremap <Esc> <C-\><C-n>
+
+" function! s:list_buffers()
+"   redir => list
+"   silent ls
+"   redir END
+"   return split(list, "\n")
+" endfunction
+
+" command! BD call fzf#run(fzf#wrap({
+"   \ 'source': s:list_buffers(),
+"   \ 'sink*': { lines -> s:delete_buffers(lines) },
+"   \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+"   \ }))
+
+" command! BD call fzf#vim#buffers(<q-args>, {}, <bang>0)
+" command! -bang -nargs=? Buffers call fzf#vim#buffers(<q-args>, {'options': ['--bind=ctrl-k:accept']}, <bang>0)
+" command! -bang -nargs=? BD call fzf#vim#buffers(<q-args>, {'sink*': { lines -> s:delete_buffers(lines)}, 'options': '--multi --reverse --bind ctrl-a:select-all+accept'}, <bang>0)
+" command! BD call fzf#run(fzf#wrap({'sink*': {lines -> s:delete_buffers(lines) }}))
+
+" nnoremap <silent> <Leader>fB :BD<CR>
 "}}}
 
 " <Plug> CamelCaseMotion {{{

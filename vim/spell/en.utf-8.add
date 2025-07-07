@@ -204,3 +204,7 @@ deps
 fontawesome
 bluez
 rssi
+RPC
+serializer
+proximities
+Healthkit

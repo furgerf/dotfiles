@@ -121,6 +121,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " mappings for CoCList
 nnoremap         <nowait> <leader>cl  :<C-u>CocList 
 nnoremap <silent><nowait> <leader>ca  :<C-u>CocList diagnostics<CR>
+nnoremap <silent><nowait> <leader>cb  :<C-u>CocList diagnostics --buffer<CR>
 nnoremap <silent><nowait> <leader>ce  :<C-u>CocList extensions<CR>
 nnoremap <silent><nowait> <leader>cc  :<C-u>CocList commands<CR>
 nnoremap <silent><nowait> <leader>co  :<C-u>CocList outline<CR>

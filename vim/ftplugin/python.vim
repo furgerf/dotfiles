@@ -28,12 +28,10 @@ AnyFoldActivate
 " add mappings to sort imports
 nnoremap <silent> <LocalLeader>i :CocCommand python.sortImports<CR>
 
-" remove print
+" remove print TODO improve to also work on multiline
+" https://vim.fandom.com/wiki/Power_of_g
 nnoremap <silent> <LocalLeader>rp :g/^\s\+print/d<CR>:g/^\s\+# print/d<CR>
 
-nnoremap <expr> <LocalLeader>, getline('.')[col('$')-2] == "," ? "mz$x'z" : ""
-
-nnoremap <silent> <LocalLeader>a :Autoflake! --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables<CR>
 nnoremap <silent> <LocalLeader>A :Autoflake --expand-star-imports --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables<CR>
 
 " setlocal spell
@@ -43,3 +41,13 @@ let g:python_highlight_file_headers_as_comments = 1
 let g:python_highlight_func_calls = 0
 let g:python_highlight_space_errors = 0
 
+" convert excel paste to string list
+" - paste from system clipboard
+" - select to beginning of paste
+" - replace:
+"   - Remove carriage returns
+"   - Replace tabs with separators
+"   - Start tuple on beginning of line
+"   - Finish tuple on end of line
+" with nonprintable characters: let @q = '"+pv''[:s/^V^M// | ''<,''>s/	/", "/ | ''<,''>s/^/("/ | ''<,''>s/$/"),/^M'
+let @q = '"+pv''[:s/// | ''<,''>s/	/", "/ | ''<,''>s/^/("/ | ''<,''>s/$/"),/'
